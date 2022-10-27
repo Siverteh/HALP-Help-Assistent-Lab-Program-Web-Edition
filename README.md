@@ -4,6 +4,8 @@ To get started after cloning, create new branch by running `git checkout -b NEW-
 
 see how git works here: [github-rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase)
 
+After making changes, stage the changes by running `git add .` or `git add SPECIFIC-FILE`, and then commit and push: `git commit -m"MESSAGE"` and then `git push`
+
 ## :rocket: Branching Strategy
 
 ## `main`
