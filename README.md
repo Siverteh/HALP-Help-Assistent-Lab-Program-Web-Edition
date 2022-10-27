@@ -17,8 +17,13 @@ After making changes, stage the changes by running `git add .` or `git add SPECI
 
 ## Branch naming convention
 
-- Branches should include task id in the branch name
+- Branches should include task id in the branch name, exampel: `CHAN-1/initial-start`
 - Limited lifetime:
   - **Must** be deleted once the work contained within the branch is done, and the branch is merged to `main`
 - Rewriting git history is allowed (rebasing and `push --force`) as long as commits in the rebase exists *only* in the branch
+
+
+## :raised_hand: Project report
+
+Remember to update [project report](https://www.overleaf.com/project/635675ed670de6ab20ffab7b)
 
