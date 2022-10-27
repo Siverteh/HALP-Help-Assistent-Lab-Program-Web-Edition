@@ -12,7 +12,7 @@ After making changes, stage the changes by running `git add .` or `git add SPECI
 
 - Must **always** be production ready
 - Can **not** be deleted
-- Merges to master must pass peer review 
+- Merges to main must pass peer review 
 - All changes to main must be trough a merge from a branch (due to the above requirement)
 
 ## Branch naming convention
