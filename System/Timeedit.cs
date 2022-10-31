@@ -30,7 +30,7 @@ public class Timeedit
     {
         await Task.Run(() => GetDataLoop(sleepTime * 1000));
     }
-
+    
     /**
      * Starts the manual call to TimeEdit to get retrieve desired data
      */
@@ -127,5 +127,4 @@ public class Timeedit
         await _db.Database.ExecuteSqlRawAsync("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='Courses';");
         await _db.SaveChangesAsync();
     }
-
 }
