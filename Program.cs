@@ -34,6 +34,7 @@ using (var services = app.Services.CreateScope())
     var um = services.ServiceProvider.GetRequiredService<UserManager<StudentUser>>();
     var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     ApplicationDbInitializer.Initialize(db, um, rm);
+    new Timeedit(db).GetData();
 }
 
 // Configure the HTTP request pipeline.
@@ -61,7 +62,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-Timeedit te = new Timeedit();
-te.GetData();
+
+
 
 app.Run();

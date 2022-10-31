@@ -3,11 +3,18 @@ using System.Net;
 using System.Reflection;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
+using OperationCHAN.Data;
+using OperationCHAN.Models;
 
 namespace OperationCHAN;
 
 public class Timeedit
 {
+    private ApplicationDbContext _db;
+    public Timeedit(ApplicationDbContext db)
+    {
+        _db = db;
+    }
     public async void StartLoop()
     {
         await Task.Run(() => GetDataLoop());
@@ -60,16 +67,21 @@ public class Timeedit
         {
             CalendarEvent e = new CalendarEvent();
             e = calendar.Events[i];
-            String fag = e.Name;
-            if (fag.Contains("lab"))
+            String fag = e.Summary;
+            if (fag.ToLower().Contains("lab"))
             {
+                String name = e.Summary;
                 String room = e.Location;
-                String foreleser = e.Description;
                 DateTime date = e.DtStart.Date;
-                var begin = e.DtStart;
-                var end = e.DtEnd;
+                DateTime begin = e.DtStart.Date;
+                DateTime end = e.DtEnd.Date;
                 
+                
+                _db.Courses.Add(new CourseModel(name));
+                await _db.SaveChangesAsync();
+                Console.WriteLine("Here:" + name);
             }
+            Console.WriteLine("Here:After");
         }
     }
 }
