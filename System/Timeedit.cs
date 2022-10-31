@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using OperationCHAN.Data;
@@ -54,7 +55,7 @@ public class Timeedit
     }
 
     static readonly HttpClient client = new HttpClient();
-    async void RunDotNet()
+    public async Task RunDotNet() 
     {
         using HttpResponseMessage response = await client.GetAsync(
                 "https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics");
@@ -72,16 +73,15 @@ public class Timeedit
             {
                 String name = e.Summary;
                 String room = e.Location;
-                DateTime date = e.DtStart.Date;
-                DateTime begin = e.DtStart.Date;
-                DateTime end = e.DtEnd.Date;
+                var begin = e.DtStart.Value;
+                var end = e.DtEnd.Value;
                 
-                
-                _db.Courses.Add(new CourseModel(name));
-                await _db.SaveChangesAsync();
+
                 Console.WriteLine("Here:" + name);
+                await _db.Courses.AddAsync(new CourseModel(name, end, begin, room));
             }
-            Console.WriteLine("Here:After");
+            Console.WriteLine("Here:After:" + i);
         }
+        await _db.SaveChangesAsync();
     }
 }
