@@ -10,6 +10,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         : base(options)
     {
     }
-    
-    public DbSet<>
+
+    public DbSet<CourseModel> Courses => Set<CourseModel>();
 }
