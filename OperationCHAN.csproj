@@ -30,4 +30,15 @@
         <PackageReference Include="Npgsql" Version="6.0.7" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\.gitignore" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\bower.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\index-svg.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\index.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\index.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\jquery.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\LICENSE" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\README.md" />
+    </ItemGroup>
+
 </Project>
