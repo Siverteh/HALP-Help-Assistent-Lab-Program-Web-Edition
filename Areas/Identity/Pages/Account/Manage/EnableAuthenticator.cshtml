@@ -5,7 +5,6 @@
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
 
-
 <h3>@ViewData["Title"]</h3>
 <div>
     <p>To use an authenticator app go through the following steps:</p>
@@ -22,6 +21,7 @@
         </li>
         <li>
             <p>Scan the QR Code or enter this key <kbd>@Model.SharedKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
+
             <div id="qrCode"></div>
             <div id="qrCodeData" data-url="@Model.AuthenticatorUri"></div>
         </li>
@@ -34,7 +34,8 @@
                 <div class="col-md-6">
                     <form id="send-code" method="post">
                         <div class="form-floating">
-                            <input asp-for="Input.Code" class="form-control" autocomplete="off"/>
+
+                            <input asp-for="Input.Code" class="form-control" autocomplete="off" />
                             <label asp-for="Input.Code" class="control-label form-label">Verification Code</label>
                             <span asp-validation-for="Input.Code" class="text-danger"></span>
                         </div>
