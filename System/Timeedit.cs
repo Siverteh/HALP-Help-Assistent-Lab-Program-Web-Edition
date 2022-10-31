@@ -56,13 +56,20 @@ public class Timeedit
 
         var calendar = Calendar.Load(responseBody);
 
-        var events = calendar.Events.ToList();
-        
         for (int i = 0; i < calendar.Events.Count; i++)
         {
             CalendarEvent e = new CalendarEvent();
             e = calendar.Events[i];
-            Console.WriteLine(calendar.Events[i]);
+            String fag = e.Name;
+            if (fag.Contains("lab"))
+            {
+                String room = e.Location;
+                String foreleser = e.Description;
+                DateTime date = e.DtStart.Date;
+                var begin = e.DtStart;
+                var end = e.DtEnd;
+                
+            }
         }
     }
 }
