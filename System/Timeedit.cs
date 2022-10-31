@@ -127,4 +127,5 @@ public class Timeedit
         await _db.Database.ExecuteSqlRawAsync("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='Courses';");
         await _db.SaveChangesAsync();
     }
+
 }
