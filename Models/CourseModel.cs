@@ -6,12 +6,37 @@ public class CourseModel
 {
     public CourseModel(){}
 
-    public CourseModel(string courseCode, DateTime courseEnd, DateTime courseStart, string courseRoom1)
+    public CourseModel(string courseCode, DateTime courseEnd, DateTime courseStart, string courseRooms)
     {
-        CourseCode = courseCode;
+        var code = courseCode.Split(',');
+        CourseCode = code[0];
+        
         CourseStart = courseStart;
         CourseEnd = courseEnd;
-        CourseRoom1 = courseRoom1;
+
+        var courseRoom = courseRooms.Split(',', '/');
+
+        for (int i = 0; i < courseRoom.Length; i++)
+        {
+            if (courseRoom[i].Contains("GRM"))
+            {
+                if (courseRoom[i][0] == ' ')
+                {
+                    courseRoom[i] = courseRoom[i].Remove(0, 1);
+                }
+            }
+            else
+            {
+                var tmp = courseRoom[i-1].Substring(0, 7);
+                courseRoom[i] = tmp + courseRoom[i];
+            }
+        }
+        
+        CourseRoom1 = courseRoom[0];
+        if (courseRoom.Length > 1) CourseRoom2 = courseRoom[1];
+        if (courseRoom.Length > 2) CourseRoom3 = courseRoom[2];
+        if (courseRoom.Length > 3) CourseRoom4 = courseRoom[3];
+        
     }
     
     public int Id { get; set; }
@@ -31,8 +56,4 @@ public class CourseModel
     
     //[Required]
     public DateTime CourseEnd { get; set; }
-    
-    public int Age { get; set; }
-    
-    
 }
