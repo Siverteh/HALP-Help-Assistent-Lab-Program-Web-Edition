@@ -24,6 +24,7 @@ builder.Services.Configure<IdentityOptions>(opts =>
 });
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 var app = builder.Build();
 
