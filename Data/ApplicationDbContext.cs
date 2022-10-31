@@ -12,4 +12,5 @@ public class ApplicationDbContext : IdentityDbContext<StudentUser>
     }
 
     public DbSet<CourseModel> Courses => Set<CourseModel>();
+
 }
