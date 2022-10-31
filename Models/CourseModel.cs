@@ -6,17 +6,17 @@ public class CourseModel
 {
     public CourseModel(){}
 
-    public CourseModel(string courseCode)
+    public CourseModel(string courseCode, DateTime courseEnd, DateTime courseStart, string courseRoom1)
     {
         CourseCode = courseCode;
-        //CourseStart = couseStart;
-        //CourseEnd = courseEnd;
-        //CourseRoom1 = courseRooms;
+        CourseStart = courseStart;
+        CourseEnd = courseEnd;
+        CourseRoom1 = courseRoom1;
     }
     
     public int Id { get; set; }
     
-    [Required]
+    //[Required]
     public string CourseCode { get; set; } = String.Empty;
     
     [Required]
@@ -26,10 +26,10 @@ public class CourseModel
     public string CourseRoom4 { get; set; } = String.Empty;
     
     
-    [Required]
+    //[Required]
     public DateTime CourseStart { get; set; }
     
-    [Required]
+    //[Required]
     public DateTime CourseEnd { get; set; }
     
     public int Age { get; set; }
