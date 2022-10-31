@@ -6,12 +6,12 @@ public class CourseModel
 {
     public CourseModel(){}
 
-    public CourseModel(string courseCode, string courseRooms, DateTime couseStart, DateTime courseEnd)
+    public CourseModel(string courseCode)
     {
         CourseCode = courseCode;
-        CourseStart = couseStart;
-        CourseEnd = courseEnd;
-        CourseRoom1 = courseRooms;
+        //CourseStart = couseStart;
+        //CourseEnd = courseEnd;
+        //CourseRoom1 = courseRooms;
     }
     
     public int Id { get; set; }
