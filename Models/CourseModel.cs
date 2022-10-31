@@ -16,7 +16,6 @@ public class CourseModel
         if (courseRooms.Length > 1) CourseRoom2 = courseRooms[1];
         if (courseRooms.Length > 2) CourseRoom3 = courseRooms[2];
         if (courseRooms.Length > 3) CourseRoom4 = courseRooms[3];
-        
     }
 
     public int Id { get; set; }

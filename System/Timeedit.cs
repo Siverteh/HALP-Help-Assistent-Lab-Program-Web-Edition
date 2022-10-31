@@ -79,6 +79,7 @@ public class Timeedit
                 var end = e.DtEnd.Value;
                 await _db.Courses.AddAsync(new CourseModel(courseCode, end, begin, rooms));
             }
+            Console.WriteLine("Here:After");
         }
         await _db.SaveChangesAsync();
     }
