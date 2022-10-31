@@ -5,7 +5,7 @@ namespace OperationCHAN.Models;
 public class CourseModel
 {
     public CourseModel(){}
-    
+
     public CourseModel(string courseCode, DateTime labEnd, DateTime labStart, string[] courseRooms)
     {
         CourseCode = courseCode;
@@ -32,7 +32,7 @@ public class CourseModel
     
     //[Required]
     public DateTime LabStart { get; set; }
-    
+
     //[Required]
     public DateTime LabEnd { get; set; }
 

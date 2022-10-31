@@ -50,7 +50,7 @@ public class Timeedit
             Thread.Sleep(sleepTime);
         }
     }
-    
+
     /**
      * Makes a call to TimeEdit, gets the .ics file,
      * and puts the data into the database
@@ -79,7 +79,7 @@ public class Timeedit
                 var end = e.DtEnd.Value;
                 await _db.Courses.AddAsync(new CourseModel(courseCode, end, begin, rooms));
             }
-            Console.WriteLine("Here:After");
+            Console.WriteLine("Here:After:" + i);
         }
         await _db.SaveChangesAsync();
     }
