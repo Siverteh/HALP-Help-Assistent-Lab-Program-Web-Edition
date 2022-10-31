@@ -60,6 +60,8 @@ public class Timeedit
         
         for (int i = 0; i < calendar.Events.Count; i++)
         {
+            CalendarEvent e = new CalendarEvent();
+            e = calendar.Events[i];
             Console.WriteLine(calendar.Events[i]);
         }
     }
