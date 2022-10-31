@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Areas.Identity.Services;
+using OperationCHAN;
 using OperationCHAN.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,5 +60,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+Timeedit te = new Timeedit();
+te.StartLoop();
 
 app.Run();
