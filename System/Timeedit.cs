@@ -1,4 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Net;
+using System.Reflection;
+using Ical.Net;
+using Ical.Net.CalendarComponents;
 
 namespace OperationCHAN;
 
@@ -11,7 +15,7 @@ public class Timeedit
 
     public void GetData()
     {
-        RunPython();
+        RunDotNet();
     }
 
     void GetDataLoop()
@@ -25,10 +29,10 @@ public class Timeedit
 
     void RunPython()
     {
-        String path =
-            "C:/Users/nikol/OneDrive/SKULE/Universitet/Semester 3/IKT201-G Internettjenester/Prosjekt/chan/System/Script/timeedit.py";
+        var p = System.AppContext.BaseDirectory;
+        String path = "/System/Script/timeedit.py";
         ProcessStartInfo start = new ProcessStartInfo();
-        start.FileName = "my/full/path/to/python.exe";
+        start.FileName = "python.exe";
         start.Arguments = string.Format(path);
         start.UseShellExecute = false;
         start.RedirectStandardOutput = true;
@@ -39,6 +43,24 @@ public class Timeedit
                 string result = reader.ReadToEnd();
                 Console.Write(result);
             }
+        }
+    }
+
+    static readonly HttpClient client = new HttpClient();
+    async void RunDotNet()
+    {
+        using HttpResponseMessage response = await client.GetAsync(
+                "https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics");
+        
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        var calendar = Calendar.Load(responseBody);
+
+        var events = calendar.Events.ToList();
+        
+        for (int i = 0; i < calendar.Events.Count; i++)
+        {
+            Console.WriteLine(calendar.Events[i]);
         }
     }
 }
