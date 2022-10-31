@@ -62,6 +62,6 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 Timeedit te = new Timeedit();
-te.StartLoop();
+te.GetData();
 
 app.Run();
