@@ -30,7 +30,7 @@ public class Timeedit
     {
         await Task.Run(() => GetDataLoop(sleepTime * 1000));
     }
-    
+
     /**
      * Starts the manual call to TimeEdit to get retrieve desired data
      */
@@ -50,7 +50,7 @@ public class Timeedit
             Thread.Sleep(sleepTime);
         }
     }
-
+    
     /**
      * Makes a call to TimeEdit, gets the .ics file,
      * and puts the data into the database
