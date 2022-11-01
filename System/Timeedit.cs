@@ -25,28 +25,28 @@ public class Timeedit
     /**
      * Starts the loop to get data from TimeEdit
      */
-    public async void StartLoop()
+    public async Task StartLoop(int sleepTime = 2000)
     {
-        await Task.Run(() => GetDataLoop());
+        await Task.Run(() => GetDataLoop(sleepTime));
     }
 
     /**
      * Starts the manual call to TimeEdit to get retrieve desired data
      */
-    public void GetData()
+    public async Task GetData()
     {
-        GetDataFromTimeEdit();
+        await GetDataFromTimeEdit();
     }
 
     /**
      * Private method that invokes the update method for TimeEdit regularly
      */
-    void GetDataLoop()
+    private async Task GetDataLoop(int sleepTime)
     {
         while (true)
         {
-            GetDataFromTimeEdit();
-            Thread.Sleep(2000);
+            await GetDataFromTimeEdit();
+            Thread.Sleep(sleepTime);
         }
     }
     
@@ -54,8 +54,10 @@ public class Timeedit
      * Makes a call to TimeEdit, gets the .ics file,
      * and puts the data into the database
      */
-    public async Task GetDataFromTimeEdit()
+    private async Task GetDataFromTimeEdit()
     {
+        await EmptyTable();
+        
         using HttpResponseMessage response = await client.GetAsync(
                 "https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics");
         
@@ -74,7 +76,6 @@ public class Timeedit
                 string[] rooms = ProcessRooms(e.Location);
                 var begin = e.DtStart.Value;
                 var end = e.DtEnd.Value;
-                
                 await _db.Courses.AddAsync(new CourseModel(courseCode, end, begin, rooms));
             }
         }
@@ -84,7 +85,7 @@ public class Timeedit
     /**
      * Extract the course code from the string retrieved from TimeEdit
      */
-    string GetCourseCode(string course)
+    private string GetCourseCode(string course)
     {
         var code = course.Split(',');
         return code[0];
@@ -93,7 +94,7 @@ public class Timeedit
     /**
      * Turn the string of given rooms into an array
      */
-    string[] ProcessRooms(string rooms)
+    private string[] ProcessRooms(string rooms)
     {
         var courseRooms = rooms.Split(',', '/');
 
@@ -114,5 +115,14 @@ public class Timeedit
         }
 
         return courseRooms;
+    }
+
+    /**
+     * Empty the table so it is ready for new TimeEdit data
+     */
+    private async Task EmptyTable()
+    {
+        _db.Courses.RemoveRange(_db.Courses.ToList());
+        await _db.SaveChangesAsync();
     }
 }
