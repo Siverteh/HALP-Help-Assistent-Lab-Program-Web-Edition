@@ -124,6 +124,7 @@ public class Timeedit
     private async Task EmptyTable()
     {
         _db.Courses.RemoveRange(_db.Courses.ToList());
+
         await _db.Database.ExecuteSqlRawAsync("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='Courses';");
         await _db.SaveChangesAsync();
     }
