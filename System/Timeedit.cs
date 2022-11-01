@@ -54,7 +54,7 @@ public class Timeedit
      * Makes a call to TimeEdit, gets the .ics file,
      * and puts the data into the database
      */
-    public async Task GetDataFromTimeEdit() 
+    public async Task GetDataFromTimeEdit()
     {
         using HttpResponseMessage response = await client.GetAsync(
                 "https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics");
@@ -67,20 +67,52 @@ public class Timeedit
         {
             CalendarEvent e = new CalendarEvent();
             e = calendar.Events[i];
-            String fag = e.Summary;
+            string fag = e.Summary;
             if (fag.ToLower().Contains("lab") || fag.ToLower().Contains("øving"))
             {
-                String name = e.Summary;
-                String rooms = e.Location;
+                string courseCode = GetCourseCode(e.Summary);
+                string[] rooms = ProcessRooms(e.Location);
                 var begin = e.DtStart.Value;
                 var end = e.DtEnd.Value;
                 
-
-                Console.WriteLine("Here:" + name);
-                await _db.Courses.AddAsync(new CourseModel(name, end, begin, rooms));
+                await _db.Courses.AddAsync(new CourseModel(courseCode, end, begin, rooms));
             }
-            Console.WriteLine("Here:After:" + i);
         }
         await _db.SaveChangesAsync();
+    }
+
+    /**
+     * Extract the course code from the string retrieved from TimeEdit
+     */
+    string GetCourseCode(string course)
+    {
+        var code = course.Split(',');
+        return code[0];
+    }
+
+    /**
+     * Turn the string of given rooms into an array
+     */
+    string[] ProcessRooms(string rooms)
+    {
+        var courseRooms = rooms.Split(',', '/');
+
+        for (int i = 0; i < courseRooms.Length; i++)
+        {
+            if (courseRooms[i].Contains("GRM"))
+            {
+                if (courseRooms[i][0] == ' ')
+                {
+                    courseRooms[i] = courseRooms[i].Remove(0, 1);
+                }
+            }
+            else
+            {
+                var tmp = courseRooms[i-1].Substring(0, 7);
+                courseRooms[i] = tmp + courseRooms[i];
+            }
+        }
+
+        return courseRooms;
     }
 }
