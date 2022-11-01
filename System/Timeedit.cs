@@ -68,16 +68,16 @@ public class Timeedit
             CalendarEvent e = new CalendarEvent();
             e = calendar.Events[i];
             String fag = e.Summary;
-            if (fag.ToLower().Contains("lab"))
+            if (fag.ToLower().Contains("lab") || fag.ToLower().Contains("øving"))
             {
                 String name = e.Summary;
-                String room = e.Location;
+                String rooms = e.Location;
                 var begin = e.DtStart.Value;
                 var end = e.DtEnd.Value;
                 
 
                 Console.WriteLine("Here:" + name);
-                await _db.Courses.AddAsync(new CourseModel(name, end, begin, room));
+                await _db.Courses.AddAsync(new CourseModel(name, end, begin, rooms));
             }
             Console.WriteLine("Here:After:" + i);
         }
