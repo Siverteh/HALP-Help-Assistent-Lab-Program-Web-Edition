@@ -12,50 +12,49 @@ namespace OperationCHAN;
 public class Timeedit
 {
     private ApplicationDbContext _db;
+    static readonly HttpClient client = new HttpClient();
+    
+    /**
+     * Initialize the TimeEdit class
+     */
     public Timeedit(ApplicationDbContext db)
     {
         _db = db;
     }
+    
+    /**
+     * Starts the loop to get data from TimeEdit
+     */
     public async void StartLoop()
     {
         await Task.Run(() => GetDataLoop());
     }
 
+    /**
+     * Starts the manual call to TimeEdit to get retrieve desired data
+     */
     public void GetData()
     {
-        RunDotNet();
+        GetDataFromTimeEdit();
     }
 
+    /**
+     * Private method that invokes the update method for TimeEdit regularly
+     */
     void GetDataLoop()
     {
         while (true)
         {
-            Console.WriteLine("Test");
+            GetDataFromTimeEdit();
             Thread.Sleep(2000);
         }
     }
-
-    void RunPython()
-    {
-        var p = System.AppContext.BaseDirectory;
-        String path = "/System/Script/timeedit.py";
-        ProcessStartInfo start = new ProcessStartInfo();
-        start.FileName = "python.exe";
-        start.Arguments = string.Format(path);
-        start.UseShellExecute = false;
-        start.RedirectStandardOutput = true;
-        using(Process process = Process.Start(start))
-        {
-            using(StreamReader reader = process.StandardOutput)
-            {
-                string result = reader.ReadToEnd();
-                Console.Write(result);
-            }
-        }
-    }
-
-    static readonly HttpClient client = new HttpClient();
-    public async Task RunDotNet() 
+    
+    /**
+     * Makes a call to TimeEdit, gets the .ics file,
+     * and puts the data into the database
+     */
+    public async Task GetDataFromTimeEdit() 
     {
         using HttpResponseMessage response = await client.GetAsync(
                 "https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics");
