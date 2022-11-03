@@ -6,11 +6,11 @@ public class CourseModel
 {
     public CourseModel(){}
 
-    public CourseModel(string courseCode, DateTime courseEnd, DateTime courseStart, string[] courseRooms)
+    public CourseModel(string courseCode, DateTime labEnd, DateTime labStart, string[] courseRooms)
     {
         CourseCode = courseCode;
-        CourseStart = courseStart;
-        CourseEnd = courseEnd;
+        LabStart = labStart;
+        LabEnd = labEnd;
 
         CourseRoom1 = courseRooms[0];
         if (courseRooms.Length > 1) CourseRoom2 = courseRooms[1];
@@ -32,8 +32,8 @@ public class CourseModel
     
     
     //[Required]
-    public DateTime CourseStart { get; set; }
+    public DateTime LabStart { get; set; }
     
     //[Required]
-    public DateTime CourseEnd { get; set; }
+    public DateTime LabEnd { get; set; }
 }
