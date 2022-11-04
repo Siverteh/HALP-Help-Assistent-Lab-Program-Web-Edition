@@ -34,8 +34,6 @@ using (var services = app.Services.CreateScope())
     var um = services.ServiceProvider.GetRequiredService<UserManager<StudentUser>>();
     var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     ApplicationDbInitializer.Initialize(db, um, rm);
-    //Timeedit t = new Timeedit(db);
-    //t.GetData();
 }
 
 
@@ -64,7 +62,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-new Timeedit( app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).GetData();
-
+new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
 
 app.Run();

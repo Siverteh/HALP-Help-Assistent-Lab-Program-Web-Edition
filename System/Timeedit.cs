@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
+using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
 
@@ -25,9 +26,9 @@ public class Timeedit
     /**
      * Starts the loop to get data from TimeEdit
      */
-    public async Task StartLoop(int sleepTime = 2000)
+    public async Task StartLoop(int sleepTime = 60*60*24)
     {
-        await Task.Run(() => GetDataLoop(sleepTime));
+        await Task.Run(() => GetDataLoop(sleepTime * 1000));
     }
 
     /**
@@ -123,6 +124,7 @@ public class Timeedit
     private async Task EmptyTable()
     {
         _db.Courses.RemoveRange(_db.Courses.ToList());
+        await _db.Database.ExecuteSqlRawAsync("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='Courses';");
         await _db.SaveChangesAsync();
     }
 }
