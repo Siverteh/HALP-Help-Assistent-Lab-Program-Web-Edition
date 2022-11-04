@@ -10,4 +10,7 @@ public class ApplicationDbContext : IdentityDbContext<StudentUser>
         : base(options)
     {
     }
+
+    public DbSet<CourseModel> Courses => Set<CourseModel>();
+
 }
