@@ -18,7 +18,7 @@ public class CourseModel
         if (courseRooms.Length > 3) CourseRoom4 = courseRooms[3];
         
     }
-    
+
     public int Id { get; set; }
     
     //[Required]
