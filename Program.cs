@@ -63,5 +63,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
-
+Console.WriteLine("here");
 app.Run();
