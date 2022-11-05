@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OperationCHAN.Models;
 
@@ -18,7 +19,13 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize(AuthenticationSchemes = "Discord")]
     public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    public IActionResult DiscordAuthFailed()
     {
         return View();
     }

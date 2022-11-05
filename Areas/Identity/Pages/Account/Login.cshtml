@@ -7,40 +7,41 @@
 
 <div class="box">
     <div class="text-center">
-            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <h1 class="text-white mb-4 mt-5">Log in</h1>
-                
-                <div class="container">
-                    
-                    <div class="row mb-4 justify-content-md-center">
-                        <div class="col col-sm-12 col-md-6">
-                            <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" placeholder="Email" aria-required="true"/>
-                            <span asp-validation-for="Input.Email" class="text-danger"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="row mb-4 justify-content-md-center">
-                        <div class="col col-sm-12 col-md-6">
-                            <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="current-password" placeholder="Password" aria-required="true"/>
-                            <span asp-validation-for="Input.Password" class="text-danger"></span>
-                        </div>
-                    </div>
-                    
-                    <button id="registerSubmit" type="submit" class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Log in</button>
-                    
-                    <div class="mb-2 col-sm-12">
-                        <a id="forgot-password" class="text-white text-decoration-none" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </div>
-                    
-                    <div class="mb-2 mb-2 col-sm-12">
-                        <a asp-page="./Register" class="text-white text-decoration-none" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </div>
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h1 class="text-white mb-4 mt-5">Log in</h1>
 
+            <div class="container">
+
+                <div class="row mb-4 justify-content-md-center">
+                    <div class="col col-sm-12 col-md-6">
+                        <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" placeholder="Email" aria-required="true"/>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
                 </div>
-            </form>
+
+
+                <div class="row mb-4 justify-content-md-center">
+                    <div class="col col-sm-12 col-md-6">
+                        <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="current-password" placeholder="Password" aria-required="true"/>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <button id="registerSubmit" type="submit" class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Log in</button>
+
+                <div class="mb-2 col-sm-12">
+                    <a id="forgot-password" class="text-white text-decoration-none" asp-page="./ForgotPassword">Forgot your password?</a>
+                </div>
+
+                <div class="mb-2 mb-2 col-sm-12">
+                    <a asp-page="./Register" class="text-white text-decoration-none" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                </div>
+
+            </div>
+        </form>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }
