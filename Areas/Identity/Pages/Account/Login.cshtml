@@ -18,13 +18,6 @@
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                 </div>
-                
-                <div class="discordLogin">
-                    <form action="/signin">
-                        <input type="submit" value="Login with Discord!"/>
-                    </form>
-                </div>
-
 
                 <div class="row mb-4 justify-content-md-center">
                     <div class="col col-sm-12 col-md-6">
@@ -45,6 +38,25 @@
 
             </div>
         </form>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Use another service to log in.</h3>
+            <hr/>
+            @{
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div>
+                        <p>
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            }
+                        </p>
+                    </div>
+                </form>
+
+            }
+        </section>
     </div>
 </div>
 
