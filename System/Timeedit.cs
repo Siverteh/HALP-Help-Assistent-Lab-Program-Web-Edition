@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using Ical.Net;
+﻿using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Data;

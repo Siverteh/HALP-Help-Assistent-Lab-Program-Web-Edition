@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -8,6 +7,7 @@ namespace OperationCHAN.Areas.Identity.Services;
 public class EmailSender : IEmailSender
 {
     private readonly ILogger _logger;
+
     public EmailSender(ILogger<EmailSender> logger)
     {
         _logger = logger;
@@ -24,14 +24,13 @@ public class EmailSender : IEmailSender
             HtmlContent = message
         };
         msg.AddTo(new EmailAddress(toEmail));
-        
+
         msg.SetClickTracking(false, false);
         var response = await client.SendEmailAsync(msg);
-        
+
         // ReSharper disable once TemplateIsNotCompileTimeConstantProblem
         _logger.LogInformation(response.IsSuccessStatusCode
             ? $"Email to {toEmail} queued successfully!"
             : $"Failure Email to {toEmail}");
     }
 }
-    
