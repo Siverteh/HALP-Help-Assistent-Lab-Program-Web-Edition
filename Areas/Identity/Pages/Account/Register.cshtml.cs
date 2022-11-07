@@ -80,7 +80,6 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
             
-            [Required]
             [Display(Name = "Discord tag")]
             public string DiscordTag { get; set; }
             
