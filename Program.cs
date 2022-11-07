@@ -1,3 +1,9 @@
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text.Json;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using OperationCHAN.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -19,12 +25,19 @@ builder.Services.AddDefaultIdentity<StudentUser>(options => options.SignIn.Requi
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.Configure<IdentityOptions>(opts =>
-{
-    opts.SignIn.RequireConfirmedEmail = true;
-});
+builder.Services.Configure<IdentityOptions>(opts => { opts.SignIn.RequireConfirmedEmail = true; });
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+builder.Services.AddAuthentication().AddDiscord(options =>
+{
+    options.Scope.Add("identify");
+    options.Scope.Add("email");
+    options.ClientId = "1037686187588067419";
+    options.ClientSecret = "SIenibsqkRxwigs_ChMg41OmmqOxjS2v";
+    options.SaveTokens = true;
+    options.AccessDeniedPath = "/Home/DiscordAuthFailed";
+});
 
 var app = builder.Build();
 
@@ -65,4 +78,3 @@ app.MapRazorPages();
 new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
 
 app.Run();
-
