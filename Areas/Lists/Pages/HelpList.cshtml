@@ -1,0 +1,54 @@
+﻿@page
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model OperationCHAN.Areas.List.HelpListModel
+
+@{
+    ViewData["Title"] = "Lab Queue";
+}
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - OperationCHAN</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/helplist.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/OperationCHAN.styles.css" asp-append-version="true"/>
+</head>
+<body>
+<div class="navbar d-flex flex-row">
+    
+    <div class="col-sm" id="queue-title">Lab Queue</div>
+
+    <div class="col-sm d-flex flex-row-reverse" id="form">
+        <form class="form-inline" asp-area="Identity" asp-page="/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+            <button type="submit" class="btn btn-link text-white text-decoration-none">Settings</button>
+        </form>
+        
+        <form class="form-inline" asp-area="Identity" asp-page="/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+            <button type="submit" class="btn btn-link text-white text-decoration-none">Archive</button>
+        </form>
+    </div>
+
+</div>
+<table>
+    <tr>
+        <th>Nickname</th>
+        <th>Description</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td>Sondre</td>
+        <td>Test desc</td>
+        <td>Finished</td>
+    </tr>
+    <tr>
+        <td>Markus</td>
+        <td>Test desc 2</td>
+        <td>Waiting</td>
+    </tr>
+</table> 
+
+
+
+</body>
