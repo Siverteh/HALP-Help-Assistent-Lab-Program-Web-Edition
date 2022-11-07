@@ -1,5 +1,4 @@
 ﻿using Ical.Net;
-using Ical.Net.CalendarComponents;
 using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
@@ -8,8 +7,8 @@ namespace OperationCHAN;
 
 public class Timeedit
 {
-    private ApplicationDbContext _db;
-    static readonly HttpClient client = new HttpClient();
+    private readonly ApplicationDbContext _db;
+    private static readonly HttpClient Client = new HttpClient();
     
     /**
      * Initialize the TimeEdit class
@@ -55,26 +54,25 @@ public class Timeedit
     {
         await EmptyTable();
         
-        using HttpResponseMessage response = await client.GetAsync(
+        using var response = await Client.GetAsync(
                 "https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics");
         
-        string responseBody = await response.Content.ReadAsStringAsync();
+        var responseBody = await response.Content.ReadAsStringAsync();
 
         var calendar = Calendar.Load(responseBody);
 
-        for (int i = 0; i < calendar.Events.Count; i++)
+        foreach (var data in calendar.Events)
         {
-            CalendarEvent e = new CalendarEvent();
-            e = calendar.Events[i];
-            string fag = e.Summary;
-            if (fag.ToLower().Contains("lab") || fag.ToLower().Contains("øving"))
-            {
-                string courseCode = GetCourseCode(e.Summary);
-                string[] rooms = ProcessRooms(e.Location);
-                var begin = e.DtStart.Value;
-                var end = e.DtEnd.Value;
-                await _db.Courses.AddAsync(new CourseModel(courseCode, end, begin, rooms));
-            }
+            var fag = data.Summary;
+            if (!(fag.ToLower().Contains("lab") || fag.ToLower().Contains("øving"))) continue;
+            if (DateTime.Now.Date > data.DtStart.Value) continue;
+
+            
+            var courseCode = GetCourseCode(data.Summary);
+            var rooms = ProcessRooms(data.Location);
+            var begin = data.DtStart.Value + TimeSpan.FromHours(1);
+            var end = data.DtEnd.Value + TimeSpan.FromHours(1);
+            await _db.Courses.AddAsync(new CourseModel(courseCode, end, begin, rooms));
         }
         await _db.SaveChangesAsync();
     }
@@ -82,7 +80,7 @@ public class Timeedit
     /**
      * Extract the course code from the string retrieved from TimeEdit
      */
-    private string GetCourseCode(string course)
+    private static string GetCourseCode(string course)
     {
         var code = course.Split(',');
         return code[0];
@@ -91,11 +89,11 @@ public class Timeedit
     /**
      * Turn the string of given rooms into an array
      */
-    private string[] ProcessRooms(string rooms)
+    private static string[] ProcessRooms(string rooms)
     {
         var courseRooms = rooms.Split(',', '/');
 
-        for (int i = 0; i < courseRooms.Length; i++)
+        for (var i = 0; i < courseRooms.Length; i++)
         {
             if (courseRooms[i].Contains("GRM"))
             {
@@ -106,7 +104,7 @@ public class Timeedit
             }
             else
             {
-                var tmp = courseRooms[i-1].Substring(0, 7);
+                var tmp = courseRooms[i - 1][0..7];
                 courseRooms[i] = tmp + courseRooms[i];
             }
         }
