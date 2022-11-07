@@ -39,6 +39,25 @@
             </div>
         </form>
     </div>
+    <br/>
+    <div class="mb-2 mb-2 col-sm-12" style="margin: auto; text-align: center">
+        <section>
+            <h3>Use another service to log in.</h3>
+            <hr/>
+            @{
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div>
+                        <p>
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            }
+                        </p>
+                    </div>
+                </form>
+            }
+        </section>
+    </div>
 </div>
 
 @section Scripts {
