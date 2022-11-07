@@ -1,5 +1,4 @@
-﻿
-using OperationCHAN.Models;
+﻿using OperationCHAN.Models;
 using Microsoft.AspNetCore.Identity;
 using OperationCHAN.Data;
 

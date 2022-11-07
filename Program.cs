@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Areas.Identity.Services;
+using OperationCHAN;
 using OperationCHAN.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,7 @@ using (var services = app.Services.CreateScope())
     ApplicationDbInitializer.Initialize(db, um, rm);
 }
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -60,4 +62,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
+
 app.Run();
+
