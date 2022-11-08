@@ -1,15 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using OperationCHAN.Data;
+using OperationCHAN.Models;
 
-namespace OperationCHAN.Areas.List;
+namespace OperationCHAN.Areas.Lists.Pages;
 
-public class HelpListModel : PageModel
+public class HelpList : PageModel
 {
-    public void OnGet()
+    private readonly ApplicationDbContext _db;
+
+    public IEnumerable<HelplistModel> ListItems { get; set; }
+
+    public HelpList(ApplicationDbContext db)
     {
-        Console.WriteLine("Yay");
+        _db = db;
     }
     
-    public HelpListModel(){}
-    
-    public string ReturnUrl { get; set; }
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        var entry = _db.HelpList.ToList();
+
+        ListItems = entry;
+
+        return Page();
+    }
+
+    public string? ReturnUrl { get; set; }
 }
