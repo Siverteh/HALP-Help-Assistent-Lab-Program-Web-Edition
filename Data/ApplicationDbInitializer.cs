@@ -25,8 +25,37 @@ namespace OperationCHAN.Data
             um.CreateAsync(admin, "Password1.").Wait();
             um.AddToRoleAsync(admin, "Admin").Wait();
             um.CreateAsync(user, "Password1.").Wait();
+            
+            InitializeHelplist(db);
 
             db.SaveChanges(); 
+        }
+
+        public static void InitializeHelplist(ApplicationDbContext db)
+        {
+            db.HelpList.Add(new HelplistModel
+            {
+                Nickname = "Nikolai",
+                Room = "A2036",
+                Description = "How do I C?",
+                Status = "Finished"
+            });
+            
+            db.HelpList.Add(new HelplistModel
+            {
+                Nickname = "Sondre",
+                Room = "A2040",
+                Description = "What do Spanish programmers code in? Si ++",
+                Status = "Waiting"
+            });
+            
+            db.HelpList.Add(new HelplistModel
+            {
+                Nickname = "Markus",
+                Room = "A3092",
+                Description = "Why is my dog so cute?",
+                Status = "Waiting"
+            });
         }
     }
 }

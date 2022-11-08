@@ -1,6 +1,5 @@
 ﻿@page
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@model OperationCHAN.Areas.List.HelpListModel
+@model OperationCHAN.Areas.Lists.Pages.HelpList
 
 @{
     ViewData["Title"] = "Lab Queue";
@@ -13,7 +12,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/helplist.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/OperationCHAN.styles.css" asp-append-version="true"/>
 </head>
 <body>
 <div class="navbar d-flex flex-row">
@@ -37,16 +35,16 @@
         <th>Description</th>
         <th>Status</th>
     </tr>
-    <tr>
-        <td>Sondre</td>
-        <td>Test desc</td>
-        <td>Finished</td>
-    </tr>
-    <tr>
-        <td>Markus</td>
-        <td>Test desc 2</td>
-        <td>Waiting</td>
-    </tr>
+    @{
+        foreach (var entry in Model.ListItems)
+        {
+            <tr>
+                <td>@Html.DisplayFor(item => entry.Nickname)</td>
+                <td>@Html.DisplayFor(item => entry.Description)</td>
+                <td>@Html.DisplayFor(item => entry.Status)</td>
+            </tr>
+        }
+    }
 </table> 
 
 
