@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Areas.Identity.Services;
 using OperationCHAN;
 using OperationCHAN.Models;
+using Microsoft.AspNetCore.ResponseCompression;
+using OperationCHAN.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,8 @@ builder.Services.Configure<IdentityOptions>(opts =>
 });
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -61,6 +65,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+app.MapHub<HelplistHub>("/chatHub");
+
 
 // Route added for debugging purposes, to see all available endpoints
 app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>

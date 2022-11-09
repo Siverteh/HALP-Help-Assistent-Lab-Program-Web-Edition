@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
 
@@ -17,11 +16,18 @@ public class HelpList : PageModel
         _db = db;
     }
     
+    /// <summary>
+    /// The method run to load the page
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<IActionResult> OnGetAsync(int? id)
     {
-        var entry = _db.HelpList.ToList();
+        // Get all the entries in the Helplist for sending
+        var entries = _db.HelpList.ToList();
 
-        ListItems = entry;
+        // Place all entries into the global variable accessible to the cshtml
+        ListItems = entries;
 
         return Page();
     }
