@@ -4,8 +4,9 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
-connection.invoke("SendMessage", "Test", "This is a test", "C2036").catch(function (err) {
-    return console.error(err.toString());
+// Receive message
+connection.on("ReceiveMessage", (nickname, description, room) => {
+    insertCell(nickname, description, room)
 });
 
 // Inserts a new cell into the table
