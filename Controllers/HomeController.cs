@@ -1,41 +1,26 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OperationCHAN.Data;
 using OperationCHAN.Models;
 
 namespace OperationCHAN.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ApplicationDbContext _db;
-    public HomeController(ApplicationDbContext db)
+    private readonly ILogger<HomeController> _logger;
+
+    public HomeController(ILogger<HomeController> logger)
     {
-        _db = db;
+        _logger = logger;
     }
 
-    [HttpGet]
     public IActionResult Index()
     {
-        return View(new TicketModel());
-    }
-    
-    [HttpPost]
-    public IActionResult Index(TicketModel ticket)
-    {
-        if (!ModelState.IsValid)
-            return View(ticket);
-
-        var date = new DateTime().ToString("dd/MM/yyyy hh:mm");
-        ticket.DateTime = Convert.ToDateTime(date);
-        _db.Tickets.Add(ticket);
-        _db.SaveChanges();
-        
-        return RedirectToAction(nameof(Index));
+        return View();
     }
 
-    
     [Authorize(AuthenticationSchemes = "Discord")]
+
     public IActionResult DiscordAuthFailed()
     {
         return View();

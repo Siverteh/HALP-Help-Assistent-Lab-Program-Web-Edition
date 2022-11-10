@@ -1,47 +1,82 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@using OperationCHAN.Models
+@inject SignInManager<StudentUser> SignInManager
 @model OperationCHAN.Areas.Ticket.Pages.Create
 
 @{
     ViewData["Title"] = "Create ticket";
 }
-<div class="box">
+<div class="box" xmlns="http://www.w3.org/1999/html">
     <div class="text-center">
-        <form method="post">
-            <h1 class="text-white mb-4 mt-5">New ticket</h1>
+        <h1 class="text-white mb-4 mt-5">New ticket</h1>
+        
+        <div class="container">
+            @* <form method="post"> *@
+             <div class="row mb-4 justify-content-md-center">
+               <div class="col col-sm-12 col-md-6">
+                   @if (SignInManager.IsSignedIn(User))
+                   {
+                       <input
+                           id="nickname"
+                           @* asp-for="Nickname" *@
+                           class="form-control form-control-lg"
+                           placeholder="Name"
+                           value="@User.Identity?.Name"
+                           aria-required="true"/>
+                   }
+                   else
+                   {
+                       <input
+                            id="nickname"
+                           @* asp-for="Nickname" *@
+                           class="form-control form-control-lg"
+                           placeholder="Name"
+                           aria-required="true"/>
+                   }
+                  
+                   @* <span asp-validation-for="Nickname" class="text-danger"></span> *@
+               </div>
+           </div>
 
-            <div class="container">
-                
-                <div class="row mb-4 justify-content-md-center">
-                    <div class="col col-sm-12 col-md-6">
-                        <input  asp-for="Name" class="form-control form-control-lg" placeholder="Name" aria-required="true"/>
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
+            <div class="row mb-4 justify-content-md-center">
+                <div class="col col-sm-12 col-md-6">
+                    
+                    <textarea
+                        id="description"
+                        rows="5"
+                        type="text"
+                        @* asp-for="Description" *@
+                        class="form-control form-control-lg"
+                        placeholder="Description"
+                        aria-required="true"></textarea>
+                    @* <span asp-validation-for="Description" class="text-danger"></span> *@
                 </div>
-
-                <div class="row mb-4 justify-content-md-center">
-                    <div class="col col-sm-12 col-md-6">
-                        <textarea rows="5" type="text"  asp-for="Description" class="form-control form-control-lg" placeholder="Description" aria-required="true"></textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row mb-4 justify-content-md-center">
-                    <div class="col col-sm-12 col-md-4">
-                        <input class="form-control form-control-lg" list="datalistOptions" placeholder="Room">
-                        <datalist id="datalistOptions">
-                            @{foreach (var entry in Model.Courses)
-                                {
-                                    <option value="@entry.CourseCode"/>
-                                }
-                            }
-                        </datalist>
-                        <span asp-validation-for="Room" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Send</button>
-
             </div>
-        </form>
+
+            <div class="row justify-content-md-center">
+                <div class="col col-sm-12 col-md-4">
+                    
+                    <input
+                        class="form-control form-control-lg"
+                        list="datalistOptions"
+                        placeholder="Room"
+                        id="room">
+                    <datalist id="datalistOptions">
+                        @{foreach (var entry in Model.Courses)
+                          {
+                              <option value="@entry.CourseCode"/>
+                          }
+                        }
+                    </datalist>
+                    @* <span asp-validation-for="Room" class="text-danger"></span> *@
+                </div>
+            </div>
+            
+            <span id="validation" class="text-danger"></span><br/>
+            
+            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="onCreate()">Send</button>
+            @* </form> *@
+        </div>
     </div>
 </div>

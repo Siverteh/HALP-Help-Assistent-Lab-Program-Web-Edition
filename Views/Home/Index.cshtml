@@ -1,58 +1,8 @@
-﻿@model TicketModel
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<StudentUser> SignInManager
-@inject UserManager<StudentUser> UserManager
-@{
-    ViewData["Title"] = "Create ticket";
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
-<div class="box">
-    <div class="text-center">
-        <form id="createTicketForm" method="post"> @* asp-route-returnUrl="@Model.ReturnUrl"  *@
-            <h1 class="text-white mb-4 mt-5">New ticket</h1>
 
-            <div class="container">
-                
-                <div class="row mb-4 justify-content-md-center">
-                    <div class="col col-sm-12 col-md-6">
-                       @if (SignInManager.IsSignedIn(User))
-                       {
-                           <input
-                               asp-for="Name"
-                               class="form-control form-control-lg"
-                               placeholder="Name"
-                               value="@User.Identity?.Name"
-                               aria-required="true"/>
-                       }
-                       else
-                       {
-                           <input
-                               asp-for="Name"
-                               class="form-control form-control-lg"
-                               placeholder="Name"
-                               aria-required="true"/>
-                       }
-                       
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row mb-4 justify-content-md-center">
-                    <div class="col col-sm-12 col-md-6">
-                        <textarea rows="5" type="text"  asp-for="Description" class="form-control form-control-lg" placeholder="Description" aria-required="true"></textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row mb-4 justify-content-md-center">
-                    <div class="col col-sm-12 col-md-4">
-                        <input asp-for="Room" class="form-control form-control-lg" placeholder="Room" aria-required="true"/>
-                        <span asp-validation-for="Room" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Send</button>
-
-            </div>
-        </form>
-    </div>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
