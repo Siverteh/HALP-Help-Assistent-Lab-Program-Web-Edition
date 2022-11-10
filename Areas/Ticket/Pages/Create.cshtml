@@ -27,7 +27,14 @@
 
                 <div class="row mb-4 justify-content-md-center">
                     <div class="col col-sm-12 col-md-4">
-                        <input asp-for="Room" class="form-control form-control-lg" placeholder="Room" aria-required="true"/>
+                        <input class="form-control form-control-lg" list="datalistOptions" placeholder="Room">
+                        <datalist id="datalistOptions">
+                            @{foreach (var entry in Model.Courses)
+                                {
+                                    <option value="@entry.CourseCode"/>
+                                }
+                            }
+                        </datalist>
                         <span asp-validation-for="Room" class="text-danger"></span>
                     </div>
                 </div>

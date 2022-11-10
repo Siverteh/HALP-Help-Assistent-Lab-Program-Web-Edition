@@ -12,9 +12,11 @@ public class Create : PageModel
     {
         _db = db;
     }
-    
+    public IEnumerable<CourseModel> Courses { get; set; }
     public IActionResult OnGet()
     {
+        
+        Courses = _db.Courses.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
         return Page();
     }
     
