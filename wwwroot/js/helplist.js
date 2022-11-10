@@ -4,9 +4,8 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
-// Message received
-connection.on("ReceiveMessage", function (nickname, description, room) {
-    insertCell(nickname, description, room);
+connection.invoke("SendMessage", "Test", "This is a test", "C2036").catch(function (err) {
+    return console.error(err.toString());
 });
 
 // Inserts a new cell into the table
@@ -32,7 +31,7 @@ function insertCell(nickname, description, room) {
 
 // Button for testing
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("SendMessage", "Pepsi", "Can I have food now?", "C2036").catch(function (err) {
+    connection.invoke("SendMessage", "Test", "This is a test", "C2036").catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
