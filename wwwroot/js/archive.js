@@ -38,19 +38,10 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
 });
 
-// Button for testing
-const button = document.getElementById('post-btn');
-
-button.addEventListener('click', async _ => {
-    try {
-        const response = await fetch('yourUrl', {
-            method: 'post',
-            body: {
-                // Your body
-            }
-        });
-        console.log('Completed!', response);
-    } catch(err) {
-        console.error(`Error: ${err}`);
-    }
+// Button for unarchive
+document.getElementById("uaButton").addEventListener("click", function (event) {
+    connection.invoke("SendMessage", "Test", "This is a test", "C2036").catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
 });
