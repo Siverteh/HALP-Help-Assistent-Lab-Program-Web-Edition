@@ -1,0 +1,49 @@
+﻿@page
+@model OperationCHAN.Areas.Lists.Pages.Archive
+
+@{
+    ViewData["Title"] = "Lab Archive";
+}
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - OperationCHAN</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/helplist.css" asp-append-version="true"/>
+</head>
+<body>
+<div class="navbar d-flex flex-row">
+    
+    <div class="col-sm" id="queue-title">Lab Archive</div>
+
+        <div class="col-sm d-flex flex-row-reverse" id="form">
+            <form class="form-inline">
+                <a class="nav-link text-white" href="/Lists/Helplist">Back</a>
+            </form>
+        </div>
+
+</div>
+<table id="table">
+    <tr>
+        <th>Nickname</th>
+        <th>Description</th>
+        <th>Status</th>
+    </tr>
+    @{
+        foreach (var entry in Model.ListItems)
+        {
+            <tr>
+                <td>@Html.DisplayFor(item => entry.Nickname)</td>
+                <td>@Html.DisplayFor(item => entry.Description)</td>
+                <td>@Html.DisplayFor(item => entry.Status)</td>
+            </tr>
+        }
+    }
+</table>
+<button id="sendButton" type="submit" class="btn btn-link text-black text-decoration-none">Test</button>
+</body>
+
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/helplist.js"></script>
