@@ -40,7 +40,11 @@ builder.Services.AddAuthentication().AddDiscord(options =>
     options.SaveTokens = true;
     options.AccessDeniedPath = "/Home/DiscordAuthFailed";
 });
+
 builder.Services.AddSignalR();
+builder.Services.AddControllersWithViews().AddRazorPagesOptions(options => {
+    options.Conventions.AddAreaPageRoute("Ticket", "/Create", "");
+});
 
 var app = builder.Build();
 
@@ -73,13 +77,16 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.MapHub<HelplistHub>("/chatHub");
 
+// Route added for debugging purposes, to see all available endpoints
+app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
+    string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
+
+// Start TimeEdit loop
+new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
 
 // Route added for debugging purposes, to see all available endpoints
 app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
