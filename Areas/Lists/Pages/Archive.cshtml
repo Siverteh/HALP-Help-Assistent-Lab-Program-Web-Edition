@@ -11,7 +11,7 @@
     <title>@ViewData["Title"] - OperationCHAN</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/helplist.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/lists.css" asp-append-version="true"/>
 </head>
 <body>
 <div class="navbar d-flex flex-row">
@@ -31,10 +31,18 @@
         <th>Description</th>
         <th>Status</th>
     </tr>
+        <tr>
+            <td>HardcodedNick</td>
+            <td>HardcodedDesc</td>
+            <td>HardcodedDesc</td>
+            <td>
+                <button id="uaButton" type="submit" class="btn .dropbtn">Unarchive</button>
+            </td>
+        </tr>
     @{
         foreach (var entry in Model.ListItems)
         {
-            <tr>
+            <tr id="tr-@entry.Id">
                 <td>@Html.DisplayFor(item => entry.Nickname)</td>
                 <td>@Html.DisplayFor(item => entry.Description)</td>
                 <td>@Html.DisplayFor(item => entry.Status)</td>
