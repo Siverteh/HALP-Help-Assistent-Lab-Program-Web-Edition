@@ -1,8 +1,8 @@
 ﻿@page
-@model OperationCHAN.Areas.Lists.Pages.HelpList
+@model OperationCHAN.Areas.Lists.Pages.Archive
 
 @{
-    ViewData["Title"] = "Lab Queue";
+    ViewData["Title"] = "Lab Archive";
 }
 
 <head>
@@ -16,17 +16,13 @@
 <body>
 <div class="navbar d-flex flex-row">
     
-    <div class="col-sm" id="queue-title">Lab Queue</div>
+    <div class="col-sm" id="queue-title">Lab Archive</div>
 
-    <div class="col-sm d-flex flex-row-reverse" id="form">
-        <form class="form-inline">
-            <a class="nav-link text-white" href="/Settings">Settings</a>
-        </form>
-        
-        <form class="form-inline">
-            <a class="nav-link text-white" href="/Lists/Archive">Archive</a>
-        </form>
-    </div>
+        <div class="col-sm d-flex flex-row-reverse" id="form">
+            <form class="form-inline">
+                <a class="nav-link text-white" href="/Lists/Helplist">Back</a>
+            </form>
+        </div>
 
 </div>
 <table id="table">
