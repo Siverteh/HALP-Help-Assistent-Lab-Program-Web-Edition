@@ -12,6 +12,9 @@ public class ApplicationDbContext : IdentityDbContext<StudentUser>
     }
 
     public DbSet<CourseModel> Courses => Set<CourseModel>();
+
     public DbSet<TicketModel> Tickets => Set<TicketModel>();
+
+    public DbSet<HelplistModel> HelpList => Set<HelplistModel>();
 
 }
