@@ -28,13 +28,13 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
-using (var services = app.Services.CreateScope())
-{
-    var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var um = services.ServiceProvider.GetRequiredService<UserManager<StudentUser>>();
-    var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    ApplicationDbInitializer.Initialize(db, um, rm);
-}
+// using (var services = app.Services.CreateScope())
+// {
+//     var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+//     var um = services.ServiceProvider.GetRequiredService<UserManager<StudentUser>>();
+//     var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//     ApplicationDbInitializer.Initialize(db, um, rm); 
+// }
 
 
 // Configure the HTTP request pipeline.

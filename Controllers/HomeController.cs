@@ -1,26 +1,35 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using OperationCHAN.Data;
 using OperationCHAN.Models;
 
 namespace OperationCHAN.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private readonly ApplicationDbContext _db;
+    public HomeController(ApplicationDbContext db)
     {
-        _logger = logger;
+        _db = db;
     }
 
+    [HttpGet]
     public IActionResult Index()
     {
-        return View();
+        return View(new TicketModel());
     }
-
-    public IActionResult Privacy()
+    [HttpPost]
+    public IActionResult Index(TicketModel ticket)
     {
-        return View();
+        if (!ModelState.IsValid)
+            return View(ticket);
+
+        var date = new DateTime().ToString("dd/MM/yyyy hh:mm");
+        ticket.DateTime = Convert.ToDateTime(date);
+        _db.Tickets.Add(ticket);
+        _db.SaveChanges();
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
