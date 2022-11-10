@@ -16,11 +16,11 @@
 <body>
 <div class="navbar d-flex flex-row">
     
-    <div class="col-sm" id="queue-title">Lab Archive</div>
+    <div class="col-sm" id="queue-title">Lab Archive @RouteData.Values["id"]</div>
 
         <div class="col-sm d-flex flex-row-reverse" id="form">
             <form class="form-inline">
-                <a class="nav-link text-white" href="/Lists/Helplist">Back</a>
+                <a class="nav-link text-white" href="/Lists/Helplist/@RouteData.Values["id"]">Back</a>
             </form>
         </div>
 
@@ -32,16 +32,6 @@
         <th>Status</th>
         <th></th>
     </tr>
-        <tr>
-            <td>HardcodedNick</td>
-            <td>HardcodedDesc</td>
-            <td>HardcodedDesc</td>
-            <td class="tdButton">
-                <form method="post">
-                    <button id="uaButton" type="submit" class="btn .dropbtn">Unarchive</button>
-                </form>
-            </td>
-        </tr>
     @{
         foreach (var entry in Model.ListItems)
         {

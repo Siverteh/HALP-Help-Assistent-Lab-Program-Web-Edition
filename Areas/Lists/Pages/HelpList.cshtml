@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id}"
 @model OperationCHAN.Areas.Lists.Pages.HelpList
 
 @{
@@ -7,7 +7,7 @@
 <body>
 <div class="navbar d-flex flex-row">
     
-    <div class="col-sm" id="queue-title">Lab Queue</div>
+    <div class="col-sm" id="queue-title">Lab Queue @RouteData.Values["id"]</div>
 
     <div class="col-sm d-flex flex-row-reverse" id="form">
         <form class="form-inline">
@@ -15,7 +15,7 @@
         </form>
         
         <form class="form-inline">
-            <a class="nav-link text-white" href="/Lists/Archive">Archive</a>
+            <a class="nav-link text-white" href="/Lists/Archive/@RouteData.Values["id"]">Archive</a>
         </form>
     </div>
 
