@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id}"
 @model OperationCHAN.Areas.Lists.Pages.Archive
 
 @{
@@ -30,22 +30,28 @@
         <th>Nickname</th>
         <th>Description</th>
         <th>Status</th>
+        <th></th>
     </tr>
         <tr>
             <td>HardcodedNick</td>
             <td>HardcodedDesc</td>
             <td>HardcodedDesc</td>
-            <td>
-                <button id="uaButton" type="submit" class="btn .dropbtn">Unarchive</button>
+            <td class="tdButton">
+                <form method="post">
+                    <button id="uaButton" type="submit" class="btn .dropbtn">Unarchive</button>
+                </form>
             </td>
         </tr>
     @{
         foreach (var entry in Model.ListItems)
         {
-            <tr id="tr-@entry.Id">
+            <tr>
                 <td>@Html.DisplayFor(item => entry.Nickname)</td>
                 <td>@Html.DisplayFor(item => entry.Description)</td>
                 <td>@Html.DisplayFor(item => entry.Status)</td>
+                <td class="tdButton">
+                    <button id="uaButton" value="@RouteData.Values["id"]" type="submit" class="btn">Unarchive</button>
+                </td>
             </tr>
         }
     }
@@ -54,4 +60,4 @@
 </body>
 
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/helplist.js"></script>
+    <script src="~/js/archive.js"></script>
