@@ -8,6 +8,7 @@ namespace OperationCHAN.Areas.Lists.Pages;
 public class Archive : PageModel
 {
     private readonly ApplicationDbContext _db;
+    public string RoomID { get; set; }
 
     public IEnumerable<HelplistModel> ListItems { get; set; }
 
@@ -15,6 +16,7 @@ public class Archive : PageModel
     {
         _db = db;
     }
+    
     
     /// <summary>
     /// The method run to load the page
@@ -29,6 +31,11 @@ public class Archive : PageModel
         // Place all entries into the global variable accessible to the cshtml
         ListItems = entries;
 
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
         return Page();
     }
 

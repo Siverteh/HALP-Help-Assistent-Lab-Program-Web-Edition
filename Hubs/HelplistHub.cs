@@ -13,7 +13,7 @@ namespace OperationCHAN.Hubs
         /// <param name="room">The room you are in</param>
         public async Task SendMessage(string nickname, string description, string room)
         {
-            await Clients.All.SendAsync("ReceiveMessage", nickname, description, room);
+            await Clients.All.SendAsync("ReceiveMessage", 100, nickname, description, room);
         }
         
         /// <summary>
