@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
@@ -18,6 +19,7 @@ public class HomeController : Controller
     {
         return View(new TicketModel());
     }
+    
     [HttpPost]
     public IActionResult Index(TicketModel ticket)
     {
@@ -30,6 +32,13 @@ public class HomeController : Controller
         _db.SaveChanges();
         
         return RedirectToAction(nameof(Index));
+    }
+
+    
+    [Authorize(AuthenticationSchemes = "Discord")]
+    public IActionResult DiscordAuthFailed()
+    {
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
