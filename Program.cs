@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Areas.Identity.Services;
 using OperationCHAN;
 using OperationCHAN.Models;
+using Microsoft.AspNetCore.ResponseCompression;
+using OperationCHAN.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,10 @@ builder.Services.AddAuthentication().AddDiscord(options =>
     options.SaveTokens = true;
     options.AccessDeniedPath = "/Home/DiscordAuthFailed";
 });
+
+builder.Services.AddSignalR();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -75,6 +81,20 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+app.MapHub<HelplistHub>("/chatHub");
+
+// Route added for debugging purposes, to see all available endpoints
+app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
+    string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
+
+// Start TimeEdit loop
+new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
+
+// Route added for debugging purposes, to see all available endpoints
+app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
+    string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
+
+// Start TimeEdit loop
 new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
 
 app.Run();
