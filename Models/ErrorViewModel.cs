@@ -1,4 +1,4 @@
-namespace OperationCHAN.Models;
+﻿namespace OperationCHAN.Models;
 
 public class ErrorViewModel
 {
