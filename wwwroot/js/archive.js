@@ -5,7 +5,7 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
 // Inserts a new cell into the table
-connection.on("ReceiveMessage", (id, nickname, description) => {
+connection.on("UnarchivedSuccess", (id, nickname, description) => {
     insertCell(id, nickname, description)
 });
 

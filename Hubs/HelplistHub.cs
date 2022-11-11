@@ -20,21 +20,20 @@ namespace OperationCHAN.Hubs
         /// <param name="room">The room you are in</param>
         public async Task AddHelplistEntry(int entryID, string nickname, string description, string room)
         {
-            await Clients.All.SendAsync("ReceiveMessage", entryID, nickname, description);
+            await Clients.All.SendAsync("AddHelplistEntry", entryID, nickname, description);
         }
         
         /// <summary>
-        /// Sends a message to all connected clients
+        /// Removes an entry from archive, and puts it back into the helplist
         /// </summary>
-        /// <param name="nickname">The nickname to show</param>
-        /// <param name="description">The description to show</param>
+        /// <param name="entryID">The ID of the entry in the database</param>
         /// <param name="room">The room you are in</param>
         public async Task UnArchive(int entryID, string room)
         {
             // DO DATABASE SHIT HERE
             
             // This is only a line for testing
-            await Clients.All.SendAsync("ReceiveMessage", 100,"Unarchiving", "ID " + entryID + " room " + room);
+            await Clients.All.SendAsync("UnarchivedSuccess", 100,"Unarchiving", "ID " + entryID + " room " + room);
         }
 
         /// <summary>
