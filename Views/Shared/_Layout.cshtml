@@ -8,23 +8,25 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/OperationCHAN.styles.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/helplist.css" asp-append-version="true"/>
+    <link rel="icon" href="~/img/favicon.ico"/>
+
 </head>
 <body>
-<header>
-    <partial name="_LoginPartial"/>
-</header>
+    <header>
+        <partial name="_LoginPartial"/>
+    </header>
 
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/ticket.js"></script>
-<script src="~/js/helplist.js"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/ticket.js"></script>
+    <script src="~/js/helplist.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

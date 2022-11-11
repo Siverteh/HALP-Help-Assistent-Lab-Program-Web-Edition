@@ -50,7 +50,17 @@
                         <p>
                             @foreach (var provider in Model.ExternalLogins)
                             {
-                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                    @provider.DisplayName
+                                    @if (provider.DisplayName == "Discord")
+                                    {
+                                        <img src="~/img/discord-logo.png" alt="Discord" width="50" height="50">
+                                    }
+                                    else
+                                    {
+                                        @provider.DisplayName
+                                    }
+                                </button>
                             }
                         </p>
                     </div>
