@@ -40,7 +40,7 @@
                 <td>@Html.DisplayFor(item => entry.Description)</td>
                 <td>@Html.DisplayFor(item => entry.Status)</td>
                 <td class="tdButton">
-                    <button id="uaButton" value="@RouteData.Values["id"]" type="submit" class="btn">Unarchive</button>
+                    <button type="submit" onclick="unArchive()" class="btn uaButton">Unarchive</button>
                 </td>
             </tr>
         }

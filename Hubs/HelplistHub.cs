@@ -1,9 +1,16 @@
 using Microsoft.AspNetCore.SignalR;
+using OperationCHAN.Data;
 
 namespace OperationCHAN.Hubs
 {
     public class HelplistHub : Hub
     {
+        private ApplicationDbContext _db;
+        public HelplistHub(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+        
         /// <summary>
         /// Sends a message to all connected clients
         /// </summary>
@@ -23,6 +30,9 @@ namespace OperationCHAN.Hubs
         /// <param name="room">The room you are in</param>
         public async Task UnArchive(string nickname, string description, string room)
         {
+            // DO DATABASE SHIT HERE
+            
+            // This is only a line for testing
             await Clients.All.SendAsync("ReceiveMessage", nickname, description, room);
         }
         
@@ -33,9 +43,9 @@ namespace OperationCHAN.Hubs
         /// <param name="nickname"></param>
         /// <param name="description"></param>
         /// <param name="room"></param>
-        public async Task SendMessageToGroup(string user, string nickname, string description, string room)
+        public async Task SendMessageToGroup(string nickname, string description, string room)
         {
-            await Clients.User(user).SendAsync("ReceiveMessage", nickname, description, room);
+            await Clients.User(room).SendAsync("UserAdded", nickname, description, room);
         }
         
         /// <summary>
