@@ -1,6 +1,11 @@
 ﻿@page "{id}"
 @model OperationCHAN.Areas.Lists.Pages.Archive
 
+<script type="text/javascript">
+    let roomID = @RouteData.Values["id"];
+    roomID = roomID.toString();
+</script>
+
 @{
     ViewData["Title"] = "Lab Archive";
 }
@@ -49,5 +54,5 @@
 <button id="sendButton" type="submit" class="btn btn-link text-black text-decoration-none">Test</button>
 </body>
 
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/archive.js"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/archive.js"></script>

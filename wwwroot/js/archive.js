@@ -5,12 +5,12 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
 // Receive message
-connection.on("ReceiveMessage", (id, nickname, description, room) => {
-    insertCell(id, nickname, description, room)
+connection.on("ReceiveMessage", (id, nickname, description) => {
+    insertCell(id, nickname, description)
 });
 
 // Inserts a new cell into the table
-function insertCell(id, nickname, description, room) {
+function insertCell(id, nickname, description) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
     var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
 
@@ -41,7 +41,7 @@ function insertCell(id, nickname, description, room) {
 
 // Button for testing
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("SendMessage", "Test", "This is a test", "C2036").catch(function (err) {
+    connection.invoke("AddHelplistEntry", 100, "Test", "This is a test", roomID).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
@@ -49,7 +49,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 // Button for unarchive
 function unArchive() {
-    connection.invoke("UnArchive", "Unarchive", "Unarchiving test", "C2036").catch(function (err) {
+    connection.invoke("UnArchive", 1, roomID).catch(function (err) {
         return console.error(err.toString());
     });
 }

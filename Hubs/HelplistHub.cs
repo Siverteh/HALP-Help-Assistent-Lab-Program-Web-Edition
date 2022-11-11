@@ -14,12 +14,13 @@ namespace OperationCHAN.Hubs
         /// <summary>
         /// Sends a message to all connected clients
         /// </summary>
+        /// <param name="entryID">The ID of the entry in the database</param>
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
         /// <param name="room">The room you are in</param>
-        public async Task SendMessage(string nickname, string description, string room)
+        public async Task AddHelplistEntry(int entryID, string nickname, string description, string room)
         {
-            await Clients.All.SendAsync("ReceiveMessage", 100, nickname, description, room);
+            await Clients.All.SendAsync("ReceiveMessage", entryID, nickname, description);
         }
         
         /// <summary>
@@ -28,12 +29,12 @@ namespace OperationCHAN.Hubs
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
         /// <param name="room">The room you are in</param>
-        public async Task UnArchive(string nickname, string description, string room)
+        public async Task UnArchive(int entryID, string room)
         {
             // DO DATABASE SHIT HERE
             
             // This is only a line for testing
-            await Clients.All.SendAsync("ReceiveMessage", nickname, description, room);
+            await Clients.All.SendAsync("ReceiveMessage", 100,"Unarchiving", "ID " + entryID + " room " + room, room);
         }
         
         /// <summary>

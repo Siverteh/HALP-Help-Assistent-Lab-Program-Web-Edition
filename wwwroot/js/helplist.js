@@ -32,7 +32,7 @@ function insertCell(nickname, description, room) {
 
 // Button for testing
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("SendMessage", "Test", "This is a test", "C2036").catch(function (err) {
+    connection.invoke("AddHelplistEntry", 100, "Test", "This is a test", "C2036").catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
