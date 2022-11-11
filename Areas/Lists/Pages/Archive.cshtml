@@ -2,7 +2,7 @@
 @model OperationCHAN.Areas.Lists.Pages.Archive
 
 <script type="text/javascript">
-    let roomID = @RouteData.Values["id"];
+    let roomID = "@RouteData.Values["id"]";
     roomID = roomID.toString();
 </script>
 
@@ -56,3 +56,4 @@
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/archive.js"></script>
+

@@ -4,7 +4,7 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
-// Receive message
+// Inserts a new cell into the table
 connection.on("ReceiveMessage", (id, nickname, description) => {
     insertCell(id, nickname, description)
 });
@@ -30,7 +30,7 @@ function insertCell(id, nickname, description) {
     ct_uaButton.type = "submit";
     ct_uaButton.classList.add("btn");
     ct_uaButton.classList.add("uaButton");
-    ct_uaButton.onclick = "unArchive()";
+    ct_uaButton.addEventListener("click", unArchive);
 
     // Append a text node to the cell
     c_nick.appendChild(ct_nick);

@@ -1,9 +1,23 @@
 ﻿@page "{id}"
 @model OperationCHAN.Areas.Lists.Pages.HelpList
 
+<script type="text/javascript">
+    let roomID = "@RouteData.Values["id"]";
+    roomID = roomID.toString();
+</script>
+
 @{
     ViewData["Title"] = "Lab Queue";
 }
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - OperationCHAN</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/lists.css" asp-append-version="true"/>
+</head>
 <body>
 <div class="navbar d-flex flex-row">
     
@@ -40,4 +54,5 @@
 <button id="sendButton" type="submit" class="btn btn-link text-black text-decoration-none">Test</button>
 </body>
 
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/helplist.js"></script>

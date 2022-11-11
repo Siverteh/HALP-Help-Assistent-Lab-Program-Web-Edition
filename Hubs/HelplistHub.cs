@@ -34,9 +34,9 @@ namespace OperationCHAN.Hubs
             // DO DATABASE SHIT HERE
             
             // This is only a line for testing
-            await Clients.All.SendAsync("ReceiveMessage", 100,"Unarchiving", "ID " + entryID + " room " + room, room);
+            await Clients.All.SendAsync("ReceiveMessage", 100,"Unarchiving", "ID " + entryID + " room " + room);
         }
-        
+
         /// <summary>
         /// Send a message to a specific group
         /// </summary>
