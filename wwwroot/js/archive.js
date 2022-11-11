@@ -27,10 +27,10 @@ function insertCell(id, nickname, description, room) {
     var ct_stat  = document.createTextNode("Finished");
     var ct_uaButton = document.createElement("button");
     ct_uaButton.innerHTML = "Unarchive";
-    ct_uaButton.id = "uaButton";
     ct_uaButton.type = "submit";
     ct_uaButton.classList.add("btn");
-    ct_uaButton.value = id;
+    ct_uaButton.classList.add("uaButton");
+    ct_uaButton.onclick = "unArchive()";
 
     // Append a text node to the cell
     c_nick.appendChild(ct_nick);
@@ -48,9 +48,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 });
 
 // Button for unarchive
-document.getElementById("uaButton").addEventListener("click", function (event) {
-    connection.invoke("SendMessage", "Test", "This is a test", "C2036").catch(function (err) {
+function unArchive() {
+    connection.invoke("UnArchive", "Unarchive", "Unarchiving test", "C2036").catch(function (err) {
         return console.error(err.toString());
     });
-    event.preventDefault();
-});
+}
