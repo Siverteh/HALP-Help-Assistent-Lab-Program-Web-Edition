@@ -1,21 +1,78 @@
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.Mvc;
+using OperationCHAN.Data;
 
 namespace OperationCHAN.Hubs
 {
     public class HelplistHub : Hub
     {
+        private ApplicationDbContext _db;
+        public HelplistHub(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+        
         /// <summary>
-        /// Sends a message to all connected clients
+        /// Adds an entry to the helplist
         /// </summary>
+        /// <param name="entryID">The ID of the entry in the database</param>
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
         /// <param name="room">The room you are in</param>
-        public async Task SendMessage(string nickname, string description, string room)
+        public async Task AddToHelplist(int entryID, string room, string nickname, string description)
         {
-            await Clients.All.SendAsync("ReceiveMessage", nickname, description, room);
+            await Clients.All.SendAsync("AddToHelplist", entryID, nickname, description);
         }
         
+        /// <summary>
+        /// Removes an entry from archive
+        /// </summary>
+        /// <param name="entryID">The ID of the entry in the database</param>
+        /// <param name="room">The room you are in</param>
+        public async Task RemoveFromHelplist(int entryID, string room)
+        {
+            // This is only a line for testing
+            await Clients.All.SendAsync("RemoveFromHelplist", entryID);
+        }
+        
+        /// <summary>
+        /// Adds an entry to the archive
+        /// </summary>
+        /// <param name="entryID">The ID of the entry in the database</param>
+        /// <param name="nickname">The nickname to show</param>
+        /// <param name="description">The description to show</param>
+        /// <param name="room">The room you are in</param>
+        public async Task AddToArchive(int entryID, string room, string nickname, string description)
+        {
+            // Remove student from the helplist
+            await RemoveFromHelplist(entryID, room);
+
+            SetEntryStatus(entryID, "Finished");
+            
+            await Clients.All.SendAsync("AddToArchive", entryID, nickname, description);
+        }
+
+        /// <summary>
+        /// Removes an entry from archive, and puts it back into the helplist
+        /// </summary>
+        /// <param name="entryID">The ID of the entry in the database</param>
+        /// <param name="room">The room you are in</param>
+        public async Task RemoveFromArchive(int entryID, string room, string nickname, string description)
+        {
+            await AddToHelplist(entryID, room, nickname, description);
+
+            SetEntryStatus(entryID, "Waiting");
+            
+            await Clients.All.SendAsync("RemoveFromArchive", entryID);
+        }
+        
+        private bool SetEntryStatus(int id, string status)
+        {
+            var entry = _db.HelpList.Where(entry => entry.Id == id).First();
+            entry.Status = status;
+            _db.SaveChangesAsync();
+            return true;
+        }
+
         /// <summary>
         /// Send a message to a specific group
         /// </summary>
@@ -23,9 +80,9 @@ namespace OperationCHAN.Hubs
         /// <param name="nickname"></param>
         /// <param name="description"></param>
         /// <param name="room"></param>
-        public async Task SendMessageToGroup(string user, string nickname, string description, string room)
+        public async Task SendMessageToGroup(string nickname, string description, string room)
         {
-            await Clients.User(user).SendAsync("ReceiveMessage", nickname, description, room);
+            await Clients.User(room).SendAsync("UserAdded", nickname, description, room);
         }
         
         /// <summary>

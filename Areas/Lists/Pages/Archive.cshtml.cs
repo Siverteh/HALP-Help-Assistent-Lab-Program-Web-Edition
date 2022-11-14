@@ -5,16 +5,18 @@ using OperationCHAN.Models;
 
 namespace OperationCHAN.Areas.Lists.Pages;
 
-public class HelpList : PageModel
+public class Archive : PageModel
 {
     private readonly ApplicationDbContext _db;
+    public string RoomID { get; set; }
 
     public IEnumerable<HelplistModel> ListItems { get; set; }
 
-    public HelpList(ApplicationDbContext db)
+    public Archive(ApplicationDbContext db)
     {
         _db = db;
     }
+    
     
     /// <summary>
     /// The method run to load the page
@@ -24,11 +26,16 @@ public class HelpList : PageModel
     public async Task<IActionResult> OnGetAsync(int? id)
     {
         // Get all the entries in the Helplist for sending
-        var entries = _db.HelpList.Where(ticket => ticket.Status != "Finished");
+        var entries = _db.HelpList.Where(ticket => ticket.Status == "Finished");
 
         // Place all entries into the global variable accessible to the cshtml
         ListItems = entries;
 
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
         return Page();
     }
 

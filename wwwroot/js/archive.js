@@ -4,9 +4,9 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
-// Receive message
-connection.on("AddHelplistEntry", (id, nickname, description) => {
-    insertCell(nickname, description)
+// Inserts a new cell into the table
+connection.on("AddToArchive", (id, nickname, description) => {
+    insertCell(id, nickname, description);
 });
 
 // Inserts a new cell into the table
@@ -27,11 +27,11 @@ function insertCell(id, nickname, description) {
     var ct_desc  = document.createTextNode(description);
     var ct_stat  = document.createTextNode("Finished");
     var ct_uaButton = document.createElement("button");
-    ct_uaButton.innerHTML = "Archive";
+    ct_uaButton.innerHTML = "Unarchive";
     ct_uaButton.type = "submit";
     ct_uaButton.classList.add("btn");
-    ct_uaButton.classList.add("aButton");
-    ct_uaButton.addEventListener("click", archive);
+    ct_uaButton.classList.add("uaButton");
+    ct_uaButton.addEventListener("click", unArchive);
 
     // Append a text node to the cell
     c_nick.appendChild(ct_nick);
@@ -41,7 +41,7 @@ function insertCell(id, nickname, description) {
 }
 
 // Receive message
-connection.on("RemoveFromHelplist", (id) => {
+connection.on("RemoveFromArchive", (id) => {
     removeCell(id)
 });
 
@@ -50,21 +50,13 @@ function removeCell(id) {
     row.remove();
 }
 
-// Button for archiving student
-function archive(event) {
+// Button for unarchive
+function unArchive(event) {
     var tr = event.target.parentNode.parentNode;
     var id = parseInt(tr.id);
     var nickname = tr.children[0].innerText;
     var description = tr.children[1].innerText;
-    connection.invoke("AddToArchive", id, roomID, nickname, description).catch(function (err) {
+    connection.invoke("RemoveFromArchive", id, roomID, nickname, description).catch(function (err) {
         return console.error(err.toString());
     });
 }
-
-// Button for testing
-document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("AddToHelplist", 100, "Test", "This is a test", roomID).catch(function (err) {
-        return console.error(err.toString());
-    });
-    event.preventDefault();
-});

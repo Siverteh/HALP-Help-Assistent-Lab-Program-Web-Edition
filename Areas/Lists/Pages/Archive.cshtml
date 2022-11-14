@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model OperationCHAN.Areas.Lists.Pages.HelpList
+@model OperationCHAN.Areas.Lists.Pages.Archive
 
 <script type="text/javascript">
     let roomID = "@RouteData.Values["id"]";
@@ -7,19 +7,15 @@
 </script>
 
 @{
-    ViewData["Title"] = "Lab Queue";
+    ViewData["Title"] = "Lab Archive";
 }
 
 <body>
 <div class="navbar d-flex flex-row">
     
-    <div class="col-sm" id="queue-title">Lab Queue @RouteData.Values["id"]</div>
-
-    <div class="col-sm d-flex flex-row-reverse" id="form">
-        <a class="nav-link text-white" href="/Settings">Settings</a>
-
-        <a class="nav-link text-white" href="/Lists/Archive/@RouteData.Values["id"]">Archive</a>
-    </div>
+    <div class="col-sm" id="queue-title">Lab Archive @RouteData.Values["id"]</div>
+    
+    <a class="nav-link text-white" href="/Lists/Helplist/@RouteData.Values["id"]">Back</a>
 
 </div>
 <table id="table">
@@ -37,14 +33,14 @@
                 <td>@Html.DisplayFor(item => entry.Description)</td>
                 <td>@Html.DisplayFor(item => entry.Status)</td>
                 <td class="tdButton">
-                    <button type="submit" onclick="archive(event)" class="btn uaButton">Archive</button>
+                    <button type="submit" onclick="unArchive(event)" class="btn uaButton">Unarchive</button>
                 </td>
             </tr>
         }
     }
 </table>
-<button id="sendButton" type="submit" class="btn btn-link text-black text-decoration-none">Test</button>
 </body>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/helplist.js"></script>
+<script src="~/js/archive.js"></script>
+
