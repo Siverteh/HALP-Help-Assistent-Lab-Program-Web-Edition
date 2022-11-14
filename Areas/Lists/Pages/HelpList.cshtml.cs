@@ -21,8 +21,15 @@ public class HelpList : PageModel
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<IActionResult> OnGetAsync(int? id)
+    public async Task<IActionResult> OnGetAsync(string id)
     {
+        var courseCodes = _db.Courses.Count(course => course.CourseCode == id);
+
+        if (courseCodes < 1)
+        {
+            return Redirect("/404");
+        }
+
         // Get all the entries in the Helplist for sending
         var entries = _db.HelpList.Where(ticket => ticket.Status != "Finished");
 

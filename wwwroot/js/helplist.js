@@ -4,6 +4,19 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
+// Register the client with a group on the server according to course
+connection.on("SendCourseCode", () => {
+    sendCourseCode();
+});
+
+function sendCourseCode() {
+    if (connection._connectionState === "Connected") {
+        connection.invoke("AddToGroup", courseCode).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
+}
+
 // Receive message
 connection.on("AddHelplistEntry", (id, nickname, description) => {
     insertCell(nickname, description)
@@ -56,14 +69,14 @@ function archive(event) {
     var id = parseInt(tr.id);
     var nickname = tr.children[0].innerText;
     var description = tr.children[1].innerText;
-    connection.invoke("AddToArchive", id, roomID, nickname, description).catch(function (err) {
+    connection.invoke("AddToArchive", id, courseCode, nickname, description).catch(function (err) {
         return console.error(err.toString());
     });
 }
 
 // Button for testing
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("AddToHelplist", 100, "Test", "This is a test", roomID).catch(function (err) {
+    connection.invoke("AddToHelplist", 100, "Test", "This is a test", courseCode).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

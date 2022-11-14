@@ -8,7 +8,7 @@ namespace OperationCHAN.Areas.Lists.Pages;
 public class Archive : PageModel
 {
     private readonly ApplicationDbContext _db;
-    public string RoomID { get; set; }
+    public string CourseCode { get; set; }
 
     public IEnumerable<HelplistModel> ListItems { get; set; }
 
@@ -23,8 +23,15 @@ public class Archive : PageModel
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<IActionResult> OnGetAsync(int? id)
+    public async Task<IActionResult> OnGetAsync(string? id)
     {
+        var courseCodes = _db.Courses.Count(course => course.CourseCode == id);
+
+        if (courseCodes < 1)
+        {
+            return Redirect("/404");
+        }
+        
         // Get all the entries in the Helplist for sending
         var entries = _db.HelpList.Where(ticket => ticket.Status == "Finished");
 

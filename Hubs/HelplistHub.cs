@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
+using NuGet.Protocol;
 using OperationCHAN.Data;
 
 namespace OperationCHAN.Hubs
@@ -14,24 +15,24 @@ namespace OperationCHAN.Hubs
         /// <summary>
         /// Adds an entry to the helplist
         /// </summary>
-        /// <param name="entryID">The ID of the entry in the database</param>
+        /// <param name="entryID">The ID of the ticket in the database</param>
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
-        /// <param name="room">The room you are in</param>
-        public async Task AddToHelplist(int entryID, string room, string nickname, string description)
+        /// <param name="course">The course you are in</param>
+        public async Task AddToHelplist(int entryID, string course, string nickname, string description)
         {
-            await Clients.All.SendAsync("AddToHelplist", entryID, nickname, description);
+            await Clients.Groups(course).SendAsync("AddToHelplist", entryID, nickname, description);
         }
         
         /// <summary>
         /// Removes an entry from archive
         /// </summary>
         /// <param name="entryID">The ID of the entry in the database</param>
-        /// <param name="room">The room you are in</param>
-        public async Task RemoveFromHelplist(int entryID, string room)
+        /// <param name="course">The course you are in</param>
+        public async Task RemoveFromHelplist(int entryID, string course)
         {
             // This is only a line for testing
-            await Clients.All.SendAsync("RemoveFromHelplist", entryID);
+            await Clients.Groups(course).SendAsync("RemoveFromHelplist", entryID);
         }
         
         /// <summary>
@@ -40,32 +41,34 @@ namespace OperationCHAN.Hubs
         /// <param name="entryID">The ID of the entry in the database</param>
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
-        /// <param name="room">The room you are in</param>
-        public async Task AddToArchive(int entryID, string room, string nickname, string description)
+        /// <param name="course">The room you are in</param>
+        public async Task AddToArchive(int entryID, string course, string nickname, string description)
         {
             // Remove student from the helplist
-            await RemoveFromHelplist(entryID, room);
+            await RemoveFromHelplist(entryID, course);
 
-            SetEntryStatus(entryID, "Finished");
+            SetTicketStatus(entryID, "Finished");
+
+            var usr = Clients.Groups(course);
             
-            await Clients.All.SendAsync("AddToArchive", entryID, nickname, description);
+            await Clients.Groups(course).SendAsync("AddToArchive", entryID, nickname, description);
         }
 
         /// <summary>
         /// Removes an entry from archive, and puts it back into the helplist
         /// </summary>
         /// <param name="entryID">The ID of the entry in the database</param>
-        /// <param name="room">The room you are in</param>
-        public async Task RemoveFromArchive(int entryID, string room, string nickname, string description)
+        /// <param name="course">The course you are in</param>
+        public async Task RemoveFromArchive(int entryID, string course, string nickname, string description)
         {
-            await AddToHelplist(entryID, room, nickname, description);
+            await AddToHelplist(entryID, course, nickname, description);
 
-            SetEntryStatus(entryID, "Waiting");
+            SetTicketStatus(entryID, "Waiting");
             
-            await Clients.All.SendAsync("RemoveFromArchive", entryID);
+            await Clients.User(course).SendAsync("RemoveFromArchive", entryID);
         }
         
-        private bool SetEntryStatus(int id, string status)
+        private bool SetTicketStatus(int id, string status)
         {
             var entry = _db.HelpList.Where(entry => entry.Id == id).First();
             entry.Status = status;
@@ -79,10 +82,17 @@ namespace OperationCHAN.Hubs
         /// <param name="user"></param>
         /// <param name="nickname"></param>
         /// <param name="description"></param>
-        /// <param name="room"></param>
-        public async Task SendMessageToGroup(string nickname, string description, string room)
+        /// <param name="course"></param>
+        public async Task SendMessageToGroup(string nickname, string description, string course)
         {
-            await Clients.User(room).SendAsync("UserAdded", nickname, description, room);
+            await Clients.Group(course).SendAsync("UserAdded", nickname, description, course);
+        }
+        
+        public override Task OnConnectedAsync()
+        {
+            Clients.Caller.SendAsync("SendCourseCode");
+
+            return base.OnConnectedAsync();
         }
         
         /// <summary>
@@ -92,8 +102,7 @@ namespace OperationCHAN.Hubs
         public async Task AddToGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-
-            //await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has joined the group {groupName}.");
+            var test = Groups.ToJson();
         }
 
         /// <summary>
