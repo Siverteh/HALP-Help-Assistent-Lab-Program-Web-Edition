@@ -2,24 +2,27 @@
 
 // Initiate connection
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-connection.start();
+connection.start().then(sendCourseCode);
 
-// Register the client with a group on the server according to course
-connection.on("SendCourseCode", () => {
-    sendCourseCode();
-});
-
-function sendCourseCode() {
+async function sendCourseCode(){
     if (connection._connectionState === "Connected") {
         connection.invoke("AddToGroup", courseCode).catch(function (err) {
             return console.error(err.toString());
         });
+        console.log("Connected");
+    } else {
+        setTimeout(() => sendCourseCode(), 500)
     }
 }
 
 // Receive message
+connection.on("UserAdded",() => {
+    console.log("Good to go");
+});
+
+// Receive message
 connection.on("AddHelplistEntry", (id, nickname, description) => {
-    insertCell(nickname, description)
+    insertCell(nickname, description);
 });
 
 // Inserts a new cell into the table

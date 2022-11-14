@@ -11,10 +11,13 @@ public class Archive : PageModel
     public string CourseCode { get; set; }
 
     public IEnumerable<HelplistModel> ListItems { get; set; }
+    public IEnumerable<string> CourseCodes { get; set; }
 
     public Archive(ApplicationDbContext db)
     {
         _db = db;
+        // Keep all course codes in RAM for more speeeed
+        CourseCodes = _db.Courses.Select(course => course.CourseCode).Distinct();
     }
     
     
@@ -23,11 +26,9 @@ public class Archive : PageModel
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<IActionResult> OnGetAsync(string? id)
+    public async Task<IActionResult> OnGetAsync(string id)
     {
-        var courseCodes = _db.Courses.Count(course => course.CourseCode == id);
-
-        if (courseCodes < 1)
+        if (!CourseCodes.Contains(id))
         {
             return Redirect("/404");
         }

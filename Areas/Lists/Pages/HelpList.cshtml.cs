@@ -9,11 +9,14 @@ public class HelpList : PageModel
 {
     private readonly ApplicationDbContext _db;
 
-    public IEnumerable<HelplistModel> ListItems { get; set; }
+    public IEnumerable<HelplistModel> Tickets { get; set; }
+    public IEnumerable<string> CourseCodes { get; set; }
 
     public HelpList(ApplicationDbContext db)
     {
         _db = db;
+        // Keep all course codes in RAM for more speeeed
+        CourseCodes = _db.Courses.Select(course => course.CourseCode).Distinct();
     }
     
     /// <summary>
@@ -23,18 +26,16 @@ public class HelpList : PageModel
     /// <returns></returns>
     public async Task<IActionResult> OnGetAsync(string id)
     {
-        var courseCodes = _db.Courses.Count(course => course.CourseCode == id);
-
-        if (courseCodes < 1)
+        if (!CourseCodes.Contains(id))
         {
             return Redirect("/404");
         }
 
         // Get all the entries in the Helplist for sending
-        var entries = _db.HelpList.Where(ticket => ticket.Status != "Finished");
+        var tickets = _db.HelpList.Where(ticket => ticket.Status != "Finished");
 
         // Place all entries into the global variable accessible to the cshtml
-        ListItems = entries;
+        Tickets = tickets;
 
         return Page();
     }

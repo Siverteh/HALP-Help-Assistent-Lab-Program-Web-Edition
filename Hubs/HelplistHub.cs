@@ -88,21 +88,21 @@ namespace OperationCHAN.Hubs
             await Clients.Group(course).SendAsync("UserAdded", nickname, description, course);
         }
         
-        public override Task OnConnectedAsync()
+        /**public override Task OnConnectedAsync()
         {
             Clients.Caller.SendAsync("SendCourseCode");
 
             return base.OnConnectedAsync();
-        }
+        }**/
         
         /// <summary>
         /// Add the user to the group
         /// </summary>
-        /// <param name="groupName"></param>
-        public async Task AddToGroup(string groupName)
+        /// <param name="course"></param>
+        public async Task AddToGroup(string course)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            var test = Groups.ToJson();
+            await Groups.AddToGroupAsync(Context.ConnectionId, course);
+            await Clients.Group(course).SendAsync("UserAdded");
         }
 
         /// <summary>
