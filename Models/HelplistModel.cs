@@ -1,27 +1,21 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Build.Framework;
 
 namespace OperationCHAN.Models;
 
 public class HelplistModel
 {
     public HelplistModel(){}
-    public string Status { get; set; } = String.Empty;
-    
+
     public int Id { get; set; }
 
-    [Required]
-    [DataType(DataType.Text)]
-    public string Nickname { get; set; } = string.Empty;
+    public string Nickname { get; set; } = String.Empty;
     
-    [Required]
-    [DataType(DataType.Text)]
-    public string Description { get; set; } = string.Empty;
+    public string Room { get; set; } = String.Empty;
     
-    [Required]
-    [DataType(DataType.Text)]
-    public string Room { get; set; } = string.Empty;
-
-    public DateTime Created { get; set; }
+    public string Status { get; set; } = String.Empty;
+    
+    public string Description { get; set; } = String.Empty;
+    
+    public List<ApplicationUser> ApplicationUser { get; set; } = new List<ApplicationUser>();
 
 }
