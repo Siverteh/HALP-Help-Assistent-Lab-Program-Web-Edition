@@ -50,14 +50,6 @@ function removeCell(id) {
     row.remove();
 }
 
-// Button for testing
-document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("AddToHelplist", 100, "Test", "This is a test", roomID).catch(function (err) {
-        return console.error(err.toString());
-    });
-    event.preventDefault();
-});
-
 // Button for archiving student
 function archive(event) {
     var tr = event.target.parentNode.parentNode;
@@ -68,3 +60,11 @@ function archive(event) {
         return console.error(err.toString());
     });
 }
+
+// Button for testing
+document.getElementById("sendButton").addEventListener("click", function (event) {
+    connection.invoke("AddToHelplist", 100, "Test", "This is a test", roomID).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});

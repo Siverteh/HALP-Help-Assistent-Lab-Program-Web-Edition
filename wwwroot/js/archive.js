@@ -10,11 +10,6 @@ connection.on("AddToArchive", (id, nickname, description) => {
 });
 
 // Inserts a new cell into the table
-connection.on("UnarchivedSuccess", (id, nickname, description) => {
-    insertCell(id, nickname, description);
-});
-
-// Inserts a new cell into the table
 function insertCell(id, nickname, description) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
     var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
@@ -45,13 +40,15 @@ function insertCell(id, nickname, description) {
     c_uaButton.appendChild(ct_uaButton);
 }
 
-// Button for testing
-document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("AddToHelplist", 100, "Test", "This is a test", roomID).catch(function (err) {
-        return console.error(err.toString());
-    });
-    event.preventDefault();
+// Receive message
+connection.on("RemoveFromArchive", (id) => {
+    removeCell(id)
 });
+
+function removeCell(id) {
+    const row = document.getElementById(id);
+    row.remove();
+}
 
 // Button for unarchive
 function unArchive(event) {
