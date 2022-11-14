@@ -1,3 +1,5 @@
+using System.Globalization;
+using Microsoft.AspNetCore.Authentication;
 using OperationCHAN.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -33,6 +35,9 @@ builder.Services.AddAuthentication().AddDiscord(options =>
     options.ClientSecret = "SIenibsqkRxwigs_ChMg41OmmqOxjS2v";
     options.SaveTokens = true;
     options.AccessDeniedPath = "/Home/DiscordAuthFailed";
+    options.ClaimActions.MapCustomJson("urn:discord:avatar:url", user => string.Format(
+        CultureInfo.InvariantCulture, 
+        user.GetString("id")));
 });
 
 builder.Services.AddSignalR();
