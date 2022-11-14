@@ -14,5 +14,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<CourseModel> Courses => Set<CourseModel>();
 
     public DbSet<HelplistModel> HelpList => Set<HelplistModel>();
+    
+    public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
+    public DbSet<Studas> Studas => Set<Studas>();
 
 }

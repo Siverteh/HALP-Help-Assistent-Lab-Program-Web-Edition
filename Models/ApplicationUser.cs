@@ -18,5 +18,5 @@ public class ApplicationUser : IdentityUser
     
     public List<HelplistModel> Helplist { get; set; } = new List<HelplistModel>();
 
-
+    public Studas Studas { get; set; } = null!;
 }

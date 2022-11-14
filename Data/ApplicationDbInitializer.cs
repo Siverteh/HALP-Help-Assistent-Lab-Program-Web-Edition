@@ -7,31 +7,31 @@ namespace OperationCHAN.Data
     public class ApplicationDbInitializer
     {
         public static void Initialize(ApplicationDbContext db, UserManager<ApplicationUser> um,
-            RoleManager<IdentityRole> rm)
+            RoleManager<IdentityRole> rm, UserManager<Studas> umStudas)
         {
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();    
             db.SaveChanges();
             
-             var IKT = new HelplistModel
+             var IKT103 = new HelplistModel
             {
                 Room = "C3036",
                 Description = "How to program?",
             };
-            db.HelpList.Add(IKT);
+            db.HelpList.Add(IKT103);
             
-            var FYS = new HelplistModel
+            var FYS129 = new HelplistModel
             {
                 Room = "A2036",
                 Description = "How to know when the worlds ends?",
             };
-            db.Add(FYS);
+            db.Add(FYS129);
 
             List<HelplistModel> IKThelplist = new List<HelplistModel>();
-            IKThelplist.Add(IKT);
+            IKThelplist.Add(IKT103);
             
             List<HelplistModel> PhysicsHelplist = new List<HelplistModel>();
-            PhysicsHelplist.Add(FYS);
+            PhysicsHelplist.Add(FYS129);
 
             var adminRole = new IdentityRole("Admin");
             rm.CreateAsync(adminRole).Wait();
@@ -64,17 +64,13 @@ namespace OperationCHAN.Data
             var studentassistRole = new IdentityRole("StudentAssistant");
             rm.CreateAsync(studentassistRole).Wait();
             
-            var studentAssistent = new ApplicationUser()
+            var studentAssistent = new Studas()
             {
-                Nickname = "cool assistent",
-                UserName = "studas@uia.no",
-                Email = "studas@uia.no",
-                DiscordTag = "Assistant User",
-                EmailConfirmed = true,
-                Helplist = IKThelplist
+                ApplicationUser = user,
+                course = "ikt101"
             };
-            um.CreateAsync(studentAssistent, "Password1.").Wait();
-            um.AddToRoleAsync(studentAssistent, "StudentAssistant").Wait();
+            umStudas.CreateAsync(studentAssistent, "Password1.").Wait();
+            umStudas.AddToRoleAsync(studentAssistent, "StudentAssistant").Wait();
             
             db.SaveChanges(); 
         }
