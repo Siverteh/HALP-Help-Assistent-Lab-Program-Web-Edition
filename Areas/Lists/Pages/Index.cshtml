@@ -1,0 +1,26 @@
+﻿@page
+@using System.Collections.Immutable
+@model OperationCHAN.Areas.Lists.Pages.List
+@{
+    ViewData["Title"] = "Lab Queue";
+}
+
+
+<body class="text-center">
+<div class="navbar">
+    
+    <div id="queue-title">Lab Queues</div>
+
+</div>
+<div class="box">
+    @{
+        <ul class="list-group" style="background-color: transparent">
+            @foreach (var list in Model.ListItems.OrderBy(x=>x.CourseCode).DistinctBy(x=>x.CourseCode))
+            {
+                <a style="background-color: transparent; color: white" href="/lists/helplist/@list.CourseCode" class="list-group-item border-0">@list.CourseCode</a>
+            }
+        </ul>
+    }
+</div>
+</body>
+
