@@ -1,9 +1,3 @@
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text.Json;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using OperationCHAN.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -22,7 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<StudentUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
@@ -51,7 +45,7 @@ var app = builder.Build();
 using (var services = app.Services.CreateScope())
 {
     var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var um = services.ServiceProvider.GetRequiredService<UserManager<StudentUser>>();
+    var um = services.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     ApplicationDbInitializer.Initialize(db, um, rm); 
 }

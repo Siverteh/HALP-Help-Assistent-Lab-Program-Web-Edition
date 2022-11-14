@@ -24,17 +24,17 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<StudentUser> _signInManager;
-        private readonly UserManager<StudentUser> _userManager;
-        private readonly IUserStore<StudentUser> _userStore;
-        private readonly IUserEmailStore<StudentUser> _emailStore;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<StudentUser> userManager,
-            IUserStore<StudentUser> userStore,
-            SignInManager<StudentUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -84,8 +84,8 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
             public string DiscordTag { get; set; }
             
             [Required]
-            [Display(Name = "Name")]
-            public string Name { get; set; }
+            [Display(Name = "Nickname")]
+            public string Nickname { get; set; }
 
             
 
@@ -128,7 +128,7 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 user.DiscordTag = Input.DiscordTag;
-                user.Name = Input.Name;
+                user.Nickname = Input.Nickname;
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -168,27 +168,27 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private StudentUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<StudentUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(StudentUser)}'. " +
-                    $"Ensure that '{nameof(StudentUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<StudentUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<StudentUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
 }
