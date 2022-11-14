@@ -4,7 +4,9 @@ namespace OperationCHAN.Models;
 
 public class CourseModel
 {
-    public CourseModel(){}
+    public CourseModel()
+    {
+    }
 
     public CourseModel(string courseCode, DateTime labEnd, DateTime labStart, string[] courseRooms)
     {
@@ -19,17 +21,16 @@ public class CourseModel
     }
 
     public int Id { get; set; }
-    
+
     //[Required]
     public string CourseCode { get; set; } = String.Empty;
-    
-    [Required]
-    public string CourseRoom1 { get; set; } = String.Empty;
+
+    [Required] public string CourseRoom1 { get; set; } = String.Empty;
     public string CourseRoom2 { get; set; } = String.Empty;
     public string CourseRoom3 { get; set; } = String.Empty;
     public string CourseRoom4 { get; set; } = String.Empty;
-    
-    
+
+
     //[Required]
     public DateTime LabStart { get; set; }
 

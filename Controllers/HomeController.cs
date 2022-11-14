@@ -20,10 +20,6 @@ public class HomeController : Controller
     }
 
     [Authorize(AuthenticationSchemes = "Discord")]
-    public IActionResult Privacy()
-    {
-        return View();
-    }
 
     public IActionResult DiscordAuthFailed()
     {

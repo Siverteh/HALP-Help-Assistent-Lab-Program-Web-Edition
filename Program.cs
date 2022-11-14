@@ -1,9 +1,3 @@
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text.Json;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using OperationCHAN.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -42,8 +36,9 @@ builder.Services.AddAuthentication().AddDiscord(options =>
 });
 
 builder.Services.AddSignalR();
-
-builder.Services.AddSignalR();
+builder.Services.AddControllersWithViews().AddRazorPagesOptions(options => {
+    options.Conventions.AddAreaPageRoute("Ticket", "/Create", "");
+});
 
 var app = builder.Build();
 
@@ -52,7 +47,7 @@ using (var services = app.Services.CreateScope())
     var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var um = services.ServiceProvider.GetRequiredService<UserManager<StudentUser>>();
     var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    ApplicationDbInitializer.Initialize(db, um, rm);
+    ApplicationDbInitializer.Initialize(db, um, rm); 
 }
 
 
@@ -76,9 +71,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.MapHub<HelplistHub>("/chatHub");
@@ -93,8 +85,5 @@ new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<Appli
 // Route added for debugging purposes, to see all available endpoints
 app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
     string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
-
-// Start TimeEdit loop
-new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
 
 app.Run();
