@@ -2,11 +2,11 @@
 
 namespace OperationCHAN.Models;
 
-public class StudentUser : IdentityUser
+public class ApplicationUser : IdentityUser
 {
-    public StudentUser() {}
+    public ApplicationUser() {}
 
-    public StudentUser(string nickname, string discordTag, List<HelplistModel> helplist)
+    public ApplicationUser(string nickname, string discordTag, List<HelplistModel> helplist)
     {
         Nickname = nickname;
         DiscordTag = discordTag;

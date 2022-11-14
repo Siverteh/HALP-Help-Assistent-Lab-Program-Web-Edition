@@ -10,39 +10,39 @@
             <div class="container">
                 <div class="row mb-4 justify-content-md-center">
                     <div class="col col-sm-12 col-md-6">
-                        <input asp-for="Input.Email" class="form-control form-control-lg" placeholder="Email" autocomplete="username" aria-required="true"/>
+                        <input asp-for="Input.Email" class="form-control form-control-lg"  placeholder="Email" autocomplete="username" aria-required="true" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                 </div>
-
+                
                 <div class="row mb-4 justify-content-md-center">
                     <div class="col col-sm-12 col-md-6">
-                        <input asp-for="Input.Name" class="form-control form-control-lg" placeholder="Username" autocomplete="" aria-required="true"/>
-                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+                        <input asp-for="Input.Nickname" class="form-control form-control-lg"  placeholder="Username" autocomplete="" aria-required="true" />
+                        <span asp-validation-for="Input.Nickname" class="text-danger"></span>
                     </div>
                 </div>
-
+                
                 <div class="row mb-4 justify-content-md-center">
                     <div class="col col-sm-12 col-md-6">
                         <input asp-for="Input.DiscordTag" class="form-control form-control-lg" autocomplete="" aria-required="true" placeholder="Discord tag"/>
                         <span asp-validation-for="Input.DiscordTag" class="text-danger"></span>
                     </div>
                 </div>
-
+                    
                 <div class="row mb-4 justify-content-md-center">
                     <div class="col col-sm-12 col-md-6">
-                        <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="Password"/>
+                        <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="Password" />
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                 </div>
-
+                    
                 <div class="row mb-4 justify-content-md-center">
                     <div class="col col-sm-12 col-md-6">
                         <input asp-for="Input.ConfirmPassword" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="Confirm password"/>
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
                 </div>
-
+                    
                 <button id="registerSubmit" type="submit" class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-5">Register</button>
             </div>
         </form>
@@ -50,5 +50,5 @@
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial"/>
+ <partial name="_ValidationScriptsPartial" />
 }
