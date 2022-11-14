@@ -5,14 +5,20 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
 // Inserts a new cell into the table
+connection.on("AddToArchive", (id, nickname, description) => {
+    insertCell(id, nickname, description);
+});
+
+// Inserts a new cell into the table
 connection.on("UnarchivedSuccess", (id, nickname, description) => {
-    insertCell(id, nickname, description)
+    insertCell(id, nickname, description);
 });
 
 // Inserts a new cell into the table
 function insertCell(id, nickname, description) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
     var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
+    newRow.id = id;
 
     // Insert a cell in the row at index 
     var c_nick  = newRow.insertCell(0);
@@ -41,15 +47,19 @@ function insertCell(id, nickname, description) {
 
 // Button for testing
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("AddHelplistEntry", 100, "Test", "This is a test", roomID).catch(function (err) {
+    connection.invoke("AddToHelplist", 100, "Test", "This is a test", roomID).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
 });
 
 // Button for unarchive
-function unArchive() {
-    connection.invoke("UnArchive", 1, roomID).catch(function (err) {
+function unArchive(event) {
+    var tr = event.target.parentNode.parentNode;
+    var id = parseInt(tr.id);
+    var nickname = tr.children[0].innerText;
+    var description = tr.children[1].innerText;
+    connection.invoke("RemoveFromArchive", id, roomID, nickname, description).catch(function (err) {
         return console.error(err.toString());
     });
 }

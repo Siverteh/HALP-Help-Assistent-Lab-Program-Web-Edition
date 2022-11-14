@@ -40,12 +40,12 @@
     @{
         foreach (var entry in Model.ListItems)
         {
-            <tr>
+            <tr id="@entry.Id">
                 <td>@Html.DisplayFor(item => entry.Nickname)</td>
                 <td>@Html.DisplayFor(item => entry.Description)</td>
                 <td>@Html.DisplayFor(item => entry.Status)</td>
                 <td class="tdButton">
-                    <button type="submit" onclick="unArchive()" class="btn uaButton">Unarchive</button>
+                    <button type="submit" onclick="unArchive(event)" class="btn uaButton">Unarchive</button>
                 </td>
             </tr>
         }

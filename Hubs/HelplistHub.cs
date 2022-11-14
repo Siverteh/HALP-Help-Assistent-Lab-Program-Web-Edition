@@ -12,15 +12,52 @@ namespace OperationCHAN.Hubs
         }
         
         /// <summary>
-        /// Sends a message to all connected clients
+        /// Adds an entry to the helplist
         /// </summary>
         /// <param name="entryID">The ID of the entry in the database</param>
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
         /// <param name="room">The room you are in</param>
-        public async Task AddHelplistEntry(int entryID, string nickname, string description, string room)
+        public async Task AddToHelplist(int entryID, string nickname, string description, string room)
         {
-            await Clients.All.SendAsync("AddHelplistEntry", entryID, nickname, description);
+            await Clients.All.SendAsync("AddToHelplist", entryID, nickname, description);
+        }
+        
+        /// <summary>
+        /// Removes an entry from archive
+        /// </summary>
+        /// <param name="entryID">The ID of the entry in the database</param>
+        /// <param name="room">The room you are in</param>
+        public async Task RemoveFromHelplist(int entryID, string room)
+        {
+            // This is only a line for testing
+            await Clients.All.SendAsync("RemoveFromHelplist", entryID);
+        }
+        
+        /// <summary>
+        /// Adds an entry to the archive
+        /// </summary>
+        /// <param name="entryID">The ID of the entry in the database</param>
+        /// <param name="nickname">The nickname to show</param>
+        /// <param name="description">The description to show</param>
+        /// <param name="room">The room you are in</param>
+        public async Task AddToArchive(int entryID, string room, string nickname, string description)
+        {
+            // TODO Set student as finished in the database
+            // Remove student from the helplist
+            await RemoveFromHelplist(entryID, room);
+
+            SetEntryStatus(entryID, "Finished");
+            
+            await Clients.All.SendAsync("AddToArchive", entryID, nickname, description);
+        }
+
+        private bool SetEntryStatus(int id, string status)
+        {
+            var entry = _db.HelpList.Where(entry => entry.Id == id).First();
+            entry.Status = status;
+            _db.SaveChangesAsync();
+            return true;
         }
         
         /// <summary>
@@ -28,12 +65,12 @@ namespace OperationCHAN.Hubs
         /// </summary>
         /// <param name="entryID">The ID of the entry in the database</param>
         /// <param name="room">The room you are in</param>
-        public async Task UnArchive(int entryID, string room)
+        public async Task RemoveFromArchive(int entryID, string room)
         {
             // DO DATABASE SHIT HERE
             
             // This is only a line for testing
-            await Clients.All.SendAsync("UnarchivedSuccess", 100,"Unarchiving", "ID " + entryID + " room " + room);
+            await Clients.All.SendAsync("UnarchivedSuccess", entryID,"Unarchiving", "ID " + entryID + " room " + room);
         }
 
         /// <summary>

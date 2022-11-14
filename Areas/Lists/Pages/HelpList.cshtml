@@ -39,14 +39,18 @@
         <th>Nickname</th>
         <th>Description</th>
         <th>Status</th>
+        <th></th>
     </tr>
     @{
         foreach (var entry in Model.ListItems)
         {
-            <tr>
+            <tr id="@entry.Id">
                 <td>@Html.DisplayFor(item => entry.Nickname)</td>
                 <td>@Html.DisplayFor(item => entry.Description)</td>
                 <td>@Html.DisplayFor(item => entry.Status)</td>
+                <td class="tdButton">
+                    <button type="submit" onclick="archive(event)" class="btn uaButton">Archive</button>
+                </td>
             </tr>
         }
     }
