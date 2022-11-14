@@ -86,7 +86,4 @@ new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<Appli
 app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
     string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
 
-// Start TimeEdit loop
-new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();
-
 app.Run();
