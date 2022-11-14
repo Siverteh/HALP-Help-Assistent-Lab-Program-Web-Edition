@@ -42,15 +42,25 @@
     <br/>
     <div class="mb-2 mb-2 col-sm-12" style="margin: auto; text-align: center">
         <section>
-            <h3>Use another service to log in.</h3>
-            <hr/>
+            <h3 class="text-white">Use another service to log in.</h3>
+            <hr class="text-white"/>
             @{
                 <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
                     <div>
                         <p>
                             @foreach (var provider in Model.ExternalLogins)
                             {
-                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                    @provider.DisplayName
+                                    @if (provider.DisplayName == "Discord")
+                                    {
+                                        <img src="~/img/discord-logo.png" alt="Discord" width="50" height="50">
+                                    }
+                                    else
+                                    {
+                                        @provider.DisplayName
+                                    }
+                                </button>
                             }
                         </p>
                     </div>
