@@ -24,7 +24,7 @@ public class Archive : PageModel
     /// <summary>
     /// The method run to load the page
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">The course code as the last part of the URL</param>
     /// <returns></returns>
     public async Task<IActionResult> OnGetAsync(string id)
     {

@@ -21,8 +21,8 @@ connection.on("UserAdded",() => {
 });
 
 // Receive message
-connection.on("AddHelplistEntry", (id, nickname, description) => {
-    insertCell(nickname, description);
+connection.on("AddToHelplist", (id, nickname, description) => {
+    insertCell(id, nickname, description);
 });
 
 // Inserts a new cell into the table
@@ -76,11 +76,3 @@ function archive(event) {
         return console.error(err.toString());
     });
 }
-
-// Button for testing
-document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("AddToHelplist", 100, "Test", "This is a test", courseCode).catch(function (err) {
-        return console.error(err.toString());
-    });
-    event.preventDefault();
-});
