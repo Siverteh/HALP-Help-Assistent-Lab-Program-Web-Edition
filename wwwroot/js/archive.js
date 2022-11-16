@@ -2,7 +2,23 @@
 
 // Initiate connection
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-connection.start();
+connection.start().then(sendCourseCode);
+
+async function sendCourseCode(){
+    if (connection._connectionState === "Connected") {
+        connection.invoke("AddToGroup", courseCode).catch(function (err) {
+            return console.error(err.toString());
+        });
+        console.log("Connected");
+    } else {
+        setTimeout(() => sendCourseCode(), 500)
+    }
+}
+
+// Receive message
+connection.on("UserAdded",() => {
+    console.log("Good to go");
+});
 
 // Inserts a new cell into the table
 connection.on("AddToArchive", (id, nickname, description) => {
@@ -56,7 +72,7 @@ function unArchive(event) {
     var id = parseInt(tr.id);
     var nickname = tr.children[0].innerText;
     var description = tr.children[1].innerText;
-    connection.invoke("RemoveFromArchive", id, roomID, nickname, description).catch(function (err) {
+    connection.invoke("RemoveFromArchive", id, courseCode, nickname, description).catch(function (err) {
         return console.error(err.toString());
     });
 }

@@ -2,8 +2,8 @@
 @model OperationCHAN.Areas.Lists.Pages.HelpList
 
 <script type="text/javascript">
-    let roomID = "@RouteData.Values["id"]";
-    roomID = roomID.toString();
+    let courseCode = "@RouteData.Values["id"]";
+    courseCode = courseCode.toString();
 </script>
 
 @{
@@ -30,12 +30,12 @@
         <th></th>
     </tr>
     @{
-        foreach (var entry in Model.ListItems)
+        foreach (var ticket in Model.Tickets)
         {
-            <tr id="@entry.Id">
-                <td>@Html.DisplayFor(item => entry.Nickname)</td>
-                <td>@Html.DisplayFor(item => entry.Description)</td>
-                <td>@Html.DisplayFor(item => entry.Status)</td>
+            <tr id="@ticket.Id">
+                <td>@Html.DisplayFor(item => ticket.Nickname)</td>
+                <td>@Html.DisplayFor(item => ticket.Description)</td>
+                <td>@Html.DisplayFor(item => ticket.Status)</td>
                 <td class="tdButton">
                     <button type="submit" onclick="archive(event)" class="btn uaButton">Archive</button>
                 </td>
@@ -43,7 +43,6 @@
         }
     }
 </table>
-<button id="sendButton" type="submit" class="btn btn-link text-black text-decoration-none">Test</button>
 </body>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
