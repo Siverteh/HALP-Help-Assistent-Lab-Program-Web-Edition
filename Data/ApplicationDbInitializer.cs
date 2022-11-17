@@ -16,14 +16,19 @@ namespace OperationCHAN.Data
              var IKT103 = new HelplistModel
             {
                 Room = "C3036",
+                Nickname = "Sondre",
                 Description = "How to program?",
+                Status = "Waiting"
+                
             };
             db.HelpList.Add(IKT103);
             
             var FYS129 = new HelplistModel
             {
                 Room = "A2036",
+                Nickname = "Nikolai",
                 Description = "How to know when the worlds ends?",
+                Status = "Finished"
             };
             db.Add(FYS129);
 

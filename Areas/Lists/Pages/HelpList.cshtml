@@ -1,22 +1,24 @@
-﻿@page
+﻿@page "{id}"
 @model OperationCHAN.Areas.Lists.Pages.HelpList
+
+<script type="text/javascript">
+    let courseCode = "@RouteData.Values["id"]";
+    courseCode = courseCode.toString();
+</script>
 
 @{
     ViewData["Title"] = "Lab Queue";
 }
+
 <body>
 <div class="navbar d-flex flex-row">
     
-    <div class="col-sm" id="queue-title">Lab Queue</div>
+    <div class="col-sm" id="queue-title">Lab Queue @RouteData.Values["id"]</div>
 
     <div class="col-sm d-flex flex-row-reverse" id="form">
-        <form class="form-inline" asp-area="Identity" asp-page="/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
-            <button type="submit" class="btn btn-link text-white text-decoration-none">Settings</button>
-        </form>
-        
-        <form class="form-inline" asp-area="Identity" asp-page="/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
-            <button type="submit" class="btn btn-link text-white text-decoration-none">Archive</button>
-        </form>
+        <a class="nav-link text-white" href="/Settings">Settings</a>
+
+        <a class="nav-link text-white" href="/Lists/Archive/@RouteData.Values["id"]">Archive</a>
     </div>
 
 </div>
@@ -25,17 +27,23 @@
         <th>Nickname</th>
         <th>Description</th>
         <th>Status</th>
+        <th></th>
     </tr>
     @{
-        foreach (var entry in Model.ListItems)
+        foreach (var ticket in Model.Tickets)
         {
-            <tr>
-                <td>@Html.DisplayFor(item => entry.Nickname)</td>
-                <td>@Html.DisplayFor(item => entry.Description)</td>
-                <td>@Html.DisplayFor(item => entry.Status)</td>
+            <tr id="@ticket.Id">
+                <td>@Html.DisplayFor(item => ticket.Nickname)</td>
+                <td>@Html.DisplayFor(item => ticket.Description)</td>
+                <td>@Html.DisplayFor(item => ticket.Status)</td>
+                <td class="tdButton">
+                    <button type="submit" onclick="archive(event)" class="btn uaButton">Archive</button>
+                </td>
             </tr>
         }
     }
 </table>
-<button id="sendButton" type="submit" class="btn btn-link text-black text-decoration-none">Test</button>
 </body>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/helplist.js"></script>

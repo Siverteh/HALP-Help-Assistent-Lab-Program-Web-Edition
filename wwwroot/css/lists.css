@@ -24,3 +24,12 @@ tr:nth-child(odd) {
     color: white;
     padding-left: 2vw;
 }
+
+/* Unarchive button on hover & focus */
+.tdButton:hover {
+    background-color: #2980B9;
+}
+
+.tdButton {
+    width: 5vw;
+}

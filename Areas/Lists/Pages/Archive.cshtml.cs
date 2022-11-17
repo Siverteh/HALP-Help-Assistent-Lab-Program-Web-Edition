@@ -5,19 +5,21 @@ using OperationCHAN.Models;
 
 namespace OperationCHAN.Areas.Lists.Pages;
 
-public class HelpList : PageModel
+public class Archive : PageModel
 {
     private readonly ApplicationDbContext _db;
+    public string CourseCode { get; set; }
 
-    public IEnumerable<HelplistModel> Tickets { get; set; }
+    public IEnumerable<HelplistModel> ListItems { get; set; }
     public IEnumerable<string> CourseCodes { get; set; }
 
-    public HelpList(ApplicationDbContext db)
+    public Archive(ApplicationDbContext db)
     {
         _db = db;
         // Keep all course codes in RAM for more speeeed
         CourseCodes = _db.Courses.Select(course => course.CourseCode).Distinct();
     }
+    
     
     /// <summary>
     /// The method run to load the page
@@ -30,13 +32,18 @@ public class HelpList : PageModel
         {
             return Redirect("/404");
         }
-
+        
         // Get all the entries in the Helplist for sending
-        var tickets = _db.HelpList.Where(ticket => ticket.Status != "Finished");
+        var entries = _db.HelpList.Where(ticket => ticket.Status == "Finished");
 
         // Place all entries into the global variable accessible to the cshtml
-        Tickets = tickets;
+        ListItems = entries;
 
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
         return Page();
     }
 
