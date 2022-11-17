@@ -1,7 +1,7 @@
 ﻿@page
 @using Microsoft.AspNetCore.Identity
 @using OperationCHAN.Models
-@inject SignInManager<StudentUser> SignInManager
+@inject SignInManager<ApplicationUser> SignInManager
 @model OperationCHAN.Areas.Ticket.Pages.Create
 
 @{
@@ -13,31 +13,31 @@
         
         <div class="container">
             @* <form method="post"> *@
-             <div class="row mb-4 justify-content-md-center">
-               <div class="col col-sm-12 col-md-6">
-                   @if (SignInManager.IsSignedIn(User))
-                   {
-                       <input
-                           id="nickname"
-                           @* asp-for="Nickname" *@
-                           class="form-control form-control-lg"
-                           placeholder="Name"
-                           value="@User.Identity?.Name"
-                           aria-required="true"/>
-                   }
-                   else
-                   {
-                       <input
+            <div class="row mb-4 justify-content-md-center">
+                <div class="col col-sm-12 col-md-6">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <input
                             id="nickname"
-                           @* asp-for="Nickname" *@
-                           class="form-control form-control-lg"
-                           placeholder="Name"
-                           aria-required="true"/>
-                   }
+                            @* asp-for="Nickname" *@
+                            class="form-control form-control-lg"
+                            placeholder="Name"
+                            value="@User.Identity?.Name"
+                            aria-required="true"/>
+                    }
+                    else
+                    {
+                        <input
+                            id="nickname"
+                            @* asp-for="Nickname" *@
+                            class="form-control form-control-lg"
+                            placeholder="Name"
+                            aria-required="true"/>
+                    }
                   
-                   @* <span asp-validation-for="Nickname" class="text-danger"></span> *@
-               </div>
-           </div>
+                    @* <span asp-validation-for="Nickname" class="text-danger"></span> *@
+                </div>
+            </div>
 
             <div class="row mb-4 justify-content-md-center">
                 <div class="col col-sm-12 col-md-6">
@@ -56,7 +56,6 @@
 
             <div class="row justify-content-md-center">
                 <div class="col col-sm-4 col-md-4">
-                    
                     <input
                         class="form-control form-control-lg"
                         list="datalistOptions"
@@ -67,12 +66,15 @@
                           {
                               <option value="@entry.CourseRoom1"/>
                               <option value="@entry.CourseRoom2"/>
+                              <option value="@entry.CourseRoom3"/>
+                              <option value="@entry.CourseRoom4"/>
                           }
                         }
                     </datalist>
                     @* <span asp-validation-for="Room" class="text-danger"></span> *@
                 </div>
             </div>
+            
             
             <span id="validation" class="text-danger"></span><br/>
             
@@ -81,3 +83,5 @@
         </div>
     </div>
 </div>
+
+<script src="~/js/ticket.js"></script>

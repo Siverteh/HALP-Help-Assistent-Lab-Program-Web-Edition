@@ -20,8 +20,8 @@ connection.on("UserAdded",() => {
     console.log("Good to go");
 });
 
-// Receive message
-connection.on("AddToHelplist", (id, nickname, description) => {
+// Inserts a new cell into the table
+connection.on("AddToArchive", (id, nickname, description) => {
     insertCell(id, nickname, description);
 });
 
@@ -43,11 +43,11 @@ function insertCell(id, nickname, description) {
     var ct_desc  = document.createTextNode(description);
     var ct_stat  = document.createTextNode("Finished");
     var ct_uaButton = document.createElement("button");
-    ct_uaButton.innerHTML = "Archive";
+    ct_uaButton.innerHTML = "Unarchive";
     ct_uaButton.type = "submit";
     ct_uaButton.classList.add("btn");
-    ct_uaButton.classList.add("aButton");
-    ct_uaButton.addEventListener("click", archive);
+    ct_uaButton.classList.add("uaButton");
+    ct_uaButton.addEventListener("click", unArchive);
 
     // Append a text node to the cell
     c_nick.appendChild(ct_nick);
@@ -57,7 +57,7 @@ function insertCell(id, nickname, description) {
 }
 
 // Receive message
-connection.on("RemoveFromHelplist", (id) => {
+connection.on("RemoveFromArchive", (id) => {
     removeCell(id)
 });
 
@@ -66,13 +66,13 @@ function removeCell(id) {
     row.remove();
 }
 
-// Button for archiving student
-function archive(event) {
+// Button for unarchive
+function unArchive(event) {
     var tr = event.target.parentNode.parentNode;
     var id = parseInt(tr.id);
     var nickname = tr.children[0].innerText;
     var description = tr.children[1].innerText;
-    connection.invoke("AddToArchive", id, courseCode, nickname, description).catch(function (err) {
+    connection.invoke("RemoveFromArchive", id, courseCode, nickname, description).catch(function (err) {
         return console.error(err.toString());
     });
 }
