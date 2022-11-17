@@ -4,7 +4,6 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start();
 
-
 function isEmpty(value) {
     if(value === "" || value === null || value === undefined) {
         return true
@@ -22,7 +21,6 @@ function isValid() {
         return false
     } else return true
 }
-
 
 function onCreate(){
     if (!isValid()) {
@@ -46,4 +44,8 @@ function onCreate(){
         .catch(function (err) {
             return console.error(err.toString());
         });
+
+    document.getElementById("nickname").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("room").value = "";
 }

@@ -15,7 +15,7 @@ public class Create : PageModel
     public IEnumerable<CourseModel> Courses { get; set; }
     public IActionResult OnGet()
     {
-        
+
         Courses = _db.Courses.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
         return Page();
     }
