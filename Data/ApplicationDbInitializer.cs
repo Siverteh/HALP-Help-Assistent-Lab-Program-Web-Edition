@@ -67,6 +67,7 @@ namespace OperationCHAN.Data
             um.CreateAsync(user, "Password1.").Wait();
 
             db.Studas.Add(new Studas(admin, "Ikt103"));
+            db.CourseLinks.Add(new CourseLinksModel("https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics"));
             
             db.SaveChanges(); 
         }

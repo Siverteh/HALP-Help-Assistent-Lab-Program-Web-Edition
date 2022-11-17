@@ -29,9 +29,9 @@ public class Timeedit
     /**
      * Starts the manual call to TimeEdit to get retrieve desired data
      */
-    public async Task GetData()
+    public async Task GetData(string url)
     {
-        await GetDataFromTimeEdit();
+        await GetDataFromTimeEdit(url);
     }
 
     /**
@@ -41,8 +41,13 @@ public class Timeedit
     {
         while (true)
         {
-            await GetDataFromTimeEdit();
+            var links = _db.CourseLinks.ToList();
+            foreach (var link in links)
+            {
+                await GetDataFromTimeEdit(link.CourseLinks);
+            }
             Thread.Sleep(sleepTime);
+            await EmptyTable();
         }
     }
     
@@ -50,12 +55,9 @@ public class Timeedit
      * Makes a call to TimeEdit, gets the .ics file,
      * and puts the data into the database
      */
-    private async Task GetDataFromTimeEdit()
+    private async Task GetDataFromTimeEdit(string url)
     {
-        await EmptyTable();
-        
-        using var response = await Client.GetAsync(
-                "https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics");
+        using var response = await Client.GetAsync(url);
         
         var responseBody = await response.Content.ReadAsStringAsync();
 
