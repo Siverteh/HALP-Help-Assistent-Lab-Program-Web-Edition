@@ -80,7 +80,7 @@ namespace OperationCHAN.Data
             };
             um.CreateAsync(studentAssistent, "Password1.").Wait();
             um.AddToRoleAsync(studentAssistent, "StudentAssistant").Wait();
-            
+
             db.SaveChanges(); 
         }
     }

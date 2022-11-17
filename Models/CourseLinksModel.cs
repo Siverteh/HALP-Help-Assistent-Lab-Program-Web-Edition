@@ -7,7 +7,6 @@ public class CourseLinksModel
     public CourseLinksModel()
     {
     }
-
     public CourseLinksModel(string courseLinks)
     {
         CourseLinks = courseLinks;
@@ -16,6 +15,6 @@ public class CourseLinksModel
     public int Id { get; set; }
 
     [Required]
-    private string CourseLinks { get; set; } = String.Empty;
+    public string CourseLinks { get; set; } = String.Empty;
 
 }
