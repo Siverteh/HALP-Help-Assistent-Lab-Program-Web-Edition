@@ -19,6 +19,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<IdentityOptions>(opts => { opts.SignIn.RequireConfirmedEmail = true; });
@@ -47,8 +48,7 @@ using (var services = app.Services.CreateScope())
     var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var um = services.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var umStudas = services.ServiceProvider.GetRequiredService<UserManager<Studas>>();
-    ApplicationDbInitializer.Initialize(db, um, rm, umStudas); 
+    ApplicationDbInitializer.Initialize(db, um, rm); 
 }
 
 

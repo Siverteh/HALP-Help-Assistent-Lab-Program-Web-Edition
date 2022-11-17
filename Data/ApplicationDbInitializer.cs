@@ -7,7 +7,7 @@ namespace OperationCHAN.Data
     public class ApplicationDbInitializer
     {
         public static void Initialize(ApplicationDbContext db, UserManager<ApplicationUser> um,
-            RoleManager<IdentityRole> rm, UserManager<Studas> umStudas)
+            RoleManager<IdentityRole> rm)
         {
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();    
@@ -37,6 +37,7 @@ namespace OperationCHAN.Data
             
             List<HelplistModel> PhysicsHelplist = new List<HelplistModel>();
             PhysicsHelplist.Add(FYS129);
+            
 
             var adminRole = new IdentityRole("Admin");
             rm.CreateAsync(adminRole).Wait();
@@ -48,11 +49,11 @@ namespace OperationCHAN.Data
                 Email = "admin@uia.no",
                 DiscordTag = "Admin User",
                 EmailConfirmed = true,
-                Helplist = IKThelplist
+                //Helplist = IKThelplist
             };
             um.CreateAsync(admin, "Password1.").Wait();
             um.AddToRoleAsync(admin, "Admin").Wait();
-           
+            
 
             var user = new ApplicationUser()
             {
@@ -61,21 +62,11 @@ namespace OperationCHAN.Data
                 UserName = "user@uia.no",
                 DiscordTag = "User User", 
                 EmailConfirmed = true,
-                Helplist = PhysicsHelplist
+               // Helplist = PhysicsHelplist
             };
             um.CreateAsync(user, "Password1.").Wait();
-            
-            
-            var studentassistRole = new IdentityRole("StudentAssistant");
-            rm.CreateAsync(studentassistRole).Wait();
-            
-            var studentAssistent = new Studas()
-            {
-                ApplicationUser = user,
-                course = "ikt101"
-            };
-            umStudas.CreateAsync(studentAssistent, "Password1.").Wait();
-            umStudas.AddToRoleAsync(studentAssistent, "StudentAssistant").Wait();
+
+            db.Studas.Add(new Studas(admin, "Ikt103"));
             
             db.SaveChanges(); 
         }
