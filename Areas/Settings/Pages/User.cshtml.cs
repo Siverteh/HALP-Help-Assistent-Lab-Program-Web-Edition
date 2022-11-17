@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OperationCHAN.Areas.Settings.Pages;
 
-public class Studass : PageModel
+public class User : PageModel
 {
     private readonly ApplicationDbContext _db;
-    public Studass(ApplicationDbContext db)
+    public User(ApplicationDbContext db)
     {
         _db = db;
     }

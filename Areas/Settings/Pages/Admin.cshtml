@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @using OperationCHAN.Models
 @inject SignInManager<ApplicationUser> SignInManager
-@model OperationCHAN.Areas.Settings.Pages.Studass
+@model OperationCHAN.Areas.Settings.Pages.Admin
 
 @{
     ViewData["Title"] = "Settings";
@@ -20,12 +20,17 @@
                 <div id="right" class="header col-sm">
                     <button onclick="showTimeEdit()" class="headerButton">TimeEdit</button>
                 </div>
+                <div id="right" class="header col-sm">
+                    <button onclick="showTimeEdit()" class="headerButton">Users</button>
+                </div>
             </div>
             
         </div>
         
         @{await Html.RenderPartialAsync("_SettingsPartial");}
         @{await Html.RenderPartialAsync("_TimeEditPartial");}
+        @{await Html.RenderPartialAsync("_SettingsPartial");}
+        
     </div>
 </div>
 

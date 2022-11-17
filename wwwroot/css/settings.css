@@ -1,0 +1,11 @@
+.header {
+    background-color: #07c;
+    border: none;
+    width: inherit;
+}
+
+.headerButton {
+    width: 100%;
+    background: transparent;
+    border: none;
+}

@@ -46,7 +46,7 @@ namespace OperationCHAN.Hubs
             // Remove student from the helplist
             await RemoveFromHelplist(entryID, room);
 
-            SetEntryStatus(entryID, "Finished");
+            SetTicketStatus(entryID, "Finished");
             
             await Clients.All.SendAsync("AddToArchive", entryID, nickname, description);
         }
@@ -60,12 +60,12 @@ namespace OperationCHAN.Hubs
         {
             await AddToHelplist(entryID, room, nickname, description);
 
-            SetEntryStatus(entryID, "Waiting");
+            SetTicketStatus(entryID, "Waiting");
             
             await Clients.All.SendAsync("RemoveFromArchive", entryID);
         }
         
-        private bool SetEntryStatus(int id, string status)
+        private bool SetTicketStatus(int id, string status)
         {
             var entry = _db.HelpList.Where(entry => entry.Id == id).First();
             entry.Status = status;
