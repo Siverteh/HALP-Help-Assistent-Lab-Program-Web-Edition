@@ -38,6 +38,8 @@ public class Studass : PageModel
 
         await _db.CourseLinks.AddAsync(new CourseLinksModel(Link));
         await _db.SaveChangesAsync();
+        Timeedit t = new Timeedit(_db);
+        await t.GetData(Link);
 
         return RedirectToPage("");
     }

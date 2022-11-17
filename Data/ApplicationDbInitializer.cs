@@ -80,7 +80,7 @@ namespace OperationCHAN.Data
             };
             um.CreateAsync(studentAssistent, "Password1.").Wait();
             um.AddToRoleAsync(studentAssistent, "StudentAssistant").Wait();
-
+            db.CourseLinks.Add(new CourseLinksModel("https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics"));
             db.SaveChanges(); 
         }
     }
