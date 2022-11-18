@@ -1,20 +1,29 @@
-var settings = document.getElementById("settings");
-var timeedit = document.getElementById("timeedit");
+var settingsView = document.getElementById("settings");
+var timeeditView = document.getElementById("timeedit");
+var usersView = document.getElementById("users");
+
+var settingsButton = document.getElementById("btn_settings");
+var timeeditButton = document.getElementById("btn_timeedit")
+var usersButton = document.getElementById("btn_users")
 
 function showSettings() {
-    settings.style.display = "block";
+    settingsButton.style.backgroundColor = "#004A82";
+    settingsView.style.display = "block";
     hideTimeEdit();
 }
 
 function hideSettings() {
-    settings.style.display = "none";
+    settingsButton.style.backgroundColor = "#07c";
+    settingsView.style.display = "none";
 }
 
 function showTimeEdit() {
-    timeedit.style.display = "block";
+    timeeditButton.style.backgroundColor = "#004A82";
+    timeeditView.style.display = "block";
     hideSettings();
 }
 
 function hideTimeEdit() {
-    timeedit.style.display = "none";
+    timeeditButton.style.backgroundColor = "#07c";
+    timeeditView.style.display = "none";
 }

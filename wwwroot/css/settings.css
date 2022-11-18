@@ -4,6 +4,10 @@
     width: inherit;
 }
 
+#btn_settings {
+    background-color: #004A82;
+}
+
 .headerButton {
     width: 100%;
     background: transparent;
