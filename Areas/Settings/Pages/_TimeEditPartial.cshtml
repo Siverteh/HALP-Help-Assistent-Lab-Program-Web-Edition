@@ -1,14 +1,28 @@
-﻿<div id="timeedit" style="display:none" class="mb-4 mt-5">
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model OperationCHAN.Areas.Settings.Pages.Studass
+
+<div id="timeedit" style="display:none" class="mb-4 mt-5">
     <table id="table">
-        <tr>
-            <th>http://timeedit.no/testlink1</th>
-            <th></th>
-        </tr>
-        <tr>
-            <th>http://timeedit.no/testlink2</th>
-            <th></th>
-        </tr>
+            <form method="post">
+                <tr>
+                    <th>
+                        <input asp-for="@Model.Link" style="width: 100%" placeholder="https://cloud.timeedit.net/uia/web/tp/123456789.html">
+                    </th>
+                    <th><input type="submit"></th>
+                </tr>
+                @Html.AntiForgeryToken()
+        </form>
+        
+        @{
+            foreach (var link in Model.Links)
+            {
+                var l = link.CourseLinks.Replace("ics", "html");
+              <tr>
+                  <th><a href="@l" target="_blank">@l</a></th>
+                  <th></th>
+              </tr>
+          }
+        }
     </table>
-    <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="onCreate()">Update</button>
-            <link href="vg.no" class="text-white">How do i get a TimeEdit link?</link>
+    <a href="https://www.w3schools.com/" target="_blank">How do i get a TimeEdit link?</a>
 </div>

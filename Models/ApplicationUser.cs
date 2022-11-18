@@ -6,17 +6,20 @@ public class ApplicationUser : IdentityUser
 {
     public ApplicationUser() {}
 
-    public ApplicationUser(string nickname, string discordTag, List<HelplistModel> helplist)
+    public ApplicationUser(string nickname, string discordTag)
     {
         Nickname = nickname;
         DiscordTag = discordTag;
-        Helplist = helplist;
     }
-    public string? DiscordTag { get; set; } = String.Empty;
+    
+    public int Id { get; set; }
+    public string DiscordTag { get; set; } = String.Empty;
 
     public string Nickname{ get; set; } = String.Empty;
     
     public List<HelplistModel> Helplist { get; set; } = new List<HelplistModel>();
 
+    public Studas Studas { get; set; } = null!;
 
+     public string StudasId { get; set; } = String.Empty;
 }

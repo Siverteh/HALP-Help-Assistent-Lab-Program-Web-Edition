@@ -25,7 +25,7 @@
         </div>
         
         @{await Html.RenderPartialAsync("_SettingsPartial");}
-        @{await Html.RenderPartialAsync("_TimeEditPartial");}
+        @{await Html.RenderPartialAsync("_TimeEditPartial", Model);}
     </div>
 </div>
 

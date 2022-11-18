@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace OperationCHAN.Areas.Settings.Pages;
 
@@ -12,17 +12,40 @@ public class Studass : PageModel
     {
         _db = db;
     }
-    public IEnumerable<CourseModel> Courses { get; set; }
-    public IActionResult OnGet()
+    
+    public IEnumerable<CourseLinksModel> Links { get; set; }
+
+ 
+    public void OnGet()
     {
-        
-        Courses = _db.Courses.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
-        return Page();
+        Links = _db.CourseLinks.ToList();
     }
     
-    public IActionResult OnPostAsync()
+    [BindProperty] public string? Link { get;set; }
+    
+    public async Task<IActionResult> OnPostAsync()
     {
-        Console.WriteLine("WORKS");
-        return RedirectToPage("Index");
+        Links = _db.CourseLinks.ToList();
+        if (Link == null)
+        {
+            return Page();
+        }
+        if(!Link.StartsWith("https"))
+        {
+            return Page();
+        }
+        if (!Link.EndsWith(".html"))
+        {
+            return Page();
+        }
+
+        Link = Link.Replace("html", "ics");
+
+        await _db.CourseLinks.AddAsync(new CourseLinksModel(Link));
+        await _db.SaveChangesAsync();
+        Timeedit t = new Timeedit(_db);
+        await t.GetData(Link);
+
+        return Page();
     }
 }
