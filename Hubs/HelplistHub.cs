@@ -50,20 +50,12 @@ namespace OperationCHAN.Hubs
             };
             var t = _db.HelpList.Add(ticket);
             _db.SaveChanges();
+            
             await AddToHelplist(t.Entity.Id, t.Entity.Course, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
 
             return t.Entity.Id;
         }
 
-        /// <summary>
-        /// Removes a ticket from archive
-        /// </summary>
-        /// <param name="ticketID">The ID of the ticket in the database</param>
-        /// <param name="course">The course you are in</param>
-        public async Task RemoveFromHelplist(int ticketID, string course)
-        {
-            await Clients.Groups(course).SendAsync("RemoveFromHelplist", ticketID);
-        }
         
         /// <summary>
         /// Adds an ticket to the archive
@@ -74,8 +66,6 @@ namespace OperationCHAN.Hubs
         /// <param name="course">The room you are in</param>
         public async Task AddToArchive(int ticketID, string course, string nickname, string description, string room)
         {
-            // Remove student from the helplist
-            await RemoveFromHelplist(ticketID, course);
 
             SetTicketStatus(ticketID, "Finished");
 
@@ -92,8 +82,6 @@ namespace OperationCHAN.Hubs
             await AddToHelplist(ticketID, course, nickname, description, room);
 
             SetTicketStatus(ticketID, "Waiting");
-            
-            await Clients.Groups(course).SendAsync("RemoveFromArchive", ticketID);
         }
         
         private bool SetTicketStatus(int id, string status)
