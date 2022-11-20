@@ -72,7 +72,8 @@ function unArchive(event) {
     var id = parseInt(tr.id);
     var nickname = tr.children[0].innerText;
     var description = tr.children[1].innerText;
-    connection.invoke("RemoveFromArchive", id, courseCode, nickname, description).catch(function (err) {
+    var room = tr.children[2].innerText;
+    connection.invoke("RemoveFromArchive", id, courseCode, nickname, description, room).catch(function (err) {
         return console.error(err.toString());
     });
 }

@@ -65,9 +65,18 @@
                         @{foreach (var entry in Model.Courses)
                           {
                               <option value="@entry.CourseRoom1"/>
-                              <option value="@entry.CourseRoom2"/>
-                              <option value="@entry.CourseRoom3"/>
-                              <option value="@entry.CourseRoom4"/>
+                            @if (@entry.CourseRoom2 != "")
+                            {
+                                <option value="@entry.CourseRoom2"/>
+                            }
+                              @if (@entry.CourseRoom3 != "")
+                              {
+                                  <option value="@entry.CourseRoom3"/>
+                              }
+                              @if (@entry.CourseRoom4 != "")
+                              {
+                                  <option value="@entry.CourseRoom4"/>
+                              }
                           }
                         }
                     </datalist>
@@ -83,5 +92,5 @@
         </div>
     </div>
 </div>
-
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/ticket.js"></script>

@@ -72,7 +72,8 @@ function archive(event) {
     var id = parseInt(tr.id);
     var nickname = tr.children[0].innerText;
     var description = tr.children[1].innerText;
-    connection.invoke("AddToArchive", id, courseCode, nickname, description).catch(function (err) {
+    var room = tr.children[2].innerHTML;
+    connection.invoke("AddToArchive", id, courseCode, nickname, description, room).catch(function (err) {
         return console.error(err.toString());
     });
 }

@@ -45,6 +45,7 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\jquery.min.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\LICENSE" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\README.md" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\signalr\dist\browser\signalr.js" />
     </ItemGroup>
 
 </Project>

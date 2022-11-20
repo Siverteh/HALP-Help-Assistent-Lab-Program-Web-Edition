@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.SignalR;
 using NuGet.Protocol;
 using OperationCHAN.Data;
+using OperationCHAN.Models;
 
 namespace OperationCHAN.Hubs
 {
@@ -19,11 +20,41 @@ namespace OperationCHAN.Hubs
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
         /// <param name="course">The course you are in</param>
-        public async Task AddToHelplist(int ticketID, string course, string nickname, string description)
+        public async Task AddToHelplist(int ticketID, string course, string nickname, string description, string room)
         {
-            await Clients.Groups(course).SendAsync("AddToHelplist", ticketID, nickname, description);
+            await Clients.Groups(course).SendAsync("AddToHelplist", ticketID, nickname, description, room);
         }
-        
+        public async Task<int> CreateTicket(string nickname, string description, string room)
+        {
+            var courses = _db.Courses.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now);
+            var course = "";
+            
+            foreach (var c in courses)
+            {
+                    if (room == c.CourseRoom1 ||
+                        room == c.CourseRoom2 ||
+                        room == c.CourseRoom3 ||
+                        room == c.CourseRoom4)
+                {
+                    course = c.CourseCode;
+                }
+            }
+            
+            var ticket = new HelplistModel
+            {
+                Room = room,
+                Course = course,
+                Nickname = nickname,
+                Description = description,
+                Status = "Waiting"
+            };
+            var t = _db.HelpList.Add(ticket);
+            _db.SaveChanges();
+            await AddToHelplist(t.Entity.Id, t.Entity.Course, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
+
+            return t.Entity.Id;
+        }
+
         /// <summary>
         /// Removes a ticket from archive
         /// </summary>
@@ -41,14 +72,14 @@ namespace OperationCHAN.Hubs
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
         /// <param name="course">The room you are in</param>
-        public async Task AddToArchive(int ticketID, string course, string nickname, string description)
+        public async Task AddToArchive(int ticketID, string course, string nickname, string description, string room)
         {
             // Remove student from the helplist
             await RemoveFromHelplist(ticketID, course);
 
             SetTicketStatus(ticketID, "Finished");
 
-            await Clients.Groups(course).SendAsync("AddToArchive", ticketID, nickname, description);
+            await Clients.Groups(course).SendAsync("AddToArchive", ticketID, nickname, description, room);
         }
 
         /// <summary>
@@ -56,9 +87,9 @@ namespace OperationCHAN.Hubs
         /// </summary>
         /// <param name="ticketID">The ID of the ticket in the database</param>
         /// <param name="course">The course you are in</param>
-        public async Task RemoveFromArchive(int ticketID, string course, string nickname, string description)
+        public async Task RemoveFromArchive(int ticketID, string course, string nickname, string description, string room)
         {
-            await AddToHelplist(ticketID, course, nickname, description);
+            await AddToHelplist(ticketID, course, nickname, description, room);
 
             SetTicketStatus(ticketID, "Waiting");
             
