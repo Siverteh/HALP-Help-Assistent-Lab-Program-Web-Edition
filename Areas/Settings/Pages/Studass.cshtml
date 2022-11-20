@@ -1,0 +1,13 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model OperationCHAN.Areas.Settings.Pages.Studass
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+    <form method="post">
+        <input asp-for="Link">
+        <input type="submit">
+        @Html.AntiForgeryToken();
+    </form>
