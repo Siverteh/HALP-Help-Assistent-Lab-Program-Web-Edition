@@ -22,6 +22,7 @@
     <tr>
         <th>Nickname</th>
         <th>Description</th>
+        <th>Room</th>
         <th>Status</th>
         <th></th>
     </tr>
@@ -31,6 +32,7 @@
             <tr id="@entry.Id">
                 <td>@Html.DisplayFor(item => entry.Nickname)</td>
                 <td>@Html.DisplayFor(item => entry.Description)</td>
+                <td>@Html.DisplayFor(item => entry.Room)</td>
                 <td>@Html.DisplayFor(item => entry.Status)</td>
                 <td class="tdButton">
                     <button type="submit" onclick="unArchive(event)" class="btn uaButton">Unarchive</button>
