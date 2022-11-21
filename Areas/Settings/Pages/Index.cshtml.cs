@@ -20,6 +20,8 @@ public class Settings : PageModel
     public string Role { get; set; }
     public IEnumerable<ApplicationUser> Users { get; set; }
     public IEnumerable<CourseModel> Courses { get; set; }
+    
+    public IEnumerable<Studas> Studasses { get; set; }
 
 
     public void OnGet()
@@ -27,6 +29,7 @@ public class Settings : PageModel
         Links = _db.CourseLinks.ToList();
         Users = _db.Users.ToList();
         Courses = _db.Courses.ToList();
+        Studasses = _db.Studas.ToList();
         var loggedInUser = _um.GetUserAsync(User).Result;
         if (loggedInUser != null)
         {

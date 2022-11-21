@@ -1,5 +1,5 @@
 ﻿@model OperationCHAN.Areas.Settings.Pages.Settings
-<div id="roles" style="display:none" class="container text-black">
+<div id="roles" style="display:none" class="container text-black mb-4 mt-5">
     <div class="row">
         <div class="col-sm">
             <input type="text" id="myInput" onkeyup="searchTable(event)" placeholder="Search for names..">
@@ -12,8 +12,10 @@
                 @{
                     foreach (var user in Model.Users)
                     {
-                        <tr>
-                            <td>@user.Nickname</td>
+                        <tr >
+                            <td>
+                                <button type="submit" value="@user.Id" onclick="setUserID(event)" class="btn">@user.Nickname</button>
+                            </td>
                         </tr>
                     }
                 }
@@ -22,25 +24,27 @@
         <div class="col-sm">
             <input type="text" id="myInput" onkeyup="searchTable(event)" placeholder="Search for courses..">
 
-            <table id="courses_table">
-                <tr>
-                    <th>Course</th>
-                    <th></th>
-                </tr>
-                @{
-                    foreach (var course in Model.Courses)
-                    {
-                        <tr>
-                            <td>@course.CourseCode</td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                </div>
-                            </td>
-                        </tr>
+            <div style="overflow-y: auto">
+                <table id="courses_table" >
+                    <tr>
+                        <th>Course</th>
+                        <th>Studass</th>
+                    </tr>
+                    @{
+                        foreach (var course in Model.Courses)
+                        {
+                            <tr>
+                                <td>@course.CourseCode</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     }
-                }
-            </table>
+                </table>
+                </div>
         </div>
     </div>
     <div>

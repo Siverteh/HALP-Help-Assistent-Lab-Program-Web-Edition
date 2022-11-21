@@ -5,10 +5,10 @@
     <table id="table">
             <form method="post">
                 <tr>
-                    <th>
+                    <td>
                         <input style="width: 100%" placeholder="https://cloud.timeedit.net/uia/web/tp/123456789.html">
-                    </th>
-                    <th><input type="submit" class="btn addButton" value="Add"></th>
+                    </td>
+                    <td><input type="submit" class="btn addButton" value="Add"></td>
                 </tr>
                 @Html.AntiForgeryToken()
         </form>
@@ -18,10 +18,10 @@
             {
                 var l = link.CourseLinks.Replace("ics", "html");
               <tr>
-                  <th><a href="@l" target="_blank">@l</a></th>
-                  <th>
+                  <td><a href="@l" target="_blank">@l</a></td>
+                  <td>
                       <button type="submit" onclick="archive(event)" class="btn rmButton">Remove</button>
-                  </th>
+                  </td>
               </tr>
           }
         }

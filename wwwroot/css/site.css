@@ -2,6 +2,7 @@
   background-color: #004A82;
   border-radius: 30px;
   padding: 20px;
+  max-height: 100vh;
 }
 
 /*Overwriting bootstrap theme*/
@@ -10,5 +11,6 @@
     font-family: "Ah Aharoni", "Bahnschrift";
     font-size: 20px;
     background-color: #0070C0;
+    overflow: hidden;
   }
 }

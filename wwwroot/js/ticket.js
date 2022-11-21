@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 // Initiate connection
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/helplisthub").build();
 connection.start();
 
 

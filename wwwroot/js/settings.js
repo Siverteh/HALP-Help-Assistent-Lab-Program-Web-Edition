@@ -1,3 +1,37 @@
+"use strict";
+
+// SignaR live updates
+// Initiate connection
+var connection = new signalR.HubConnectionBuilder().withUrl("/settingshub").build();
+connection.start();
+
+// Receive message
+connection.on("ShowStudent",(courses, isAdmin) => {
+    console.log("ShowStudent received");
+});
+
+var userID = null;
+
+function setUserID(event) {
+    userID = event.target.value;
+}
+
+function setStudass(event) {
+    var courseCode = "";
+    connection.invoke("SetStudass", userID, courseCode).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
+function setStudass(event) {
+    var courseCode = "";
+    connection.invoke("SetStudass", userID, courseCode).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
+
+// Showing of the different divs 
 var settingsView = document.getElementById("settings");
 var timeeditView = document.getElementById("timeedit");
 var rolesView = document.getElementById("roles");
@@ -55,21 +89,21 @@ function hideTimeEdit() {
 
 function searchTable(event) {
     // Declare variables
-    var input, filter, table, tds, i, txtValue;
+    var input, filter, table, trs, i, txtValue;
     table = event.target.parentNode.children[1];
     input = event.target;
     filter = input.value.toUpperCase();
     //table = document.getElementById("users_table");
-    tds = table.getElementsByTagName("td");
+    trs = table.getElementsByTagName("tr");
 
     // Loop through all list items, and hide those who don't match the search query
-    for (i = 0; i < tds.length; i++) {
-        var td = tds[i];
-        txtValue = td.textContent || td.innerText;
+    for (i = 0; i < trs.length; i++) {
+        var tr = trs[i];
+        txtValue = tr.textContent || tr.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tds[i].style.display = "";
+            trs[i].style.display = "";
         } else {
-            tds[i].style.display = "none";
+            trs[i].style.display = "none";
         }
     }
 }
