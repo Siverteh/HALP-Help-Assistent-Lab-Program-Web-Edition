@@ -31,8 +31,8 @@ builder.Services.AddAuthentication().AddDiscord(options =>
 {
     options.Scope.Add("identify");
     options.Scope.Add("email");
-    options.ClientId = "1037686187588067419";
-    options.ClientSecret = "SIenibsqkRxwigs_ChMg41OmmqOxjS2v";
+    options.ClientId = builder.Configuration["Discord:ClientId"];
+    options.ClientSecret = builder.Configuration["Discord:ClientSecret"];
     options.SaveTokens = true;
     options.AccessDeniedPath = "/Home/DiscordAuthFailed";
     options.ClaimActions.MapCustomJson("urn:discord:avatar:url", user => string.Format(
