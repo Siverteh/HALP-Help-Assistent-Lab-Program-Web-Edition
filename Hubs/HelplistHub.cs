@@ -18,7 +18,7 @@ namespace OperationCHAN.Hubs
         /// Adds an entry to the helplist
         /// </summary>
         /// <param name="ticketID">The ID of the ticket in the database</param>
-        /// /// <param name="course">The course you are in</param>
+        /// <param name="course">The course you are in</param>
         /// <param name="nickname">The nickname to show</param>
         /// <param name="description">The description to show</param>
         /// <param name="room">The room to show</param>
@@ -120,12 +120,9 @@ namespace OperationCHAN.Hubs
         
         public async Task RemovedByUser(int ticketID)
         {
-            var ticket = _db.HelpList.Where(ticket => ticket.Id == ticketID);
-            Console.WriteLine(ticket);
-
-            SetTicketStatus(ticketID, "Removed");
-
-            await Clients.Groups(ticket.First().Course).SendAsync("AddToArchive", ticketID, ticket.First().Nickname, ticket.First().Description);
+            var ticket = SetTicketStatus(ticketID, "Removed");
+            
+            await AddToArchive(ticket.Id, ticket.Course, ticket.Nickname, ticket.Description, ticket.Status, ticket.Room);
         }
     }
 }
