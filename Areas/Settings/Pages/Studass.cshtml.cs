@@ -15,7 +15,6 @@ public class Studass : PageModel
     
     public IEnumerable<CourseLinksModel> Links { get; set; }
 
- 
     public void OnGet()
     {
         Links = _db.CourseLinks.ToList();

@@ -1,5 +1,6 @@
 ﻿@page
 @using Microsoft.AspNetCore.Identity
+@using OperationCHAN.Areas.Settings.Pages
 @using OperationCHAN.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @model OperationCHAN.Areas.Settings.Pages.Admin
@@ -12,6 +13,7 @@
         <h1 class="text-white mb-4 mt-5">Settings</h1>
         
         <div class="container">
+            
             
             <div id="navbar" class="row">
                 <div id="left" class="header col-sm">
@@ -29,7 +31,7 @@
         
         @{await Html.RenderPartialAsync("_SettingsPartial");}
         @{await Html.RenderPartialAsync("_TimeEditPartial");}
-        @{await Html.RenderPartialAsync("_SettingsPartial");}
+        @{await Html.RenderPartialAsync("_UsersPartial");}
         
     </div>
 </div>

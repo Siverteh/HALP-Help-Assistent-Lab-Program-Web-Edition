@@ -8,7 +8,7 @@
                     <th>
                         <input asp-for="@Model.Link" style="width: 100%" placeholder="https://cloud.timeedit.net/uia/web/tp/123456789.html">
                     </th>
-                    <th><input type="submit"></th>
+                    <th><input type="submit" class="btn addButton" value="Add"></th>
                 </tr>
                 @Html.AntiForgeryToken()
         </form>
@@ -19,7 +19,9 @@
                 var l = link.CourseLinks.Replace("ics", "html");
               <tr>
                   <th><a href="@l" target="_blank">@l</a></th>
-                  <th></th>
+                  <th>
+                      <button type="submit" onclick="archive(event)" class="btn rmButton">Remove</button>
+                  </th>
               </tr>
           }
         }

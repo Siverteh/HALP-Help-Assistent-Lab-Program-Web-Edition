@@ -1,7 +1,6 @@
 ﻿@page
 @using Microsoft.AspNetCore.Identity
 @using OperationCHAN.Models
-@inject SignInManager<ApplicationUser> SignInManager
 @model OperationCHAN.Areas.Settings.Pages.Studass
 
 @{
@@ -15,10 +14,10 @@
             
             <div id="navbar text-white" class="row">
                 <div id="btn_settings" class="header col-sm">
-                    <button class="headerButton" onclick="showSettings(event)">Settings</button>
+                    <button class="headerButton" onclick="showSettings()">Settings</button>
                 </div>
                 <div id="btn_timeedit" class="header col-sm">
-                    <button onclick="showTimeEdit(event)" class="headerButton">TimeEdit</button>
+                    <button onclick="showTimeEdit()" class="headerButton">TimeEdit</button>
                 </div>
             </div>
             

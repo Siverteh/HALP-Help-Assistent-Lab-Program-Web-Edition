@@ -6,7 +6,14 @@ var settingsButton = document.getElementById("btn_settings");
 var timeeditButton = document.getElementById("btn_timeedit")
 var usersButton = document.getElementById("btn_users")
 
+if(window.location.hash == '#timeedit'){
+    showTimeEdit();
+} else {
+    showSettings();
+}
+
 function showSettings() {
+    window.location.hash = "#settings";
     settingsButton.style.backgroundColor = "#004A82";
     settingsView.style.display = "block";
     hideTimeEdit();
@@ -18,6 +25,7 @@ function hideSettings() {
 }
 
 function showTimeEdit() {
+    window.location.hash = "#timeedit";
     timeeditButton.style.backgroundColor = "#004A82";
     timeeditView.style.display = "block";
     hideSettings();

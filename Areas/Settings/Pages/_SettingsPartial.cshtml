@@ -1,3 +1,14 @@
 ﻿<div id="settings" class="text-white mb-4 mt-5">
-    Settings
+    <form action="https://localhost:7006/Identity/Account/Manage">
+        <input type="submit" class="btn cnButton" value="Change Nickname">
+    </form>
+    <form action="https://localhost:7006/Identity/Account/Manage/ChangePassword">
+        <input type="submit" class="btn cpButton" value="Change Password">
+    </form>
+    <form action="https://localhost:7006/Identity/Account/Manage/ExternalLogins">
+        <input type="submit" class="btn loButton" value="Log out of external services">
+    </form>
+        <form action="https://localhost:7006/Identity/Account/Manage/PersonalData">
+        <input type="submit" class="btn loButton" value="Delete personal data">
+        </form>
 </div>
