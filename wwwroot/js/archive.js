@@ -9,24 +9,18 @@ async function sendCourseCode(){
         connection.invoke("AddToGroup", courseCode).catch(function (err) {
             return console.error(err.toString());
         });
-        console.log("Connected");
     } else {
         setTimeout(() => sendCourseCode(), 500)
     }
 }
 
-// Receive message
-connection.on("UserAdded",() => {
-    console.log("Good to go");
+// Inserts a new cell into the table
+connection.on("AddToArchive", (id, nickname, description, status, room) => {
+    insertCell(id, nickname, description, status, room);
 });
 
 // Inserts a new cell into the table
-connection.on("AddToArchive", (id, nickname, description, room) => {
-    insertCell(id, nickname, description, room);
-});
-
-// Inserts a new cell into the table
-function insertCell(id, nickname, description, room) {
+function insertCell(id, nickname, description, status, room) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
     var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
     newRow.id = id;
@@ -43,7 +37,7 @@ function insertCell(id, nickname, description, room) {
     var ct_nick  = document.createTextNode(nickname);
     var ct_desc  = document.createTextNode(description);
     var ct_room  = document.createTextNode(room);
-    var ct_stat  = document.createTextNode("Finished");
+    var ct_stat  = document.createTextNode(status);
     var ct_uaButton = document.createElement("button");
     ct_uaButton.innerHTML = "Unarchive";
     ct_uaButton.type = "submit";
@@ -59,6 +53,11 @@ function insertCell(id, nickname, description, room) {
     c_uaButton.appendChild(ct_uaButton);
 }
 
+// Receive message
+connection.on("RemoveFromArchive", (id) => {
+    removeCell(id)
+});
+
 function removeCell(id) {
     const row = document.getElementById(id);
     row.remove();
@@ -72,7 +71,6 @@ function unArchive(event) {
     var description = tr.children[1].innerText;
     var room = tr.children[2].innerText;
     connection.invoke("RemoveFromArchive", id, courseCode, nickname, description, room)
-        .then(() => removeCell(id))
         .catch(function (err) {
         return console.error(err.toString());
     });

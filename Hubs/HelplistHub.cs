@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore.Storage;
 using NuGet.Protocol;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
@@ -23,6 +24,11 @@ namespace OperationCHAN.Hubs
         public async Task AddToHelplist(int ticketID, string course, string nickname, string description, string room)
         {
             await Clients.Groups(course).SendAsync("AddToHelplist", ticketID, nickname, description, room);
+        }
+        
+        public async Task AddToArchive(int ticketID, string course, string nickname, string description, string status, string room)
+        {
+            await Clients.Groups(course).SendAsync("AddToArchive", ticketID, nickname, description, status, room);
         }
         public async Task<int> CreateTicket(string nickname, string description, string room)
         {
@@ -55,21 +61,21 @@ namespace OperationCHAN.Hubs
 
             return t.Entity.Id;
         }
-
+        
         
         /// <summary>
         /// Adds an ticket to the archive
         /// </summary>
         /// <param name="ticketID">The ID of the ticket in the database</param>
-        /// <param name="nickname">The nickname to show</param>
-        /// <param name="description">The description to show</param>
-        /// <param name="course">The room you are in</param>
-        public async Task AddToArchive(int ticketID, string course, string nickname, string description, string room)
+        public async Task RemoveFromHelplist(int ticketID)
         {
+            var ticket = _db.HelpList.First(t => t.Id == ticketID);
+            Console.WriteLine(ticket.Course);
+            await AddToArchive(ticket.Id, ticket.Course, ticket.Nickname, ticket.Description, ticket.Status, ticket.Room);
 
             SetTicketStatus(ticketID, "Finished");
 
-            await Clients.Groups(course).SendAsync("AddToArchive", ticketID, nickname, description, room);
+            await Clients.Groups(ticket.Course).SendAsync("RemoveFromHelplist", ticketID);
         }
 
         /// <summary>
@@ -82,27 +88,18 @@ namespace OperationCHAN.Hubs
             await AddToHelplist(ticketID, course, nickname, description, room);
 
             SetTicketStatus(ticketID, "Waiting");
+            
+            await Clients.Groups(course).SendAsync("RemoveFromArchive", ticketID);
+            
         }
         
-        private bool SetTicketStatus(int id, string status)
+        private void SetTicketStatus(int id, string status)
         {
             var ticket = _db.HelpList.First(ticket => ticket.Id == id);
             ticket.Status = status;
             _db.SaveChangesAsync();
-            return true;
         }
-
-        /// <summary>
-        /// Send a message to a specific group
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="nickname"></param>
-        /// <param name="description"></param>
-        /// <param name="course"></param>
-        public async Task SendMessageToGroup(string nickname, string description, string course)
-        {
-            await Clients.Group(course).SendAsync("UserAdded", nickname, description, course);
-        }
+        
 
         /// <summary>
         /// Add the user to the group
@@ -111,7 +108,6 @@ namespace OperationCHAN.Hubs
         public async Task AddToGroup(string course)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, course);
-            await Clients.Group(course).SendAsync("UserAdded");
         }
 
         /// <summary>
@@ -121,8 +117,6 @@ namespace OperationCHAN.Hubs
         public async Task RemoveFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-
-            //await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
         }
     }
 }
