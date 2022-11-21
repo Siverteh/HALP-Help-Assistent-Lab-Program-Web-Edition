@@ -54,9 +54,9 @@ function insertCell(id, nickname, description, status, room) {
 }
 
 // Receive message
-connection.on("RemoveFromArchive", (id) => {
-    removeCell(id)
-});
+connection.on("RemoveFromArchive",
+    (id) => removeCell(id)
+);
 
 function removeCell(id) {
     const row = document.getElementById(id);
@@ -67,11 +67,7 @@ function removeCell(id) {
 function unArchive(event) {
     var tr = event.target.parentNode.parentNode;
     var id = parseInt(tr.id);
-    var nickname = tr.children[0].innerText;
-    var description = tr.children[1].innerText;
-    var room = tr.children[2].innerText;
-    connection.invoke("RemoveFromArchive", id, courseCode, nickname, description, room)
-        .catch(function (err) {
-        return console.error(err.toString());
-    });
+    
+    connection.invoke("RemoveFromArchive", id)
+        .catch(err => console.error(err.toString()));
 }

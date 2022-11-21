@@ -30,7 +30,7 @@ function insertCell(id, nickname, description, room) {
     var c_nick  = newRow.insertCell(0);
     var c_desc  = newRow.insertCell(1);
     var c_room  = newRow.insertCell(2);
-    var c_uaButton  = newRow.insertCell(4);
+    var c_uaButton  = newRow.insertCell(3);
     c_uaButton.classList.add("tdButton");
 
     // Create a text node
@@ -52,25 +52,20 @@ function insertCell(id, nickname, description, room) {
 }
 
 // Receive message
-connection.on("RemoveFromHelplist", (id) => {
-    removeCell(id)
-});
+connection.on("RemoveFromHelplist",
+    (id) => removeCell(id)
+);
 
 function removeCell(id) {
     const row = document.getElementById(id);
     row.remove();
 }
 
-
 // Button for archiving student
-async function archive(event) {
+function archive(event) {
     var tr = event.target.parentNode.parentNode;
     var id = parseInt(tr.id);
-    
 
-    await connection.invoke("RemoveFromHelplist", id)
-        .then(() =>  removeCell(id))
+    connection.invoke("RemoveFromHelplist", id)
         .catch((err) => console.error(err.toString()));
-    
-   
 }
