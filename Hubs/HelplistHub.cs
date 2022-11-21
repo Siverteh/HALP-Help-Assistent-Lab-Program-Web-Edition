@@ -129,8 +129,6 @@ namespace OperationCHAN.Hubs
         {
             var ticket = _db.HelpList.Where(ticket => ticket.Id == ticketID);
             Console.WriteLine(ticket);
-            // Remove student from the helplist
-            await RemoveFromHelplist(ticketID, ticket.First().Course);
 
             SetTicketStatus(ticketID, "Removed");
 

@@ -6,7 +6,6 @@ connection.start().then(sendCourseCode);
 
 async function sendCourseCode(){
     if (connection._connectionState === "Connected") {
-        console.log(courseCode)
         connection.invoke("AddToGroup", courseCode).catch(function (err) {
             return console.error(err.toString());
         });
