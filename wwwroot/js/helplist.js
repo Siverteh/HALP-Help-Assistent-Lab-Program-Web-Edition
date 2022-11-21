@@ -64,6 +64,7 @@ function removeCell(id) {
     row.remove();
 }
 
+
 // Button for archiving student
 function archive(event) {
     var tr = event.target.parentNode.parentNode;
