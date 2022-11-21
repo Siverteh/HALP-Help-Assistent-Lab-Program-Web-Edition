@@ -46,6 +46,7 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\LICENSE" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\README.md" />
       <_ContentIncludedByDefault Remove="wwwroot\js\signalr\dist\browser\signalr.js" />
+      <_ContentIncludedByDefault Remove="Views\AccessDenied\index.cshtml" />
     </ItemGroup>
 
 </Project>
