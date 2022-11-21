@@ -105,5 +105,17 @@ namespace OperationCHAN.Hubs
 
             //await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
         }
+        
+        public async Task RemovedByUser(int ticketID)
+        {
+            var ticket = _db.HelpList.Where(ticket => ticket.Id == ticketID);
+            Console.WriteLine(ticket);
+            // Remove student from the helplist
+            await RemoveFromHelplist(ticketID, ticket.First().Course);
+
+            SetTicketStatus(ticketID, "Removed");
+
+            await Clients.Groups(ticket.First().Course).SendAsync("AddToArchive", ticketID, ticket.First().Nickname, ticket.First().Description);
+        }
     }
 }

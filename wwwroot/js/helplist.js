@@ -6,6 +6,7 @@ connection.start().then(sendCourseCode);
 
 async function sendCourseCode(){
     if (connection._connectionState === "Connected") {
+        console.log(courseCode)
         connection.invoke("AddToGroup", courseCode).catch(function (err) {
             return console.error(err.toString());
         });
@@ -65,6 +66,7 @@ function removeCell(id) {
     const row = document.getElementById(id);
     row.remove();
 }
+
 
 // Button for archiving student
 function archive(event) {
