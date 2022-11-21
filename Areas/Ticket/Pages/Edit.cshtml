@@ -1,0 +1,63 @@
+﻿@page "{id}"
+@model OperationCHAN.Areas.Ticket.Pages.Edit
+@using Microsoft.AspNetCore.Identity
+@using OperationCHAN.Models
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Edit ticket";
+}
+<div class="box">
+    <div class="text-center">
+        <h1 class="text-white mb-4 mt-5">Edit ticket</h1>
+        
+        <div class="container">
+            @* <form method="post"> *@
+            <div class="row mb-4 justify-content-md-center">
+                <div class="col col-sm-12 col-md-6">
+                    <input
+                            id="nickname"
+                            @* asp-for="Nickname" *@
+                            class="form-control form-control-lg"
+                            placeholder="Name"
+                            value="@Model.Helplist.First().Nickname"
+                            aria-required="true"/>
+                </div>
+            </div>
+
+            <div class="row mb-4 justify-content-md-center">
+                <div class="col col-sm-12 col-md-6">
+                    
+                    <textarea
+                        id="description"
+                        rows="5"
+                        type="text"
+                        @* asp-for="Description" *@
+                        class="form-control form-control-lg"
+                        placeholder="Description"
+                        aria-required="true">@Model.Helplist.First().Description</textarea>
+                    @* <span asp-validation-for="Description" class="text-danger"></span> *@
+                </div>
+            </div>
+            
+            <div class="row justify-content-md-center">
+                            <div class="col col-sm-4 col-md-4">
+                                <input
+                                    class="form-control form-control-lg"
+                                    list="datalistOptions"
+                                    placeholder="Room"
+                                    value="@Model.Helplist.First().Room"
+                                    id="room">
+                                @* <span asp-validation-for="Room" class="text-danger"></span> *@
+                            </div>
+                        </div>
+
+            <span id="validation" class="text-danger"></span><br/>
+            
+            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="onEdit(@Model.Helplist.First().Id)">Send</button>
+            @* </form> *@
+        </div>
+    </div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/ticket.js"></script>
