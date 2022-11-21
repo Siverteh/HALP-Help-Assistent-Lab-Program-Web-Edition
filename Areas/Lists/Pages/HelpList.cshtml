@@ -26,6 +26,7 @@
     <tr>
         <th>Nickname</th>
         <th>Description</th>
+        <th>Room</th>  
         <th>Status</th>
         <th></th>
     </tr>
@@ -35,6 +36,7 @@
             <tr id="@ticket.Id">
                 <td>@Html.DisplayFor(item => ticket.Nickname)</td>
                 <td>@Html.DisplayFor(item => ticket.Description)</td>
+                <td>@Html.DisplayFor(item => ticket.Room)</td>
                 <td>@Html.DisplayFor(item => ticket.Status)</td>
                 <td class="tdButton">
                     <button type="submit" onclick="archive(event)" class="btn uaButton">Archive</button>

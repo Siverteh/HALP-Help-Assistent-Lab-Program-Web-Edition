@@ -22,12 +22,12 @@ connection.on("UserAdded",() => {
 });
 
 // Receive message
-connection.on("AddToHelplist", (id, nickname, description) => {
-    insertCell(id, nickname, description);
+connection.on("AddToHelplist", (id, nickname, description, room) => {
+    insertCell(id, nickname, description, room);
 });
 
 // Inserts a new cell into the table
-function insertCell(id, nickname, description) {
+function insertCell(id, nickname, description, room) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
     var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
     newRow.id = id;
@@ -35,13 +35,15 @@ function insertCell(id, nickname, description) {
     // Insert a cell in the row at index 
     var c_nick  = newRow.insertCell(0);
     var c_desc  = newRow.insertCell(1);
-    var c_stat  = newRow.insertCell(2);
-    var c_uaButton  = newRow.insertCell(3);
+    var c_room  = newRow.insertCell(2);
+    var c_stat  = newRow.insertCell(3);
+    var c_uaButton  = newRow.insertCell(4);
     c_uaButton.classList.add("tdButton");
 
     // Create a text node
     var ct_nick  = document.createTextNode(nickname);
     var ct_desc  = document.createTextNode(description);
+    var ct_room  = document.createTextNode(room);
     var ct_stat  = document.createTextNode("Finished");
     var ct_uaButton = document.createElement("button");
     ct_uaButton.innerHTML = "Archive";
@@ -53,14 +55,10 @@ function insertCell(id, nickname, description) {
     // Append a text node to the cell
     c_nick.appendChild(ct_nick);
     c_desc.appendChild(ct_desc);
+    c_room.appendChild(ct_room);
     c_stat.appendChild(ct_stat);
     c_uaButton.appendChild(ct_uaButton);
 }
-
-// Receive message
-connection.on("RemoveFromHelplist", (id) => {
-    removeCell(id)
-});
 
 function removeCell(id) {
     const row = document.getElementById(id);
@@ -74,7 +72,10 @@ function archive(event) {
     var id = parseInt(tr.id);
     var nickname = tr.children[0].innerText;
     var description = tr.children[1].innerText;
-    connection.invoke("AddToArchive", id, courseCode, nickname, description).catch(function (err) {
+    var room = tr.children[2].innerText;
+    connection.invoke("AddToArchive", id, courseCode, nickname, description, room)
+        .then(() =>  removeCell(id))
+        .catch(function (err) {
         return console.error(err.toString());
     });
 }
