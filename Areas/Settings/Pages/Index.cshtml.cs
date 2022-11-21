@@ -17,14 +17,21 @@ public class Settings : PageModel
     }
 
     public IEnumerable<CourseLinksModel> Links { get; set; }
-    public IQueryable<ApplicationUser>? user { get; set; }
-    
+    public string Role { get; set; }
+    public IEnumerable<ApplicationUser> Users { get; set; }
+    public IEnumerable<CourseModel> Courses { get; set; }
+
 
     public void OnGet()
     {
         Links = _db.CourseLinks.ToList();
+        Users = _db.Users.ToList();
+        Courses = _db.Courses.ToList();
         var loggedInUser = _um.GetUserAsync(User).Result;
-        user = _db.Users.Where(u => u.Id == loggedInUser.Id);
+        if (loggedInUser != null)
+        {
+            Role = loggedInUser.Role;
+        }
     }
     
     [BindProperty] public string? Link { get;set; }

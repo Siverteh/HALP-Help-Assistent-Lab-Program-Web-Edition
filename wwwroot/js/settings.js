@@ -52,3 +52,24 @@ function hideTimeEdit() {
     timeeditButton.style.backgroundColor = "#07c";
     timeeditView.style.display = "none";
 }
+
+function searchTable(event) {
+    // Declare variables
+    var input, filter, table, tds, i, txtValue;
+    table = event.target.parentNode.children[1];
+    input = event.target;
+    filter = input.value.toUpperCase();
+    //table = document.getElementById("users_table");
+    tds = table.getElementsByTagName("td");
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < tds.length; i++) {
+        var td = tds[i];
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tds[i].style.display = "";
+        } else {
+            tds[i].style.display = "none";
+        }
+    }
+}
