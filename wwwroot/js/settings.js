@@ -1,15 +1,30 @@
 var settingsView = document.getElementById("settings");
 var timeeditView = document.getElementById("timeedit");
-var usersView = document.getElementById("users");
+var rolesView = document.getElementById("roles");
 
 var settingsButton = document.getElementById("btn_settings");
 var timeeditButton = document.getElementById("btn_timeedit")
-var usersButton = document.getElementById("btn_users")
+var rolesButton = document.getElementById("btn_roles")
 
 if(window.location.hash == '#timeedit'){
     showTimeEdit();
+} else if (window.location.hash == '#roles') {
+    showRoles();
 } else {
     showSettings();
+}
+
+function showRoles() {
+    window.location.hash = "#roles";
+    rolesButton.style.backgroundColor = "#004A82";
+    rolesView.style.display = "block";
+    hideTimeEdit();
+    hideSettings();
+}
+
+function hideRoles() {
+    rolesButton.style.backgroundColor = "#07c";
+    rolesView.style.display = "none";
 }
 
 function showSettings() {
@@ -17,6 +32,7 @@ function showSettings() {
     settingsButton.style.backgroundColor = "#004A82";
     settingsView.style.display = "block";
     hideTimeEdit();
+    hideRoles();
 }
 
 function hideSettings() {
@@ -29,6 +45,7 @@ function showTimeEdit() {
     timeeditButton.style.backgroundColor = "#004A82";
     timeeditView.style.display = "block";
     hideSettings();
+    hideRoles();
 }
 
 function hideTimeEdit() {

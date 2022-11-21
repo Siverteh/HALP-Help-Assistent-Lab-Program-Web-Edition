@@ -1,30 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
 
 namespace OperationCHAN.Areas.Settings.Pages;
 
-public class Studass : PageModel
+public class Settings : PageModel
 {
     private readonly ApplicationDbContext _db;
-    public Studass(ApplicationDbContext db)
+    private readonly UserManager<ApplicationUser> _um;
+    public Settings(ApplicationDbContext db, UserManager<ApplicationUser> um)
     {
         _db = db;
+        _um = um;
     }
-    
+
     public IEnumerable<CourseLinksModel> Links { get; set; }
+    public IQueryable<ApplicationUser>? user { get; set; }
+    
 
     public void OnGet()
     {
         Links = _db.CourseLinks.ToList();
+        var loggedInUser = _um.GetUserAsync(User).Result;
+        user = _db.Users.Where(u => u.Id == loggedInUser.Id);
     }
     
     [BindProperty] public string? Link { get;set; }
-    
+
     public async Task<IActionResult> OnPostAsync()
     {
-        Links = _db.CourseLinks.ToList();
         if (Link == null)
         {
             return Page();
@@ -45,6 +51,6 @@ public class Studass : PageModel
         Timeedit t = new Timeedit(_db);
         await t.GetData(Link);
 
-        return Page();
+        return Redirect("~/settings/studass");
     }
 }

@@ -21,5 +21,7 @@ public class ApplicationUser : IdentityUser
 
     public Studas Studas { get; set; } = null!;
 
-     public string StudasId { get; set; } = String.Empty;
+    public string StudasId { get; set; } = String.Empty;
+     
+    public string Role { get; set; } = "user";
 }
