@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OperationCHAN.Models;
 
@@ -90,7 +91,7 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
             [Required] public string Nickname { get; set; }
             [Required] public string DiscordTag { get; set; }
         }
-        
+
         public IActionResult OnGet() => RedirectToPage("./Login");
 
         public IActionResult OnPost(string provider, string returnUrl = null)
@@ -145,6 +146,17 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
                         DiscordTag = info.Principal.FindFirstValue(ClaimTypes.Name) + "#" +
                                      info.Principal.FindFirstValue(ClaimTypes.PostalCode)
                     };
+                    var bypass = await _userManager.Users.ToListAsync();
+                    var bypassUser = bypass.Where(x => x.Email == Input.Email).ToList();
+                    if (bypassUser.Count != 0)
+                    {
+                        if (bypassUser.First().Email == Input.Email)
+                        {
+                            await _signInManager.SignInAsync(bypassUser.First(), isPersistent: false,
+                                info.LoginProvider);
+                            return LocalRedirect(returnUrl);
+                        }
+                    }
                 }
 
                 return Page();
@@ -166,7 +178,6 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                Console.Write(Input.Email + "sondre" + Input.Nickname);
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
 
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -211,9 +222,6 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
 
         private ApplicationUser CreateUser()
         {
-            Console.Write(Input.Email + "sondre" + Input.Nickname);
-            Console.Write("444444444444444444444444444444");
-            Console.WriteLine("44444444444444444444444444444444");
             try
             {
                 return Activator.CreateInstance<ApplicationUser>();
