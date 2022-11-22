@@ -1,5 +1,9 @@
 using System.Globalization;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using OperationCHAN.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -29,15 +33,34 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddAuthentication().AddDiscord(options =>
 {
+    
     options.Scope.Add("identify");
     options.Scope.Add("email");
     options.ClientId = builder.Configuration["Discord:ClientId"];
     options.ClientSecret = builder.Configuration["Discord:ClientSecret"];
     options.SaveTokens = true;
     options.AccessDeniedPath = "/Home/DiscordAuthFailed";
-    options.ClaimActions.MapCustomJson("urn:discord:avatar:url", user => string.Format(
-        CultureInfo.InvariantCulture, 
-        user.GetString("id")));
+    options.UserInformationEndpoint = "https://discord.com/api/users/@me";
+    options.ClaimActions.MapJsonKey(ClaimTypes.Name, "username");
+    options.ClaimActions.MapJsonKey(ClaimTypes.PostalCode, "discriminator");
+
+    options.Events = new OAuthEvents
+    {
+        OnCreatingTicket = async context =>
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+            
+            var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
+            response.EnsureSuccessStatusCode();
+            
+            var user = JsonDocument.Parse(await response.Content.ReadAsStringAsync()).RootElement;
+            
+            context.RunClaimActions(user);
+        }
+    };
+
 });
 
 builder.Services.AddSignalR();
