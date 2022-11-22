@@ -1,0 +1,48 @@
+﻿@page "{id}"
+@model OperationCHAN.Areas.Lists.Pages.Archive
+
+<script type="text/javascript">
+    let courseCode = "@RouteData.Values["id"]";
+    courseCode = courseCode.toString();
+</script>
+
+@{
+    ViewData["Title"] = "Lab Archive";
+}
+
+<body>
+<div class="navbar d-flex flex-row">
+    
+    <div class="col-sm" id="queue-title">Lab Archive @RouteData.Values["id"]</div>
+    
+    <a class="nav-link text-white" href="/Lists/Helplist/@RouteData.Values["id"]">Back</a>
+
+</div>
+<table id="table">
+    <tr>
+        <th>Nickname</th>
+        <th>Description</th>
+        <th>Room</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+    @{
+        foreach (var entry in Model.ListItems)
+        {
+            <tr id="@entry.Id">
+                <td>@Html.DisplayFor(item => entry.Nickname)</td>
+                <td>@Html.DisplayFor(item => entry.Description)</td>
+                <td>@Html.DisplayFor(item => entry.Room)</td>
+                <td>@Html.DisplayFor(item => entry.Status)</td>
+                <td class="tdButton">
+                    <button type="submit" onclick="unArchive(event)" class="btn uaButton">Unarchive</button>
+                </td>
+            </tr>
+        }
+    }
+</table>
+</body>
+
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/archive.js"></script>
+

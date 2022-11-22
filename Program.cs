@@ -25,6 +25,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<IdentityOptions>(opts => { opts.SignIn.RequireConfirmedEmail = true; });
@@ -86,7 +87,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Error/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -102,10 +103,6 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.MapHub<HelplistHub>("/chatHub");
-
-// Route added for debugging purposes, to see all available endpoints
-app.MapGet("/debug/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
-    string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
 
 // Start TimeEdit loop
 new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();

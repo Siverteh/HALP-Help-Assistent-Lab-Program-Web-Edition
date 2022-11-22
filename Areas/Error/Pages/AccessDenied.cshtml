@@ -1,12 +1,23 @@
-﻿@{
+﻿@page
+@model OperationCHAN.Areas.Error.Pages.AccessDenied
+
+@{
     ViewData["Title"] = "Access denied";
 }
+
+
+<script type="text/javascript">
+    function onClick() {
+        location.replace("/")
+    }
+</script>
+
 <div class="box">
     <div class="text-center">
         <h1 class="text-white mb-4 mt-5">SHIIIET (401)</h1>
         <img src="img/notPass.gif" alt="you should not pass"/>
         <div class="container justify-content-md-center w-50">
-            <button  class="btn btn-md bg-white col-md-6 mb-5" onclick="location.href='@Url.Action("Index","Home")'">Go back to start</button>
+            <button class="btn btn-md bg-white col-md-6 mb-5" onclick="onClick()">Go back to start</button>
         </div>
     </div>
 </div>

@@ -1,0 +1,32 @@
+﻿@page "{id}"
+@using Microsoft.AspNetCore.Identity
+@using OperationCHAN.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@model OperationCHAN.Areas.Ticket.Pages.Queue
+
+@{
+    ViewData["Title"] = "Your place in queue";
+}
+
+
+<div class="box mt-5" style="width: 40%; margin: auto" xmlns="http://www.w3.org/1999/html">
+    <div class="text-center ">
+        
+        <h3 class="text-white mb-2">HI @Model.Ticket.First().Nickname</h3>
+
+        <h5 class="text-white mb-1">YOU ARE NUMBER</h5>
+        
+        <h1 class="display-1 text-white mb-1">@Model.Count</h1>
+        
+        <h5 class="text-white mb-1">IN THE QUEUE</h5>
+        
+        <span id="validation" class="text-danger"></span><br/>
+            
+        <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="removeTicket(@Model.Ticket.First().Id)">DONE</button>
+          
+    </div>
+</div>
+
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+
+<script src="~/js/queue.js"></script>
