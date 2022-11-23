@@ -8,7 +8,9 @@
                     <td>
                         <input style="width: 100%" placeholder="https://cloud.timeedit.net/uia/web/tp/123456789.html">
                     </td>
-                    <td><input type="submit" class="btn addButton" value="Add"></td>
+                    <td>
+                        <button type="submit" onclick="addTimeeditLink(event)" class="btn rmButton">Add</button>
+                    </td>
                 </tr>
                 @Html.AntiForgeryToken()
         </form>
@@ -16,11 +18,13 @@
         @{
             foreach (var link in Model.Links)
             {
-                var l = link.CourseLinks.Replace("ics", "html");
+                var l = link.CourseLink.Replace("ics", "html");
               <tr>
-                  <td><a href="@l" target="_blank">@l</a></td>
                   <td>
-                      <button type="submit" onclick="archive(event)" class="btn rmButton">Remove</button>
+                      <a href="@l" target="_blank">@l</a>
+                  </td>
+                  <td>
+                      <button value="@l" type="submit" onclick="removeTimeeditLink(event)" class="btn rmButton">Remove</button>
                   </td>
               </tr>
           }

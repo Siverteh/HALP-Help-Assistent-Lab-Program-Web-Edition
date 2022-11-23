@@ -37,7 +37,7 @@ public class Settings : PageModel
         }
     }
     
-    [BindProperty] public string? Link { get;set; }
+    /*[BindProperty] public string? Link { get;set; }
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -61,5 +61,5 @@ public class Settings : PageModel
         Timeedit t = new Timeedit(_db);
         await t.GetData(Link);
         return Redirect("~/settings/studass");
-    }
+    }*/
 }

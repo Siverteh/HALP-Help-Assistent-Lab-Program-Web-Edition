@@ -15,20 +15,32 @@ public class SettingsHub : Hub
         _um = um;
     }
 
-    public async Task SetStudass(string userName, string courseCode)
+    public async Task SetStudass(string userName, string courseCode, bool isStudass)
     {
         ApplicationUser user = _db.Users.First(user => user.Nickname == userName);
-        _db.Studas.Add(new Studas(user, courseCode));
+        if (isStudass)
+        {
+            _db.Studas.Add(new Studas(user, courseCode));
+        }
+        else
+        {
+            // Remove studass
+        }
         await _db.SaveChangesAsync();
-        //await Clients.All.SendAsync("Success", ticketID, nickname, description);
     }
     
-    public async Task SetAdmin(string userName)
+    public async Task SetAdmin(string userName, bool isAdmin)
     {
         ApplicationUser user = _db.Users.First(user => user.Nickname == userName);
-        _um.AddToRoleAsync(user, "Admin").Wait();
+        if (isAdmin)
+        {
+            _um.AddToRoleAsync(user, "Admin").Wait();
+        }
+        else
+        {
+            //Remove admin
+        }
         await _db.SaveChangesAsync();
-        //await Clients.All.SendAsync("AddToHelplist", ticketID, nickname, description);
     }
     
     public async Task GetUserData(string userName)
@@ -38,5 +50,21 @@ public class SettingsHub : Hub
         var courses = _db.Studas.Where(studass => studass.ApplicationUserId == user.StudasId)
             .Select(studass => studass.Course).ToList();
         await Clients.Caller.SendAsync("ShowStudent", courses, isAdmin);
+    }
+
+    public async Task AddTimeeditLink(string link)
+    {
+        _db.CourseLinks.Add(new CourseLinksModel(link));
+        _db.SaveChanges();
+    }
+
+    public async Task RemoveTimeeditLink(string link)
+    {
+        var _link = _db.CourseLinks.First(l => l.CourseLink == link);
+        if (_link != null)
+        {
+            _db.CourseLinks.Remove(_link);
+            _db.SaveChanges();
+        }
     }
 }

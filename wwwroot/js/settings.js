@@ -1,11 +1,10 @@
 "use strict";
 
-// SignaR live updates
+// SignalR live updates
 // Initiate connection
 var connection = new signalR.HubConnectionBuilder().withUrl("/settingshub").build();
 connection.start();
 
-// Receive message
 connection.on("ShowStudent",(courses, isAdmin) => {
     console.log("ShowStudent received");
     toggleStudassBoxes(courses);
@@ -22,15 +21,17 @@ function getUserData(event) {
 }
 
 function setStudass(event) {
-    var courseCode = "";
-    connection.invoke("SetStudass", userName, courseCode).catch(function (err) {
+    var courseCode = event.target.id;
+    var isStudass = event.target.checked;
+    connection.invoke("SetStudass", userName, courseCode, isStudass).catch(function (err) {
         return console.error(err.toString());
     });
 }
 
 function setAdmin(event) {
-    var courseCode = "";
-    connection.invoke("SetAdmin", userName, courseCode).catch(function (err) {
+    var courseCode = event.target.id;
+    var isAdmin = event.target.checked;
+    connection.invoke("SetAdmin", userName, courseCode, isAdmin).catch(function (err) {
         return console.error(err.toString());
     });
 }
@@ -51,6 +52,21 @@ function toggleAdminBox(isAdmin) {
         adminBox.checked = false;
     }
     
+}
+
+// Timeedit link stuff
+function addTimeeditLink(event) {
+    var link = event.target.value;
+    connection.invoke("AddTimeeditLink", link).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
+function removeTimeeditLink(event) {
+    var link = event.target.value;
+    connection.invoke("RemoveTimeeditLink", link).catch(function (err) {
+        return console.error(err.toString());
+    });
 }
 
 
