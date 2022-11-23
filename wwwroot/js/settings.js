@@ -8,26 +8,49 @@ connection.start();
 // Receive message
 connection.on("ShowStudent",(courses, isAdmin) => {
     console.log("ShowStudent received");
+    toggleStudassBoxes(courses);
+    toggleAdminBox(isAdmin);
 });
 
-var userID = null;
+var userName = null;
 
-function setUserID(event) {
-    userID = event.target.value;
-}
-
-function setStudass(event) {
-    var courseCode = "";
-    connection.invoke("SetStudass", userID, courseCode).catch(function (err) {
+function getUserData(event) {
+    userName = event.target.value;
+    connection.invoke("GetUserData", userName).catch(function (err) {
         return console.error(err.toString());
     });
 }
 
 function setStudass(event) {
     var courseCode = "";
-    connection.invoke("SetStudass", userID, courseCode).catch(function (err) {
+    connection.invoke("SetStudass", userName, courseCode).catch(function (err) {
         return console.error(err.toString());
     });
+}
+
+function setAdmin(event) {
+    var courseCode = "";
+    connection.invoke("SetAdmin", userName, courseCode).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
+function toggleStudassBoxes(courses) {
+    for (var course in courses) {
+        var studassBox = document.getElementById(course);
+        studassBox.checked = true;
+    }
+}
+
+function toggleAdminBox(isAdmin) {
+    var adminBox = document.getElementById("adminCheckBox");
+    if (isAdmin) {
+        adminBox.checked = true;
+    }
+    else {
+        adminBox.checked = false;
+    }
+    
 }
 
 

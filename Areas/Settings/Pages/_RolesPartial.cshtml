@@ -14,7 +14,7 @@
                     {
                         <tr >
                             <td>
-                                <button type="submit" value="@user.Id" onclick="setUserID(event)" class="btn">@user.Nickname</button>
+                                <button type="submit" value="@user.Nickname" onclick="getUserData(event)" class="btn">@user.Nickname</button>
                             </td>
                         </tr>
                     }
@@ -37,7 +37,7 @@
                                 <td>@course.CourseCode</td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="" onclick="setStudass(event)" id="@course.CourseCode">
                                     </div>
                                 </td>
                             </tr>
@@ -49,7 +49,7 @@
     </div>
     <div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" value="" onclick="setAdmin(event)" id="adminCheckBox">
             <label class="form-check-label" for="flexCheckDefault">
                 Admin
             </label>
