@@ -29,9 +29,8 @@ function setStudass(event) {
 }
 
 function setAdmin(event) {
-    var courseCode = event.target.id;
     var isAdmin = event.target.checked;
-    connection.invoke("SetAdmin", userName, courseCode, isAdmin).catch(function (err) {
+    connection.invoke("SetAdmin", userName, isAdmin).catch(function (err) {
         return console.error(err.toString());
     });
 }
