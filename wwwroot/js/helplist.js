@@ -20,6 +20,18 @@ connection.on("AddToHelplist", (id, nickname, description, room) => {
     insertCell(id, nickname, description, room);
 });
 
+connection.on("UpdateHelplist", (id, nickname, description, room) => {
+    updateCell(id, nickname, description, room);
+});
+
+function updateCell(id, nickname, description, room) {
+    var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
+    //tbodyRef.rows.id == id
+
+    console.log(tbodyRef.rows)
+    console.log(id)
+}
+
 // Inserts a new cell into the table
 function insertCell(id, nickname, description, room) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];

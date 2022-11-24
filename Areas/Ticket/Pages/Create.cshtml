@@ -84,14 +84,14 @@
             </div>
                 
             <br/> 
-            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="onCreate()">Send</button>
+            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Send</button>
             @Html.AntiForgeryToken()
             </form>
         </div>
     </div>
 </div>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-@* <script src="~/js/ticket.js"></script> *@
+<script src="~/js/ticket.js"></script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>

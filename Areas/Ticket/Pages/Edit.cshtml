@@ -34,9 +34,10 @@
                         rows="5"
                         type="text"
                         asp-for="Helplist.Description"
+                        value="@Model.Helplist.Description"
                         class="form-control form-control-lg"
                         placeholder="Description"
-                        aria-required="true">@Model.Helplist.Description</textarea>
+                        aria-required="true"></textarea>
                     <span asp-validation-for="Helplist.Description" class="text-danger"></span>
                 </div>
             </div>
@@ -55,15 +56,13 @@
                         </div>
                 <br/>
             
-            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="onEdit(@Model.Helplist.Id)">Send</button>
+                <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Send</button>
                 @Html.AntiForgeryToken()
             </form>
         </div>
     </div>
 </div>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-@* <script src="~/js/ticket.js"></script> *@
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>

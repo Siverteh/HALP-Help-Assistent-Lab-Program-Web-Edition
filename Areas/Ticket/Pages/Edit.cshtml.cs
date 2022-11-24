@@ -39,23 +39,41 @@ public class Edit : PageModel
         return Page();
     }
     
-    public async Task<IActionResult> OnPatchAsync()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        Console.WriteLine(Helplist.Id);
-        
-        var ticket = _db.HelpList.First(t => t.Id == Helplist.Id);
-       
-        ticket.Room = Helplist.Room;
-        ticket.Nickname = Helplist.Nickname;
-        ticket.Description = Helplist.Description;
-            
-        var t = _db.HelpList.Update(ticket);
-        _db.SaveChanges();
+        var cookie = Request.Cookies["MyTicket"];
+        if (String.IsNullOrEmpty(cookie))
+        {
+            return Redirect("/error/error");
+        }
+        Helplist.Id =  Int32.Parse(cookie);
+        var courses = _db.Courses;//.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now);
+
+        foreach (var c in courses)
+        {
+            if (Helplist.Room == c.CourseRoom1 ||
+                Helplist.Room == c.CourseRoom2 ||
+                Helplist.Room == c.CourseRoom3 ||
+                Helplist.Room == c.CourseRoom4)
+            {
+                Helplist.Course = c.CourseCode;
+            }
+        }
+
+        if (String.IsNullOrEmpty(Helplist.Course))
+        {
+            return Redirect("/error/error");
+        }
+
+        Helplist.Status = "Waiting";
+
+        var t = _db.HelpList.Update(Helplist);
+        await _db.SaveChangesAsync();
 
         await HubContext.Clients.Groups(t.Entity.Course).SendAsync("UpdateHelplist", t.Entity.Id, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
         return Redirect($"~/ticket/queue");
