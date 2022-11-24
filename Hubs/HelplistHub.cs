@@ -24,6 +24,12 @@ namespace OperationCHAN.Hubs
         {
             await Clients.Groups(course).SendAsync("AddToHelplist", ticketID, nickname, description, room);
         }
+        
+        public async Task AddToArchive(int ticketID, string course, string nickname, string description, string status, string room)
+        {
+            await Clients.Groups(course).SendAsync("AddToArchive", ticketID, nickname, description, status, room);
+        }
+        
         public async Task<int> CreateTicket(string nickname, string description, string room)
         {
             var courses = _db.Courses.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now);
