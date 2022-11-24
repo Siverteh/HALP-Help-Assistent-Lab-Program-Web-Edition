@@ -34,7 +34,7 @@ public class Queue : PageModel
         
         if (id == 0)
         {
-            return Redirect("/404");
+            return Redirect("/error/error");
         }
 
         var ticket = _db.HelpList.Where(ticket => ticket.Id == id);
@@ -43,9 +43,9 @@ public class Queue : PageModel
         Ticket = ticket;
         Tickets = tickets;
         
-        if (Ticket.First().Status == "Removed" || Ticket.First().Status == "Finished")
+        if (Ticket.First().Status is "Removed" or "Finished")
         {
-            return Redirect("/identity/error");
+            return Redirect("/error/error");
         }
 
         var count = 0;

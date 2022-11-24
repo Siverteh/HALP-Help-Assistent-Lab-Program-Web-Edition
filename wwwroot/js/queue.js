@@ -9,6 +9,11 @@ function removeTicket(id)
         return console.error(err.toString());
     });
 
-    location.replace("/");
+    redirect("/");
+}
+
+function redirect(url)
+{
+    location.replace(url);
 }
 
