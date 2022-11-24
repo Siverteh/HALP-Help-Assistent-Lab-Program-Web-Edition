@@ -31,20 +31,9 @@ namespace OperationCHAN.Hubs
             await Clients.Groups(course).SendAsync("AddToArchive", ticketID, nickname, description, status, room);
         }
         
-        public async Task<int> EditTicket(int id, string nickname, string description, string room)
+        public async Task UpdateHelplist(int ticketID, string course, string nickname, string description, string room)
         {
-            var ticket = _db.HelpList.First(t => t.Id == id);
-       
-            ticket.Room = room;
-            ticket.Nickname = nickname;
-            ticket.Description = description;
-            
-            var t = _db.HelpList.Update(ticket);
-            _db.SaveChanges();
-            
-            //await AddToHelplist(t.Entity.Id, t.Entity.Course, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
-
-            return t.Entity.Id;
+            await Clients.Groups(course).SendAsync("UpdateHelplist", ticketID, nickname, description, room);
         }
 
         /// <summary>

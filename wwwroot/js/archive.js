@@ -19,6 +19,17 @@ connection.on("AddToArchive", (id, nickname, description, status, room) => {
     insertCell(id, nickname, description, status, room);
 });
 
+connection.on("UpdateHelplist", (id, nickname, description, status, room) => {
+    updateCell(id, nickname, description, status, room);
+});
+
+function updateCell(id, nickname, description, status, room) {
+    var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
+    //tbodyRef.rows.id == id
+    
+    console.log(tbodyRef.rows)
+}
+
 // Inserts a new cell into the table
 function insertCell(id, nickname, description, status, room) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];

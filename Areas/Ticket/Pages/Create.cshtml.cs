@@ -47,16 +47,10 @@ public class Create : PageModel
 
         Ticket.Status = "Waiting";
 
-        await _db.HelpList.AddAsync(Ticket);
+        var t = await _db.HelpList.AddAsync(Ticket);
         await _db.SaveChangesAsync();
         
-        var t = _db.HelpList.First(t => 
-                t.Description == Ticket.Description && 
-                t.Course == Ticket.Course && 
-                t.Nickname == Ticket.Nickname &&
-                t.Status == "Waiting");
-
-        var b = t.Id.ToString();
+        var b = t.Entity.Id.ToString();
         
         var cookieOptions = new CookieOptions
         {
@@ -66,7 +60,7 @@ public class Create : PageModel
         };
         HttpContext.Response.Cookies.Append("MyTicket", b, cookieOptions);
 
-        await HubContext.Clients.Groups(t.Course).SendAsync("AddToHelplist", t.Id, t.Nickname, t.Description, t.Room);
+        await HubContext.Clients.Groups(t.Entity.Course).SendAsync("AddToHelplist", t.Entity.Id, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
         return Redirect($"~/ticket/queue");
         
     }
