@@ -10,7 +10,6 @@
 
     <ItemGroup>
         <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
-        <None Include="wwwroot\img\icon.ico" />
         <None Include="wwwroot\img\notPass.gif" />
     </ItemGroup>
 
@@ -46,6 +45,7 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\LICENSE" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\qrcodejs\README.md" />
       <_ContentIncludedByDefault Remove="wwwroot\js\signalr\dist\browser\signalr.js" />
+      <_ContentIncludedByDefault Remove="Views\AccessDenied\index.cshtml" />
     </ItemGroup>
 
 </Project>
