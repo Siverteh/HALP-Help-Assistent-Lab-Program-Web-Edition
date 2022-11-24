@@ -30,7 +30,7 @@ public class Archive : PageModel
     {
         if (!CourseCodes.Contains(id))
         {
-            return Redirect("/404");
+            return Redirect("/error/error");
         }
         
         // Get all the entries in the Helplist for sending

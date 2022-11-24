@@ -32,7 +32,7 @@ public class HelpList : PageModel
         }
 
         // Get all the entries in the Helplist for sending
-        var tickets = _db.HelpList.Where(ticket => ticket.Status == "Waitning" && ticket.Course == id);
+        var tickets = _db.HelpList.Where(ticket => ticket.Status == "Waiting" && ticket.Course == id);
 
         // Place all entries into the global variable accessible to the cshtml
         Tickets = tickets;

@@ -22,7 +22,7 @@ namespace OperationCHAN.Data
                 Status = "Waiting"
                 
             };
-            db.HelpList.Add(IKT103);
+            db.Add(IKT103);
             
             var FYS129 = new HelplistModel
             {
