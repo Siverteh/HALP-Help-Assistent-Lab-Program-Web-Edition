@@ -16,6 +16,7 @@ namespace OperationCHAN.Data
              var IKT103 = new HelplistModel
             {
                 Room = "C3036",
+                Course = "IKT201-G",
                 Nickname = "Sondre",
                 Description = "How to program?",
                 Status = "Waiting"
@@ -27,6 +28,7 @@ namespace OperationCHAN.Data
             {
                 Room = "A2036",
                 Nickname = "Nikolai",
+                Course = "IKT201-G",
                 Description = "How to know when the worlds ends?",
                 Status = "Finished"
             };

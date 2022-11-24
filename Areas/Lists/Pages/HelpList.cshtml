@@ -26,7 +26,7 @@
     <tr>
         <th>Nickname</th>
         <th>Description</th>
-        <th>Status</th>
+        <th>Room</th>
         <th></th>
     </tr>
     @{
@@ -35,7 +35,7 @@
             <tr id="@ticket.Id">
                 <td>@Html.DisplayFor(item => ticket.Nickname)</td>
                 <td>@Html.DisplayFor(item => ticket.Description)</td>
-                <td>@Html.DisplayFor(item => ticket.Status)</td>
+                <td>@Html.DisplayFor(item => ticket.Room)</td>
                 <td class="tdButton">
                     <button type="submit" onclick="archive(event)" class="btn uaButton">Archive</button>
                 </td>
@@ -45,5 +45,5 @@
 </table>
 </body>
 
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/helplist.js"></script>

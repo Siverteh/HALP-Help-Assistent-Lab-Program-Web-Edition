@@ -2,47 +2,71 @@
 using OperationCHAN.Data;
 using OperationCHAN.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using OperationCHAN.Hubs;
 
 namespace OperationCHAN.Areas.Ticket.Pages;
 
 public class Create : PageModel
 {
     private readonly ApplicationDbContext _db;
-    public Create(ApplicationDbContext db)
+    private readonly IHubContext<HelplistHub> HubContext;
+
+    public Create(ApplicationDbContext db, IHubContext<HelplistHub> hubcontext)
     {
         _db = db;
+        HubContext = hubcontext;
     }
     public IEnumerable<CourseModel> Courses { get; set; }
     public IActionResult OnGet()
     {
-        
-        Courses = _db.Courses.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
+        Courses = _db.Courses.ToList();//.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
         return Page();
     }
-    //
-    // [BindProperty]
-    // public HelplistModel HelplistModel { get; set; }
-    //
-    // public async Task<IActionResult> OnPostAsync()
-    // {
-    //     Console.WriteLine(HelplistModel);
-    //     if (!ModelState.IsValid)
-    //     {
-    //         return Page();
-    //     }
-    //     var date = new DateTime().ToString("dd/MM/yyyy hh:mm");
-    //     HelplistModel.Created = Convert.ToDateTime(date);
-    //     HelplistModel.Status = "Waiting";
-    //     
-    //     var entry = _db.Add(new HelplistModel());
-    //     entry.CurrentValues.SetValues(HelplistModel);
-    //     await _db.SaveChangesAsync();
-    //     return RedirectToPage("./Create");
-    //     _db.HelpList.Add(HelplistModel);
-    //     await _db.SaveChangesAsync();
-    //
-    //     return RedirectToPage("./Create");
-    //     
-    // }
+    
+    [BindProperty] public HelplistModel Ticket { get;set; }
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+
+        var courses = _db.Courses;//.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now);
+
+        foreach (var c in courses)
+        {
+            if (Ticket.Room == c.CourseRoom1 ||
+                Ticket.Room == c.CourseRoom2 ||
+                Ticket.Room == c.CourseRoom3 ||
+                Ticket.Room == c.CourseRoom4)
+            {
+                Ticket.Course = c.CourseCode;
+            }
+        }
+        if (String.IsNullOrEmpty(Ticket.Course))
+        {
+            return Redirect("/error/error");
+        }
+
+        Ticket.Status = "Waiting";
+
+        var t = await _db.HelpList.AddAsync(Ticket);
+        await _db.SaveChangesAsync();
+        
+        var b = t.Entity.Id.ToString();
+        
+        var cookieOptions = new CookieOptions
+        {
+            Expires = DateTime.Now.AddDays(2),
+            IsEssential = true,
+            Secure = true
+        };
+        HttpContext.Response.Cookies.Append("MyTicket", b, cookieOptions);
+
+        await HubContext.Clients.Groups(t.Entity.Course).SendAsync("AddToHelplist", t.Entity.Id, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
+        return Redirect($"~/ticket/queue");
+        
+    }
 
 }
