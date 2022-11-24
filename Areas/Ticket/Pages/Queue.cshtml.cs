@@ -37,7 +37,7 @@ public class Queue : PageModel
         Ticket = ticket;
         Tickets = tickets;
         
-        if (Ticket.First().Status == "Removed" || Ticket.First().Status == "Finished")
+        if (Ticket.First().Status is "Removed" or "Finished")
         {
             return Redirect("/identity/error");
         }
