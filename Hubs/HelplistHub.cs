@@ -26,11 +26,11 @@ namespace OperationCHAN.Hubs
         {
             await Clients.Groups(course).SendAsync("AddToHelplist", ticketID, nickname, description, room);
         }
-        
         public async Task AddToArchive(int ticketID, string course, string nickname, string description, string status, string room)
         {
             await Clients.Groups(course).SendAsync("AddToArchive", ticketID, nickname, description, status, room);
         }
+        
         public async Task<int> EditTicket(int id, string nickname, string description, string room)
         {
             var ticket = _db.HelpList.First(t => t.Id == id);
