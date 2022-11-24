@@ -31,40 +31,7 @@ namespace OperationCHAN.Hubs
         {
             await Clients.Groups(course).SendAsync("AddToArchive", ticketID, nickname, description, status, room);
         }
-        
-        public async Task<int> CreateTicket(string nickname, string description, string room)
-        {
-            var courses = _db.Courses.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now);
-            var course = "";
-            
-            foreach (var c in courses)
-            {
-                    if (room == c.CourseRoom1 ||
-                        room == c.CourseRoom2 ||
-                        room == c.CourseRoom3 ||
-                        room == c.CourseRoom4)
-                {
-                    course = c.CourseCode;
-                }
-            }
-            
-            var ticket = new HelplistModel
-            {
-                Room = room,
-                Course = course,
-                Nickname = nickname,
-                Description = description,
-                Status = "Waiting"
-            };
-            var t = _db.HelpList.Add(ticket);
-            _db.SaveChanges();
-            
-            await AddToHelplist(t.Entity.Id, t.Entity.Course, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
 
-            return t.Entity.Id;
-        }
-        
-        
         /// <summary>
         /// Adds an ticket to the archive
         /// </summary>

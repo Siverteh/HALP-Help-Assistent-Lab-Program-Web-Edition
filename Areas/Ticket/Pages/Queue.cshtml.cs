@@ -23,10 +23,16 @@ public class Queue : PageModel
         HelpLists = _db.HelpList.Select(helplist => helplist.Id).Distinct();
     }
 
-    public IActionResult OnGet(int id)
+    public IActionResult OnGet()
     {
-       
-        if (!HelpLists.Contains(id))
+        var id = 0;
+        var cookie = Request.Cookies["MyTicket"];
+        if (!String.IsNullOrEmpty(cookie))
+        { 
+            id = Int32.Parse(cookie);
+        }
+        
+        if (id == 0)
         {
             return Redirect("/404");
         }
