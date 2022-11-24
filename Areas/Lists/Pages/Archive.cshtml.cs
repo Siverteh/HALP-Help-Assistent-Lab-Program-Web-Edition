@@ -34,7 +34,7 @@ public class Archive : PageModel
         }
         
         // Get all the entries in the Helplist for sending
-        var entries = _db.HelpList.Where(ticket => ticket.Status == "Finished" && ticket.Status == "Removed" && ticket.Course == id);
+        var entries = _db.HelpList.Where(ticket => ticket.Status != "Waiting" && ticket.Course == id);
 
         // Place all entries into the global variable accessible to the cshtml
         ListItems = entries;

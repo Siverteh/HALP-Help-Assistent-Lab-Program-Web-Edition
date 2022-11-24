@@ -1,25 +1,25 @@
 ﻿@page
 @using Microsoft.AspNetCore.Identity
 @using OperationCHAN.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject SignInManager<ApplicationUser> SignInManager
 @model OperationCHAN.Areas.Ticket.Pages.Create
 
 @{
     ViewData["Title"] = "Create ticket";
 }
-<div class="box" xmlns="http://www.w3.org/1999/html">
+<div class="box">
     <div class="text-center">
         <h1 class="text-white mb-4 mt-5">New ticket</h1>
         
         <div class="container">
-            @* <form method="post"> *@
+            <form method="post" >
             <div class="row mb-4 justify-content-md-center">
                 <div class="col col-sm-12 col-md-6">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <input
+                        <input asp-for="Ticket.Nickname"
                             id="nickname"
-                            @* asp-for="Nickname" *@
                             class="form-control form-control-lg"
                             placeholder="Name"
                             value="@User.Identity?.Name"
@@ -27,62 +27,72 @@
                     }
                     else
                     {
-                        <input
+                        <input asp-for="Ticket.Nickname"
                             id="nickname"
-                            @* asp-for="Nickname" *@
                             class="form-control form-control-lg"
                             placeholder="Name"
                             aria-required="true"/>
                     }
                   
-                    @* <span asp-validation-for="Nickname" class="text-danger"></span> *@
+                    <span asp-validation-for="Ticket.Nickname" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-4 justify-content-md-center">
                 <div class="col col-sm-12 col-md-6">
                     
-                    <textarea
+                    <textarea asp-for="Ticket.Description"
                         id="description"
                         rows="5"
                         type="text"
-                        @* asp-for="Description" *@
                         class="form-control form-control-lg"
                         placeholder="Description"
                         aria-required="true"></textarea>
-                    @* <span asp-validation-for="Description" class="text-danger"></span> *@
+                    <span asp-validation-for="Ticket.Description" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row justify-content-md-center">
-                <div class="col col-sm-12 col-md-4">
-                                
-                    <input
-                        class="form-control form-control-lg"
-                        list="datalistOptions"
-                        placeholder="Room"
-                        id="room">
+                <div class="col col-sm-4 col-md-4">
+                    <input asp-for="Ticket.Room"
+                           class="form-control form-control-lg"
+                           list="datalistOptions"
+                           placeholder="Room"
+                           aria-required="true"
+                           id="room">
                     <datalist id="datalistOptions">
                         @{foreach (var entry in Model.Courses)
                           {
                               <option value="@entry.CourseRoom1"/>
-                              <option value="@entry.CourseRoom2"/>
-                              <option value="@entry.CourseRoom3"/>
-                              <option value="@entry.CourseRoom4"/>
+                              @if (@entry.CourseRoom2 != "")
+                              {
+                                  <option value="@entry.CourseRoom2"/>
+                              }
+                              @if (@entry.CourseRoom3 != "")
+                              {
+                                  <option value="@entry.CourseRoom3"/>
+                              }
+                              @if (@entry.CourseRoom4 != "")
+                              {
+                                  <option value="@entry.CourseRoom4"/>
+                              }
                           }
                         }
                     </datalist>
-                    @* <span asp-validation-for="Room" class="text-danger"></span> *@
+                    <span asp-validation-for="Ticket.Room" class="text-danger"></span>
                 </div>
             </div>
-            
-            
-            <span id="validation" class="text-danger"></span><br/>
-            
-            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="onCreate()">Send</button>
-            @* </form> *@
+                
+            <br/> 
+            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Send</button>
+            @Html.AntiForgeryToken()
+            </form>
         </div>
     </div>
 </div>
-
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/ticket.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
