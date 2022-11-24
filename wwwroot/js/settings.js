@@ -67,7 +67,7 @@ function clearStudassBoxes() {
 
 // Timeedit link stuff
 function addTimeeditLink(event) {
-    var link = event.target.value;
+    var link = document.getElementById("testform").value;
     connection.invoke("AddTimeeditLink", link).catch(function (err) {
         return console.error(err.toString());
     });

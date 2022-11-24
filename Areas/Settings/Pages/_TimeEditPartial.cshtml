@@ -5,12 +5,14 @@
     <table id="table">
             <form method="post">
                 <tr>
+                    <form id="testform" value="">
                     <td>
                         <input style="width: 100%" placeholder="https://cloud.timeedit.net/uia/web/tp/123456789.html">
                     </td>
                     <td>
-                        <button type="submit" onclick="addTimeeditLink(event)" class="btn rmButton">Add</button>
+                        <button type="submit" onclick="addTimeeditLink(event)" class="btn adButton">Add</button>
                     </td>
+                    </form>
                 </tr>
                 @Html.AntiForgeryToken()
         </form>

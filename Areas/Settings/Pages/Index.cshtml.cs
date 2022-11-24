@@ -60,6 +60,6 @@ public class Settings : PageModel
         await _db.SaveChangesAsync();
         Timeedit t = new Timeedit(_db);
         await t.GetData(Link);
-        return Redirect("~/settings/studass");
+        return Redirect("~/settings/#timeedit");
     }*/
 }
