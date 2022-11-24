@@ -16,7 +16,7 @@ namespace OperationCHAN.Data
              var IKT103 = new HelplistModel
             {
                 Room = "C3036",
-                Course = "FYS129-G",
+                Course = "IKT201-G",
                 Nickname = "Sondre",
                 Description = "How to program?",
                 Status = "Waiting"
