@@ -44,7 +44,7 @@ public class Timeedit
             var links = _db.CourseLinks.ToList();
             foreach (var link in links)
             {
-                await GetDataFromTimeEdit(link.CourseLinks);
+                await GetDataFromTimeEdit(link.CourseLink);
             }
             Thread.Sleep(sleepTime);
             await EmptyTable();

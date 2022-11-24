@@ -1,0 +1,60 @@
+﻿@model OperationCHAN.Areas.Settings.Pages.Settings
+<div id="roles" style="display:none" class="container text-black mb-4 mt-5">
+    <div class="row">
+        <div class="col-sm">
+            <input type="text" id="myInput" onkeyup="searchTable(event)" placeholder="Search for names..">
+            
+            <table id="users_table">
+                <tr>
+                    <th>Nickname</th>
+                </tr>
+                
+                @{
+                    foreach (var user in Model.Users)
+                    {
+                        <tr >
+                            <td>
+                                <button type="submit" value="@user.Nickname" onclick="getUserData(event)" class="btn">@user.Nickname</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <div class="col-sm">
+            <input type="text" id="myInput" onkeyup="searchTable(event)" placeholder="Search for courses..">
+
+            <div style="overflow-y: auto">
+                <table id="courses_table" >
+                    <tr>
+                        <th>Course</th>
+                        <th>Studass</th>
+                    </tr>
+                    @{
+                        foreach (var course in Model.Courses)
+                        {
+                            <tr>
+                                <td>@course</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input studassbox" type="checkbox" value="" onclick="setStudass(event)" id="@course">
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+                </div>
+        </div>
+    </div>
+    <div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" onclick="setAdmin(event)" id="adminCheckBox">
+            <label class="form-check-label" for="flexCheckDefault">
+                Admin
+            </label>
+            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="onCreate()">Save</button>
+        </div>
+        
+    </div>
+</div>

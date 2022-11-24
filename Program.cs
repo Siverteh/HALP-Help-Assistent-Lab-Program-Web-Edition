@@ -12,6 +12,7 @@ using OperationCHAN.Areas.Identity.Services;
 using OperationCHAN;
 using OperationCHAN.Models;
 using Microsoft.AspNetCore.ResponseCompression;
+using NuGet.Configuration;
 using OperationCHAN.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -102,7 +103,8 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.MapHub<HelplistHub>("/chatHub");
+app.MapHub<HelplistHub>("/helplisthub");
+app.MapHub<SettingsHub>("/settingshub");
 
 // Start TimeEdit loop
 new Timeedit(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>()).StartLoop();

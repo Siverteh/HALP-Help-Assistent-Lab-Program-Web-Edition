@@ -32,5 +32,4 @@ public class HelplistModel
     //  Application property
     // Has been set to null to avoid errors in testdata creation. Remove null when using in production.
     public ApplicationUser? ApplicationUser { get; set; }
-    
 }
