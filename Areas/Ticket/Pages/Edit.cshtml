@@ -1,8 +1,9 @@
-﻿@page "{id}"
+﻿@page
 @model OperationCHAN.Areas.Ticket.Pages.Edit
 @using Microsoft.AspNetCore.Identity
 @using OperationCHAN.Models
 @inject SignInManager<ApplicationUser> SignInManager
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Edit ticket";
@@ -12,15 +13,15 @@
         <h1 class="text-white mb-4 mt-5">Edit ticket</h1>
         
         <div class="container">
-            @* <form method="post"> *@
+            <form method="post">
             <div class="row mb-4 justify-content-md-center">
                 <div class="col col-sm-12 col-md-6">
                     <input
                             id="nickname"
-                            @* asp-for="Nickname" *@
+                            asp-for="Helplist.Nickname"
                             class="form-control form-control-lg"
                             placeholder="Name"
-                            value="@Model.Helplist.First().Nickname"
+                            value="@Model.Helplist.Nickname"
                             aria-required="true"/>
                 </div>
             </div>
@@ -32,32 +33,37 @@
                         id="description"
                         rows="5"
                         type="text"
-                        @* asp-for="Description" *@
+                        asp-for="Helplist.Description"
+                        value="@Model.Helplist.Description"
                         class="form-control form-control-lg"
                         placeholder="Description"
-                        aria-required="true">@Model.Helplist.First().Description</textarea>
-                    @* <span asp-validation-for="Description" class="text-danger"></span> *@
+                        aria-required="true"></textarea>
+                    <span asp-validation-for="Helplist.Description" class="text-danger"></span>
                 </div>
             </div>
             
             <div class="row justify-content-md-center">
                             <div class="col col-sm-4 col-md-4">
                                 <input
+                                    asp-for="Helplist.Room"
                                     class="form-control form-control-lg"
                                     list="datalistOptions"
                                     placeholder="Room"
-                                    value="@Model.Helplist.First().Room"
+                                    value="@Model.Helplist.Room"
                                     id="room">
-                                @* <span asp-validation-for="Room" class="text-danger"></span> *@
+                                <span asp-validation-for="Helplist.Room" class="text-danger"></span>
                             </div>
                         </div>
-
-            <span id="validation" class="text-danger"></span><br/>
+                <br/>
             
-            <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="onEdit(@Model.Helplist.First().Id)">Send</button>
-            @* </form> *@
+                <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Send</button>
+                @Html.AntiForgeryToken()
+            </form>
         </div>
     </div>
 </div>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/ticket.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
