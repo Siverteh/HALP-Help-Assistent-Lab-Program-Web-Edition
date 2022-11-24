@@ -37,7 +37,9 @@ function setAdmin(event) {
 }
 
 function toggleStudassBoxes(courses) {
-    for (var course in courses) {
+    clearStudassBoxes();
+    for (var i in courses) {
+        var course = courses[i];
         var studassBox = document.getElementById(course);
         studassBox.checked = true;
     }
@@ -51,7 +53,17 @@ function toggleAdminBox(isAdmin) {
     else {
         adminBox.checked = false;
     }
-    
+}
+
+function clearStudassBoxes() {
+    var checkBoxes = document.getElementsByClassName("studassbox");
+    if (checkBoxes.length == 0) {
+        return;
+    }
+    for (var i=0; i < checkBoxes.length; i++) {
+        var box = checkBoxes[i];
+        box.checked = false;
+    }
 }
 
 // Timeedit link stuff

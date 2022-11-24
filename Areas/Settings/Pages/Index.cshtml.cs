@@ -19,7 +19,7 @@ public class Settings : PageModel
     public IEnumerable<CourseLinksModel> Links { get; set; }
     public string Role { get; set; }
     public IEnumerable<ApplicationUser> Users { get; set; }
-    public IEnumerable<CourseModel> Courses { get; set; }
+    public IEnumerable<string> Courses { get; set; }
     
     public IEnumerable<Studas> Studasses { get; set; }
 
@@ -28,7 +28,7 @@ public class Settings : PageModel
     {
         Links = _db.CourseLinks.ToList();
         Users = _db.Users.ToList();
-        Courses = _db.Courses.ToList();
+        Courses = _db.Courses.Select(course => course.CourseCode).Distinct().ToList();
         Studasses = _db.Studas.ToList();
         var loggedInUser = _um.GetUserAsync(User).Result;
         if (loggedInUser != null)

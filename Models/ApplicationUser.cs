@@ -12,16 +12,16 @@ public class ApplicationUser : IdentityUser
         DiscordTag = discordTag;
     }
     
-    public int Id { get; set; }
+    //public int Id { get; set; }
     public string DiscordTag { get; set; } = String.Empty;
 
     public string Nickname{ get; set; } = String.Empty;
     
     public List<HelplistModel> Helplist { get; set; } = new List<HelplistModel>();
 
-    public Studas Studas { get; set; } = null!;
+    //public Studas Studas { get; set; } = null!;
 
-    public string StudasId { get; set; } = String.Empty;
+    //public string StudasId { get; set; } = String.Empty;
      
     public string Role { get; set; } = "user";
 }

@@ -34,10 +34,10 @@
                         foreach (var course in Model.Courses)
                         {
                             <tr>
-                                <td>@course.CourseCode</td>
+                                <td>@course</td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" onclick="setStudass(event)" id="@course.CourseCode">
+                                        <input class="form-check-input studassbox" type="checkbox" value="" onclick="setStudass(event)" id="@course">
                                     </div>
                                 </td>
                             </tr>

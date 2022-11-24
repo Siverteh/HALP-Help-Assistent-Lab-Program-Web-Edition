@@ -47,7 +47,7 @@ public class SettingsHub : Hub
     {
         var user = _db.Users.First(user => user.Nickname == userName);
         bool isAdmin = user.Role.Equals("admin");
-        var courses = _db.Studas.Where(studass => studass.ApplicationUserId == user.StudasId)
+        var courses = _db.Studas.Where(studass => studass.ApplicationUserId == user.Id)
             .Select(studass => studass.Course).ToList();
         await Clients.Caller.SendAsync("ShowStudent", courses, isAdmin);
     }
