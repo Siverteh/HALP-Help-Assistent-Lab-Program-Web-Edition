@@ -18,6 +18,10 @@
     border: none;
 }
 
+.highlighted {
+    border-color: black;
+}
+
 #myInput {
     background-image: url("/img/searchicon.png"); /* Add a search icon to input */
     background-position: 10px 12px; /* Position the search icon */

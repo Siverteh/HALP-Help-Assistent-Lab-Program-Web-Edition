@@ -14,6 +14,7 @@ connection.on("ShowStudent",(courses, isAdmin) => {
 var userName = null;
 
 function getUserData(event) {
+    highlightName(event);
     userName = event.target.value;
     connection.invoke("GetUserData", userName).catch(function (err) {
         return console.error(err.toString());
@@ -63,6 +64,16 @@ function clearStudassBoxes() {
         var box = checkBoxes[i];
         box.checked = false;
     }
+}
+
+function highlightName(event) {
+    var highlightedTargets = document.getElementsByClassName("highlighted");
+    for (var i=0; i<highlightedTargets.length; i++) {
+        var highlightedTarget = highlightedTargets[i];
+        highlightedTarget.classList.remove("highlighted");
+    }
+    var target = event.target.parentNode;
+    target.classList.add("highlighted")
 }
 
 // Timeedit link stuff

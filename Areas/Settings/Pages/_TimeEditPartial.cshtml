@@ -3,33 +3,35 @@
 
 <div id="timeedit" style="display:none" class="mb-4 mt-5">
     <table id="table">
-            <form method="post">
-                <tr>
-                    <form id="testform" value="">
-                    <td>
-                        <input style="width: 100%" placeholder="https://cloud.timeedit.net/uia/web/tp/123456789.html">
-                    </td>
-                    <td>
-                        <button type="submit" onclick="addTimeeditLink(event)" class="btn adButton">Add</button>
-                    </td>
-                    </form>
-                </tr>
-                @Html.AntiForgeryToken()
+        <form method="post" asp-page-handler="Add">
+            <tr>
+            <td>
+                <input asp-for="@Model.Link" style="width: 100%" placeholder="https://cloud.timeedit.net/uia/web/tp/123456789.html">
+                </td>
+                <td>
+                    <button type="submit" class="btn adButton">Add</button>
+                </td>
+            </tr>
+            @Html.AntiForgeryToken()
         </form>
         
         @{
             foreach (var link in Model.Links)
             {
                 var l = link.CourseLink.Replace("ics", "html");
-              <tr>
-                  <td>
-                      <a href="@l" target="_blank">@l</a>
-                  </td>
-                  <td>
-                      <button value="@l" type="submit" onclick="removeTimeeditLink(event)" class="btn rmButton">Remove</button>
-                  </td>
-              </tr>
-          }
+                <form method="post" asp-page-handler="Remove">
+                    <input type="hidden" value="@l" asp-for="@Model.Link" />
+                    <tr>
+                        <td>
+                            <a href="@l" target="_blank">@l</a>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn rmButton">Remove</button>
+                        </td>
+                    </tr>
+                    @Html.AntiForgeryToken()
+                </form>
+            }
         }
     </table>
     <a href="https://www.w3schools.com/" target="_blank">How do i get a TimeEdit link?</a>
