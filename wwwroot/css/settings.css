@@ -4,6 +4,10 @@
     width: inherit;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 #btn_settings {
     background-color: #004A82;
 }
@@ -14,8 +18,26 @@
     border: none;
 }
 
+.rmButton {
+    width: 100%;
+}
+
+.rmButton {
+    width: 100%;
+}
+
 #Link {
     border: none;
+}
+
+.highlighted {
+    background: grey;
+}
+
+.studassButton {
+    text-align:left; 
+    height:100%; 
+    width:100%;
 }
 
 #myInput {

@@ -22,9 +22,8 @@ public class Settings : PageModel
     public IEnumerable<string> Courses { get; set; }
     
     public IEnumerable<Studas> Studasses { get; set; }
-
-
-    public void OnGet()
+    
+    public IActionResult OnGet()
     {
         Links = _db.CourseLinks.ToList();
         Users = _db.Users.ToList();
@@ -35,12 +34,20 @@ public class Settings : PageModel
         {
             Role = loggedInUser.Role;
         }
+        else
+        {
+            return Redirect("~/error");
+        }
+
+        return Page();
     }
     
-    /*[BindProperty] public string? Link { get;set; }
+    [BindProperty] public string? Link { get;set; }
 
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAdd(string test)
     {
+        Links = _db.CourseLinks.ToList();
+        Users = _db.Users.ToList();
         if (Link == null)
         {
             return Page();
@@ -61,5 +68,24 @@ public class Settings : PageModel
         Timeedit t = new Timeedit(_db);
         await t.GetData(Link);
         return Redirect("~/settings/#timeedit");
-    }*/
+    }
+
+    public async Task<IActionResult> OnPostRemove()
+    {
+        Links = _db.CourseLinks.ToList();
+        
+        Link = Link.Replace("html", "ics");
+        
+        var links = _db.CourseLinks.Where(l => l.CourseLink == Link).ToList();
+        if (links.Count > 0)
+        {
+            foreach (var _link in links)
+            {
+                _db.CourseLinks.Remove(_link);
+            }
+            _db.SaveChanges();
+        }
+        
+        return Redirect("~/settings/#timeedit");
+    }
 }

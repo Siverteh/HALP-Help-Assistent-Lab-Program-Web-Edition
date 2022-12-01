@@ -111,32 +111,4 @@ public class SettingsHub : Hub
         // Send the data to the client
         await Clients.Caller.SendAsync("ShowStudent", courses, isAdmin);
     }
-
-    /// <summary>
-    /// Add a new timeedit link
-    /// </summary>
-    /// <param name="link">The link to add</param>
-    public async Task AddTimeeditLink(string link)
-    {
-        _db.CourseLinks.Add(new CourseLinksModel(link));
-        _db.SaveChanges();
-    }
-
-    /// <summary>
-    /// Remove a timeedit link
-    /// </summary>
-    /// <param name="link">The link to remove</param>
-    public async Task RemoveTimeeditLink(string link)
-    {
-        link = link.Replace("html", "ics");
-        var links = _db.CourseLinks.Where(l => l.CourseLink == link).ToList();
-        if (links.Count > 0)
-        {
-            foreach (var _link in links)
-            {
-                _db.CourseLinks.Remove(_link);
-            }
-            _db.SaveChanges();
-        }
-    }
 }

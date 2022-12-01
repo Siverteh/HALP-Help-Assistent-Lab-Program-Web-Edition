@@ -14,6 +14,7 @@ connection.on("ShowStudent",(courses, isAdmin) => {
 var userName = null;
 
 function getUserData(event) {
+    highlightName(event);
     userName = event.target.value;
     connection.invoke("GetUserData", userName).catch(function (err) {
         return console.error(err.toString());
@@ -37,10 +38,12 @@ function setAdmin(event) {
 
 function toggleStudassBoxes(courses) {
     clearStudassBoxes();
-    for (var i in courses) {
+    for (var i=0; i<courses.length; i++) {
         var course = courses[i];
         var studassBox = document.getElementById(course);
-        studassBox.checked = true;
+        if (studassBox != null) {
+            studassBox.checked = true;
+        }
     }
 }
 
@@ -65,19 +68,14 @@ function clearStudassBoxes() {
     }
 }
 
-// Timeedit link stuff
-function addTimeeditLink(event) {
-    var link = document.getElementById("testform").value;
-    connection.invoke("AddTimeeditLink", link).catch(function (err) {
-        return console.error(err.toString());
-    });
-}
-
-function removeTimeeditLink(event) {
-    var link = event.target.value;
-    connection.invoke("RemoveTimeeditLink", link).catch(function (err) {
-        return console.error(err.toString());
-    });
+function highlightName(event) {
+    var highlightedTargets = document.getElementsByClassName("highlighted");
+    for (var i=0; i<highlightedTargets.length; i++) {
+        var highlightedTarget = highlightedTargets[i];
+        highlightedTarget.classList.remove("highlighted");
+    }
+    var target = event.target.parentNode;
+    target.classList.add("highlighted")
 }
 
 
