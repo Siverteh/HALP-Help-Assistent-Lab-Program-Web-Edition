@@ -75,7 +75,7 @@ public class Edit : PageModel
         await _db.SaveChangesAsync();
 
         await HubContext.Clients.Groups(t.Entity.Course).SendAsync("UpdateHelplist", t.Entity.Id, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
-        //await HubContext.Clients.Groups(t.Entity.Course).SendAsync("AddToHelplist", t.Entity.Id, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
+        
         return Redirect($"~/ticket/queue");
         
     }

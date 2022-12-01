@@ -47,8 +47,6 @@ connection.on("AddToHelplist", (id, nickname, description, room) => {
 // Inserts a new cell into the table
 function insertCell(id, nickname, description, room, index) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
-    console.log("index: ", index, !index)
-    console.log("lenght: ", tbodyRef.rows.length)
     var newRow = tbodyRef.insertRow(!index ? tbodyRef.rows.length : index);
     newRow.id = id;
 
