@@ -21,7 +21,8 @@ public class HelplistModel
     
     [Required]
     public string Room { get; set; } = String.Empty;
-
+  
+    [Required]
     public string Course { get; set; } = String.Empty;
 
     public string Status { get; set; } = String.Empty;

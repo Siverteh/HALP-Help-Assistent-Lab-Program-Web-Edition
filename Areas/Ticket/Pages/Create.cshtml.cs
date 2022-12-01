@@ -46,7 +46,7 @@ public class Create : PageModel
         }
         if (String.IsNullOrEmpty(Ticket.Course))
         {
-            return Redirect("/error/error");
+            return Redirect("/error");
         }
 
         Ticket.Status = "Waiting";

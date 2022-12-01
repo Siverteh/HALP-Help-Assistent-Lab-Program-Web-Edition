@@ -15,27 +15,39 @@ async function sendCourseCode(){
     }
 }
 
+
+connection.on("UpdateHelplist", (id, nickname, description, room) => {
+    console.log("update")
+    updateCell(id, nickname, description, room);
+});
+
+function updateCell(id, nickname, description, room) {
+    
+    var x = document.getElementsByTagName("tr");
+    var i;
+    var index = 0; 
+    for (i = 0; i < x.length;i++) {
+        if (x[i].id === id.toString()) {
+            index =  x[i].rowIndex;
+            continue;
+        }
+    }
+    //delete row
+    let table = document.querySelector('table');
+    table.deleteRow(index);
+    
+    insertCell(id, nickname, description, room, index);
+}
+
 // Receive message
 connection.on("AddToHelplist", (id, nickname, description, room) => {
     insertCell(id, nickname, description, room);
 });
 
-connection.on("UpdateHelplist", (id, nickname, description, room) => {
-    updateCell(id, nickname, description, room);
-});
-
-function updateCell(id, nickname, description, room) {
-    var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
-    //tbodyRef.rows.id == id
-
-    console.log(tbodyRef.rows)
-    console.log(id)
-}
-
 // Inserts a new cell into the table
-function insertCell(id, nickname, description, room) {
+function insertCell(id, nickname, description, room, index) {
     var tbodyRef = document.getElementById('table').getElementsByTagName('tbody')[0];
-    var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
+    var newRow = tbodyRef.insertRow(!index ? tbodyRef.rows.length : index);
     newRow.id = id;
 
     // Insert a cell in the row at index 
