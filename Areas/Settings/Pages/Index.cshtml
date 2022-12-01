@@ -13,21 +13,39 @@
         <div class="container">
             
             <div id="navbar text-white" class="row">
-                <div id="btn_settings" class="header col-sm">
-                    <button onclick="showSettings()" class="headerButton text-white">Settings</button>
-                </div>
-                <div id="btn_timeedit" class="header col-sm">
-                    <button onclick="showTimeEdit()" class="headerButton text-white">TimeEdit</button>
-                </div>
-                <div id="btn_roles" class="header col-sm">
-                    <button onclick="showRoles()" class="headerButton text-white">Roles</button>
-                </div>
+
+                @if (Model.Role == "studass" || Model.Role == "admin")
+                {
+                    <div id="btn_settings" class="header col-sm">
+                        <button onclick="showSettings()" class="headerButton text-white">Settings</button>
+                    </div>
+                    <div id="btn_timeedit" class="header col-sm">
+                        <button onclick="showTimeEdit()" class="headerButton text-white">TimeEdit</button>
+                    </div>
+                }
+            
+                @if (Model.Role == "admin")
+                {
+                    <div id="btn_roles" class="header col-sm">
+                        <button onclick="showRoles()" class="headerButton text-white">Roles</button>
+                    </div>
+                }
+                
             </div>
             
         </div>
-        @{await Html.RenderPartialAsync("_SettingsPartial");}
-        @{await Html.RenderPartialAsync("_TimeEditPartial", Model);}
-        @{await Html.RenderPartialAsync("_RolesPartial", Model);}
+        @{
+            if (Model.Role == "studass" || Model.Role == "admin")
+            {
+                await Html.RenderPartialAsync("_TimeEditPartial", Model);
+            }
+            if (Model.Role == "admin")
+            {
+                await Html.RenderPartialAsync("_RolesPartial", Model);
+            }
+            
+            await Html.RenderPartialAsync("_SettingsPartial");
+        }
     </div>
 </div>
 

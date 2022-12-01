@@ -23,7 +23,7 @@ public class Settings : PageModel
     
     public IEnumerable<Studas> Studasses { get; set; }
     
-    public void OnGet()
+    public IActionResult OnGet()
     {
         Links = _db.CourseLinks.ToList();
         Users = _db.Users.ToList();
@@ -34,6 +34,12 @@ public class Settings : PageModel
         {
             Role = loggedInUser.Role;
         }
+        else
+        {
+            return Redirect("~/error/error");
+        }
+
+        return Page();
     }
     
     [BindProperty] public string? Link { get;set; }
