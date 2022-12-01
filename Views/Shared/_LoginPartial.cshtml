@@ -2,9 +2,6 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 <div class="row">
-    <div class="d-flex col flex-row">
-        <button type="submit" class="btn nav-link text-white">Back</button>
-    </div>
     <div class="d-flex col flex-row-reverse">
         @if (SignInManager.IsSignedIn(User))
         {

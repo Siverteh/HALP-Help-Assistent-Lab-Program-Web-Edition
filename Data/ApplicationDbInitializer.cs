@@ -68,6 +68,9 @@ namespace OperationCHAN.Data
                // Helplist = PhysicsHelplist
             };
             
+            var studAssRole = new IdentityRole("StudAss");
+            rm.CreateAsync(studAssRole).Wait();
+            
             var studass = new ApplicationUser()
             {
                 Nickname = "cool studass",
@@ -80,6 +83,7 @@ namespace OperationCHAN.Data
             };
             um.CreateAsync(user, "Password1.").Wait();
             um.CreateAsync(studass, "Password1.").Wait();
+            um.AddToRoleAsync(studass, "StudAss").Wait();
 
             db.Studas.Add(new Studas(studass, "IKT201-G"));
             db.CourseLinks.Add(new CourseLinksModel("https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics"));

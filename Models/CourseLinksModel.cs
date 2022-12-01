@@ -16,5 +16,6 @@ public class CourseLinksModel
 
     [Required]
     public string CourseLink { get; set; } = String.Empty;
+    
 
 }
