@@ -1,0 +1,35 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using OperationCHAN.Models
+@model OperationCHAN.Areas.Settings.Pages.Settings
+
+@{
+    ViewData["Title"] = "Settings";
+}
+<div class="box" xmlns="http://www.w3.org/1999/html">
+    <div class="text-center">
+        <h1 class="text-white mb-4 mt-5">Settings</h1>
+        
+        <div class="container">
+            
+            <div id="navbar text-white" class="row">
+                <div id="btn_settings" class="header col-sm">
+                    <button class="headerButton" onclick="showSettings()">Settings</button>
+                </div>
+                <div id="btn_timeedit" class="header col-sm">
+                    <button onclick="showTimeEdit()" class="headerButton">TimeEdit</button>
+                </div>
+                <div id="btn_roles" class="header col-sm">
+                    <button onclick="showRoles()" class="headerButton">Roles</button>
+                </div>
+            </div>
+            
+        </div>
+        @{await Html.RenderPartialAsync("_SettingsPartial");}
+        @{await Html.RenderPartialAsync("_TimeEditPartial", Model);}
+        @{await Html.RenderPartialAsync("_RolesPartial", Model);}
+    </div>
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/settings.js"></script>
