@@ -36,7 +36,7 @@ public class Settings : PageModel
         }
         else
         {
-            return Redirect("~/error/error");
+            return Redirect("~/error");
         }
 
         return Page();
