@@ -17,7 +17,6 @@ async function sendCourseCode(){
 
 
 connection.on("UpdateHelplist", (id, nickname, description, room) => {
-    console.log("update")
     updateCell(id, nickname, description, room);
 });
 
