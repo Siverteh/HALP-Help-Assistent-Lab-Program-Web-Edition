@@ -71,7 +71,40 @@ namespace OperationCHAN.Data
             db.Studas.Add(new Studas(admin, "Ikt103"));
             db.CourseLinks.Add(new CourseLinksModel("https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics"));
             
-            db.SaveChanges(); 
+            InitializeTestCourses(db);
+            
+            db.SaveChanges();
+        }
+        private static void InitializeTestCourses(ApplicationDbContext db)
+        {
+            var IKT202 = new CourseModel()
+            {
+                CourseCode = "IKT202-G",
+                CourseRoom1 = "GRM C2 036",
+            };
+            
+            var IKT203 = new CourseModel()
+            {
+                CourseCode = "IKT203-G",
+                CourseRoom1 = "GRM C2 036",
+            };
+            
+            var IKT204 = new CourseModel()
+            {
+                CourseCode = "IKT204-G",
+                CourseRoom1 = "GRM C2 036",
+            };
+            
+            var IKT205 = new CourseModel()
+            {
+                CourseCode = "IKT205-G",
+                CourseRoom1 = "GRM C2 036",
+            };
+
+            db.Courses.Add(IKT202);
+            db.Courses.Add(IKT203);
+            db.Courses.Add(IKT204);
+            db.Courses.Add(IKT205);
         }
     }
 }

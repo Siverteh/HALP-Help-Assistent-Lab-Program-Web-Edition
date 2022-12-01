@@ -3,7 +3,6 @@ using OperationCHAN.Data;
 using OperationCHAN.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using OperationCHAN.Areas.Lists.Pages;
 using OperationCHAN.Hubs;
 
 namespace OperationCHAN.Areas.Ticket.Pages;
@@ -76,6 +75,7 @@ public class Edit : PageModel
         await _db.SaveChangesAsync();
 
         await HubContext.Clients.Groups(t.Entity.Course).SendAsync("UpdateHelplist", t.Entity.Id, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
+        //await HubContext.Clients.Groups(t.Entity.Course).SendAsync("AddToHelplist", t.Entity.Id, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
         return Redirect($"~/ticket/queue");
         
     }
