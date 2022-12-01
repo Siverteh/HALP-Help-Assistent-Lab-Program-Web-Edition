@@ -28,11 +28,11 @@ public class HelpList : PageModel
     {
         if (!CourseCodes.Contains(id))
         {
-            return Redirect("/404");
+            return Redirect("/error");
         }
 
         // Get all the entries in the Helplist for sending
-        var tickets = _db.HelpList.Where(ticket => ticket.Status == "Waiting");
+        var tickets = _db.HelpList.Where(ticket => ticket.Status == "Waiting" && ticket.Course == id);
 
         // Place all entries into the global variable accessible to the cshtml
         Tickets = tickets;

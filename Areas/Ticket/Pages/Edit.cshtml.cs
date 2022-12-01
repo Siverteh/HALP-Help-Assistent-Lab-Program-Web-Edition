@@ -3,7 +3,6 @@ using OperationCHAN.Data;
 using OperationCHAN.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using OperationCHAN.Areas.Lists.Pages;
 using OperationCHAN.Hubs;
 
 namespace OperationCHAN.Areas.Ticket.Pages;
@@ -32,7 +31,7 @@ public class Edit : PageModel
         
         if (id == 0)
         {
-            return Redirect("/error/error");
+            return Redirect("/error");
         }
         Helplist = _db.HelpList.First(c => c.Id == id);
         
@@ -49,7 +48,7 @@ public class Edit : PageModel
         var cookie = Request.Cookies["MyTicket"];
         if (String.IsNullOrEmpty(cookie))
         {
-            return Redirect("/error/error");
+            return Redirect("/error");
         }
         Helplist.Id =  Int32.Parse(cookie);
         var courses = _db.Courses;//.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now);
@@ -67,7 +66,7 @@ public class Edit : PageModel
 
         if (String.IsNullOrEmpty(Helplist.Course))
         {
-            return Redirect("/error/error");
+            return Redirect("/error");
         }
 
         Helplist.Status = "Waiting";
@@ -76,6 +75,7 @@ public class Edit : PageModel
         await _db.SaveChangesAsync();
 
         await HubContext.Clients.Groups(t.Entity.Course).SendAsync("UpdateHelplist", t.Entity.Id, t.Entity.Nickname, t.Entity.Description, t.Entity.Room);
+        
         return Redirect($"~/ticket/queue");
         
     }

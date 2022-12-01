@@ -7,13 +7,29 @@
 
 @{
     ViewData["Title"] = "Create ticket";
+    //
+    // var roomValue = "";
 }
+
+@* <script type="text/javascript"> *@
+@*     var roomValue = ""; *@
+@*     document.getElementById("room").addEventListener("change", myFunction); *@
+@*      *@
+@*     function myFunction() { *@
+@*     roomValue = document.getElementById("room").value; *@
+@*     } *@
+@*     function getRoom() { *@
+@*     return roomValue; *@
+@*     } *@
+@* </script> *@
+
+
 <div class="box">
     <div class="text-center">
         <h1 class="text-white mb-4 mt-5">New ticket</h1>
         
         <div class="container">
-            <form method="post" >
+            <form method="post" id="Forms" >
             <div class="row mb-4 justify-content-md-center">
                 <div class="col col-sm-12 col-md-6">
                     @if (SignInManager.IsSignedIn(User))
@@ -80,7 +96,29 @@
                         }
                     </datalist>
                     <span asp-validation-for="Ticket.Room" class="text-danger"></span>
-                </div>
+                @* </div> *@
+                @*    <div class="col col-sm-4 col-md-4"> *@
+                @*         <input asp-for="Ticket.Course" *@
+                @*                class="form-control form-control-lg" *@
+                @*                list="options" *@
+                @*                placeholder="Course" *@
+                @*                aria-required="true"> *@
+                @*         <datalist id="options"> *@
+                @*             @foreach (var c in Model.Courses) *@
+                @*             { *@
+                @*                 JS *@
+                @*                 if (getRoom() == c.CourseRoom1 || *@
+                @*                     roomValue == c.CourseRoom2 || *@
+                @*                     roomValue == c.CourseRoom3 || *@
+                @*                     roomValue == c.CourseRoom4) *@
+                @*                 { *@
+                @*                     <option value="@c.CourseCode"/> *@
+                @*                 } *@
+                @*             } *@
+                @*         </datalist> *@
+                @*         <span asp-validation-for="Ticket.Course" class="text-danger"></span> *@
+                    @*     </div> *@
+                    </div>
             </div>
                 
             <br/> 
@@ -91,7 +129,6 @@
     </div>
 </div>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/ticket.js"></script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
