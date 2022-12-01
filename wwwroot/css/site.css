@@ -12,4 +12,22 @@
     font-size: 20px;
     background-color: #0070C0;
   }
+  p {
+    color: white;
+  }
+  li {
+    color: white;
+  }
+  h1 {
+    color: white;
+  }
+  h2 {
+    color: white;
+  }
+  h3 {
+    color: white;
+  }
+  h4 {
+    color: white;
+  }
 }
