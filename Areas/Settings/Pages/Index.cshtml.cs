@@ -79,11 +79,8 @@ public class Settings : PageModel
         var links = _db.CourseLinks.Where(l => l.CourseLink == Link).ToList();
         if (links.Count > 0)
         {
-            foreach (var _link in links)
-            {
-                _db.CourseLinks.Remove(_link);
-            }
-            _db.SaveChanges();
+            _db.CourseLinks.Remove(links.First());
+            await _db.SaveChangesAsync();
         }
         
         return Redirect("~/settings/#timeedit");

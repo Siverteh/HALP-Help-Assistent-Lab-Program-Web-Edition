@@ -30,9 +30,11 @@
                         <button onclick="showRoles()" class="headerButton text-white">Roles</button>
                     </div>
                 }
-                
+
             </div>
-            
+        </div>
+        <div style="height:20px" class="mt-2 mb-2 text-white">
+            <p id="errorMessage" class="h6"></p>
         </div>
         @{
             if (Model.Role == "studass" || Model.Role == "admin")

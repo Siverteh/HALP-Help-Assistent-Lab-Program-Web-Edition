@@ -7,8 +7,12 @@ connection.start();
 
 connection.on("ShowStudent",(courses, isAdmin) => {
     console.log("ShowStudent received");
-    toggleStudassBoxes(courses);
+    toggleStudassBoxes(courses, isAdmin);
     toggleAdminBox(isAdmin);
+});
+
+connection.on("ShowError",(error) => {
+    showError(error);
 });
 
 var userName = null;
@@ -36,15 +40,21 @@ function setAdmin(event) {
     });
 }
 
-function toggleStudassBoxes(courses) {
-    clearStudassBoxes();
-    for (var i=0; i<courses.length; i++) {
-        var course = courses[i];
-        var studassBox = document.getElementById(course);
-        if (studassBox != null) {
-            studassBox.checked = true;
+function toggleStudassBoxes(courses, isAdmin) {
+    if (isAdmin) {
+        showStudassBoxes(false);
+    }
+    else {
+        showStudassBoxes(true);
+        for (var i=0; i<courses.length; i++) {
+            var course = courses[i];
+            var studassBox = document.getElementById(course);
+            if (studassBox != null) {
+                studassBox.checked = true;
+            }
         }
     }
+    clearStudassBoxes();
 }
 
 function toggleAdminBox(isAdmin) {
@@ -68,6 +78,27 @@ function clearStudassBoxes() {
     }
 }
 
+function showStudassBoxes(show) {
+    var checkBoxes = document.getElementsByClassName("studassbox");
+    if (checkBoxes.length == 0) {
+        return;
+    }
+    // Show box
+    if (show) {
+        for (var i=0; i < checkBoxes.length; i++) {
+            var box = checkBoxes[i];
+            box.disabled = false;
+        }
+    }
+    // Grey box out
+    if (!show) {
+        for (var i=0; i < checkBoxes.length; i++) {
+            var box = checkBoxes[i];
+            box.disabled = true;
+        }
+    }
+}
+
 function highlightName(event) {
     var highlightedTargets = document.getElementsByClassName("highlighted");
     for (var i=0; i<highlightedTargets.length; i++) {
@@ -76,6 +107,15 @@ function highlightName(event) {
     }
     var target = event.target.parentNode;
     target.classList.add("highlighted")
+}
+
+function showError(error) {
+    var errorElement = document.getElementById("errorMessage");
+    errorElement.textContent = error;
+
+    setTimeout(function () {
+        errorElement.textContent = "";
+    }, 5000);
 }
 
 
