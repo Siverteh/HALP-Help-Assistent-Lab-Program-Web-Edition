@@ -6,12 +6,14 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout">
-                <button type="submit" class="btn nav-link text-white">Logout</button>
+                <button type="submit" class="button-4">Logout</button>
             </form>
         }
         else
         {
-            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">
+                <button class="button-4">Login</button>
+            </a>
         }
     </div>
 </div>

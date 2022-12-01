@@ -12,46 +12,52 @@
     <link rel="icon" href="~/img/favicon.ico"/>
 </head>
 <body>
-<header>
+    <header>
 
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="Ticket" asp-page="/Create">Halp!</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    @{
-                        if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Settings" asp-page="/Index">Settings</a>
-                            </li>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="Ticket" asp-page="/Create">
+                    <button class="button-53">Halp!</button>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Settings" asp-page="/Index">
+                                        <button class="button-4">Settings</button>
+                                    </a>
+                                </li>
+                            }
+                            if (User.IsInRole("StudAss") || User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Lists" asp-page="/Index">
+                                        <button class="button-4">Helplist</button>
+                                    </a>
+                                </li>
+                            }
                         }
-                        if (User.IsInRole("StudAss") || User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Lists" asp-page="/Index">Helplist</a>
-                            </li>
-                        }
-                    }
-                </ul>
-                <partial name="_LoginPartial"/>
+                    </ul>
+                    <partial name="_LoginPartial"/>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>
 
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
