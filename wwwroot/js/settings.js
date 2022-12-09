@@ -41,6 +41,7 @@ function setAdmin(event) {
 }
 
 function toggleStudassBoxes(courses, isAdmin) {
+    clearStudassBoxes();
     if (isAdmin) {
         showStudassBoxes(false);
     }
@@ -54,7 +55,6 @@ function toggleStudassBoxes(courses, isAdmin) {
             }
         }
     }
-    clearStudassBoxes();
 }
 
 function toggleAdminBox(isAdmin) {
