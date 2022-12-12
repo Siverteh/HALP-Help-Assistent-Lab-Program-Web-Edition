@@ -12,9 +12,7 @@ public class Queue : PageModel
     private readonly ApplicationDbContext _db;
     private readonly IHubContext<HelplistHub> HubContext;
     
-   // public IEnumerable<int> HelpLists { get; set; }
     public HelplistModel Ticket { get; set; }
-    //private IQueryable<HelplistModel> Tickets { get; set; }
     
     public int Count { get; set; }
     
