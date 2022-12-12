@@ -11,6 +11,7 @@ public class Create : PageModel
 {
     private readonly ApplicationDbContext _db;
     private readonly IHubContext<HelplistHub> HubContext;
+    public String nickname;
 
     public Create(ApplicationDbContext db, IHubContext<HelplistHub> hubcontext)
     {
@@ -20,6 +21,11 @@ public class Create : PageModel
     public IEnumerable<CourseModel> Courses { get; set; }
     public IActionResult OnGet()
     {
+        var user = _db.Users.FirstOrDefault(user => user.UserName == User.Identity.Name);
+        if (user != null)
+        {
+            nickname = user.Nickname;
+        }
         Courses = _db.Courses.ToList();//.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
         return Page();
     }
