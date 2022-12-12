@@ -36,7 +36,7 @@ public class Settings : PageModel
         }
         else
         {
-            return Redirect("~/error");
+            return Redirect("~/error/accessdenied");
         }
 
         return Page();
