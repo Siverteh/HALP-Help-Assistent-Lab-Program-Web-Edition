@@ -14,7 +14,7 @@
             
             <div id="navbar text-white" class="row">
 
-                @if (Model.Role == "studass" || Model.Role == "admin")
+                @if (Model.Role == "admin")
                 {
                     <div id="btn_settings" class="header col-sm">
                         <button onclick="showSettings()" class="headerButton text-white">Settings</button>
@@ -22,25 +22,20 @@
                     <div id="btn_timeedit" class="header col-sm">
                         <button onclick="showTimeEdit()" class="headerButton text-white">TimeEdit</button>
                     </div>
-                }
-            
-                @if (Model.Role == "admin")
-                {
                     <div id="btn_roles" class="header col-sm">
                         <button onclick="showRoles()" class="headerButton text-white">Roles</button>
                     </div>
                 }
-                
+
             </div>
-            
+        </div>
+        <div style="height:20px" class="mt-2 mb-2 text-white">
+            <p id="errorMessage" class="h6"></p>
         </div>
         @{
-            if (Model.Role == "studass" || Model.Role == "admin")
-            {
-                await Html.RenderPartialAsync("_TimeEditPartial", Model);
-            }
             if (Model.Role == "admin")
             {
+                await Html.RenderPartialAsync("_TimeEditPartial", Model);
                 await Html.RenderPartialAsync("_RolesPartial", Model);
             }
             

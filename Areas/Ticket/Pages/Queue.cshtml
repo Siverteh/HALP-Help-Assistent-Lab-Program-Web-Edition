@@ -8,28 +8,25 @@
     ViewData["Title"] = "Your place in queue";
 }
 
-
-<div class="box mt-5">
-    <div class="text-center ">
-        <div class="container ">
+<div class="box mt-5" style="max-width: 600px; margin-left: auto; margin-right: auto">
+    <div class="text-center">
             <div class="row mb-4 justify-content-md-center">
 
-            <h3 class="text-white mb-2">HI @Model.Ticket.Nickname</h3>
+                <h3 class="text-white mb-2">HI @Model.Ticket.Nickname</h3>
 
-            <h5 class="text-white mb-1">YOU ARE NUMBER</h5>
+                <h5 class="text-white mb-1">YOU ARE NUMBER</h5>
 
-            <h1 class="display-1 text-white mb-1">@Model.Count</h1>
+                <h1 class="display-1 text-white mb-1">@Model.Count</h1>
 
-            <h5 class="text-white mb-1">IN THE QUEUE</h5>
+                <h5 class="text-white mb-1">IN THE QUEUE</h5>
 
                 <span id="validation" class="text-danger"></span>
                 <br/>
-  </div>
+            </div>
             <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="redirect('/ticket/edit')">EDIT TICKET</button>
-                <br/>
+            <br/>
             <button class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4" onclick="removeTicket(@Model.Ticket.Id)">CANCEL TICKET</button>
           
-        </div>
     </div>
 </div>
 

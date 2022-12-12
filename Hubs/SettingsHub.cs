@@ -9,10 +9,12 @@ public class SettingsHub : Hub
 {
     private ApplicationDbContext _db;
     private UserManager<ApplicationUser> _um;
-    public SettingsHub(ApplicationDbContext db, UserManager<ApplicationUser> um)
+    private RoleManager<IdentityRole> _rm;
+    public SettingsHub(ApplicationDbContext db, UserManager<ApplicationUser> um, RoleManager<IdentityRole> rm)
     {
         _db = db;
         _um = um;
+        _rm = rm;
     }
     
     /// <summary>
@@ -84,9 +86,20 @@ public class SettingsHub : Hub
         }
         else
         {
-            // Remove roles, and set them to user
-            await _um.RemoveFromRoleAsync(user, "Admin");
-            user.Role = "user";
+            // Check how many admins there are 
+            var adminRoleId = _db.Roles.First(role => role.Name == "Admin").Id;
+            var admins = _db.UserRoles.Select(role => role.RoleId == adminRoleId).ToList();
+
+            if (admins.Count <= 1)
+            {
+                await SetError("You are the only admin, and thus cannot be removed. Set a new admin first");
+            }
+            else
+            {
+                // Remove roles, and set them to user
+                await _um.RemoveFromRoleAsync(user, "Admin");
+                user.Role = "user";
+            }
         }
         
         // Save changes
@@ -110,5 +123,10 @@ public class SettingsHub : Hub
             .Select(studass => studass.Course).ToList();
         // Send the data to the client
         await Clients.Caller.SendAsync("ShowStudent", courses, isAdmin);
+    }
+
+    public async Task SetError(string error)
+    {
+        await Clients.Caller.SendAsync("ShowError", error);
     }
 }
