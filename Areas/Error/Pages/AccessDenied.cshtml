@@ -14,10 +14,22 @@
 
 <div class="box">
     <div class="text-center">
-        <h1 class="text-white mb-4 mt-5">SHIIIET (401)</h1>
-        <img src="img/notPass.gif" alt="you should not pass"/>
-        <div class="container justify-content-md-center w-50">
-            <button class="btn btn-md bg-white col-md-6 mb-5" onclick="onClick()">Go back to start</button>
-        </div>
+        <h1 class="text-white mb-4 mt-5">Access Denied</h1>
+        <video id="notpass" onended="red()" autoplay muted style="width: 50vw" >
+            <source id="notpass_src" src="~/vid/notpass.mp4" type="video/mp4">
+        </video>
+        
     </div>
 </div>
+
+<script type="text/javascript">
+var vid = document.getElementById("notpass");
+vid.load();
+vid.play();
+
+function red() {
+    var base_url = window.location.origin;
+    window.location.href = base_url;
+}
+</script>
+

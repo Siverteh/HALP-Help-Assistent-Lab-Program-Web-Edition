@@ -41,7 +41,7 @@ builder.Services.AddAuthentication().AddDiscord(options =>
     options.ClientId = builder.Configuration["Discord:ClientId"];
     options.ClientSecret = builder.Configuration["Discord:ClientSecret"];
     options.SaveTokens = true;
-    options.AccessDeniedPath = "/Home/DiscordAuthFailed";
+    options.AccessDeniedPath = "/Discord/Redirect";
     options.UserInformationEndpoint = "https://discord.com/api/users/@me";
     options.ClaimActions.MapJsonKey(ClaimTypes.Name, "username");
     options.ClaimActions.MapJsonKey(ClaimTypes.PostalCode, "discriminator");
