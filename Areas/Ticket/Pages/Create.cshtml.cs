@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ public class Create : PageModel
 {
     private readonly ApplicationDbContext _db;
     private readonly IHubContext<HelplistHub> HubContext;
+    
 
     public Create(ApplicationDbContext db, IHubContext<HelplistHub> hubcontext)
     {
@@ -20,7 +22,8 @@ public class Create : PageModel
     public IEnumerable<CourseModel> Courses { get; set; }
     public IActionResult OnGet()
     {
-        Courses = _db.Courses.ToList();//.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
+       // burde vært en sjekk som sjekket om det finnes en cookie allerede, denne måttte også blitt slettet hvis ticketes blir resolvet
+        Courses = _db.Courses;//.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
         return Page();
     }
     

@@ -1,29 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using OperationCHAN.Areas.Lists.Pages;
+using Microsoft.AspNetCore.SignalR;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
+using OperationCHAN.Hubs;
 
 namespace OperationCHAN.Areas.Ticket.Pages;
 
 public class Queue : PageModel
 {
     private readonly ApplicationDbContext _db;
+    private readonly IHubContext<HelplistHub> HubContext;
     
-    public IEnumerable<int> HelpLists { get; set; }
+   // public IEnumerable<int> HelpLists { get; set; }
     public HelplistModel Ticket { get; set; }
-    private IQueryable<HelplistModel> Tickets { get; set; }
+    //private IQueryable<HelplistModel> Tickets { get; set; }
     
     public int Count { get; set; }
     
-    public Queue(ApplicationDbContext db)
+    
+    public Queue(ApplicationDbContext db, IHubContext<HelplistHub> hubcontext)
     {
         _db = db;
-        HelpLists = _db.HelpList.Select(helplist => helplist.Id).Distinct();
+        HubContext = hubcontext;
     }
 
-    public IActionResult OnGet()
+    public async Task<IActionResult> OnGetAsync()
     {
         var id = 0;
         var cookie = Request.Cookies["MyTicket"];
@@ -31,37 +33,29 @@ public class Queue : PageModel
         { 
             id = Int32.Parse(cookie);
         }
-        
         if (id == 0)
         {
             return Redirect("/error");
         }
-
-        var ticket = _db.HelpList.First(ticket => ticket.Id == id);
-        var tickets = _db.HelpList.Where(t => t.Course == ticket.Course && t.Status == "Waiting");
-
-        Ticket = ticket;
-        Tickets = tickets;
         
-        if (Ticket.Status is "Removed" or "Finished")
-        {
-            return Redirect("/error");
-        }
-
-        var count = 0;
+        var ticket = _db.HelpList.First(ticket => ticket.Id == id);
+        
+        Ticket = ticket;
+        
+        var tickets = _db.HelpList.Where(t => t.Course == ticket.Course && t.Status == "Waiting");
+   
+        var count = 1;
         foreach (var t in tickets)
         {
             if (t.Id == ticket.Id)
             {
-                break;
+                break; 
             }
-
+        
             count++;
         }
-
-
         Count = count;
-        
+
         return Page();
     }
 }

@@ -84,11 +84,12 @@ function removeCell(id) {
     row.remove();
 }
 
+
 // Button for archiving student
 function archive(event) {
     var tr = event.target.parentNode.parentNode;
     var id = parseInt(tr.id);
-
+    
     connection.invoke("RemoveFromHelplist", id)
         .catch((err) => console.error(err.toString()));
 }
