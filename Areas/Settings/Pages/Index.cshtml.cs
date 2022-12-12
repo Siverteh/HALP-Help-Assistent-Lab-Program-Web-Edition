@@ -32,7 +32,9 @@ public class Settings : PageModel
         var loggedInUser = _um.GetUserAsync(User).Result;
         if (loggedInUser != null)
         {
-            Role = loggedInUser.Role;
+            var roleID = _db.UserRoles.First(userRole => userRole.UserId == loggedInUser.Id).RoleId;
+            var role = _db.Roles.First(role => role.Id == roleID).Name;
+            Role = role;
         }
         else
         {

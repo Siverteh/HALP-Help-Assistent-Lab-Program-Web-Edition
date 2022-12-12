@@ -51,7 +51,6 @@ namespace OperationCHAN.Data
                 Email = "admin@uia.no",
                 DiscordTag = "Admin User",
                 EmailConfirmed = true,
-                Role = "admin"
                 //Helplist = IKThelplist
             };
             um.CreateAsync(admin, "Password1.").Wait();
@@ -64,11 +63,11 @@ namespace OperationCHAN.Data
                 Email = "user@uia.no",
                 UserName = "user@uia.no",
                 DiscordTag = "User User", 
-                EmailConfirmed = true,
+                EmailConfirmed = true
                // Helplist = PhysicsHelplist
             };
             
-            var studAssRole = new IdentityRole("StudAss");
+            var studAssRole = new IdentityRole("Studass");
             rm.CreateAsync(studAssRole).Wait();
             
             var studass = new ApplicationUser()
@@ -77,13 +76,12 @@ namespace OperationCHAN.Data
                 Email = "studass@uia.no",
                 UserName = "studass@uia.no",
                 DiscordTag = "Studass User", 
-                EmailConfirmed = true,
-                Role = "studass"
+                EmailConfirmed = true
                 // Helplist = PhysicsHelplist
             };
             um.CreateAsync(user, "Password1.").Wait();
             um.CreateAsync(studass, "Password1.").Wait();
-            um.AddToRoleAsync(studass, "StudAss").Wait();
+            um.AddToRoleAsync(studass, "Studass").Wait();
 
             db.Studas.Add(new Studas(studass, "IKT201-G"));
             db.CourseLinks.Add(new CourseLinksModel("https://cloud.timeedit.net/uia/web/tp/ri15667y6Z0655Q097QQY656Z067057Q469W95.ics"));

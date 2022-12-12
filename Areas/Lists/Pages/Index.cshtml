@@ -14,9 +14,19 @@
 <div class="box">
     @{
         <ul class="list-group" style="background-color: transparent">
-            @foreach (var list in Model.ListItems.OrderBy(x => x.CourseCode).DistinctBy(x => x.CourseCode))
+            @if (User.IsInRole("Studass"))
             {
-                <a style="background-color: transparent; color: white" href="/lists/helplist/@list.CourseCode" class="list-group-item border-0">@list.CourseCode</a>
+                @foreach (var list in Model.StudassItems.OrderBy(x => x.Course))
+                {
+                    <a style="background-color: transparent; color: white" href="/lists/helplist/@list.Course" class="list-group-item border-0">@list.Course</a>
+                }
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                @foreach (var list in Model.AdminItems.OrderBy(x => x.CourseCode))
+                {
+                    <a style="background-color: transparent; color: white" href="/lists/helplist/@list.CourseCode" class="list-group-item border-0">@list.CourseCode</a>
+                }
             }
         </ul>
     }
