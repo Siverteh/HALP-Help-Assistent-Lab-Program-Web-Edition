@@ -15,9 +15,6 @@
   p {
     color: white;
   }
-  li {
-    color: white;
-  }
   h1 {
     color: white;
   }
@@ -141,4 +138,9 @@
         padding: .75rem 3rem;
         font-size: 1.25rem;
     }
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+    padding-left: 0;
 }

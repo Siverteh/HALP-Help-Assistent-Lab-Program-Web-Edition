@@ -9,9 +9,7 @@
     <div class="text-center">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h1 class="text-white mb-4 mt-5">Log in</h1>
-
             <div class="container">
-
                 <div class="row mb-4 justify-content-md-center">
                     <div class="col col-sm-12 col-md-6">
                         <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" placeholder="Email" aria-required="true"/>
@@ -27,6 +25,7 @@
                 </div>
 
                 <button id="registerSubmit" type="submit" class="btn btn-md bg-white col-md-auto col-lg-2 col-sm-5 mb-4">Log in</button>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="mb-2 col-sm-12">
                     <a id="forgot-password" class="text-white text-decoration-none" asp-page="./ForgotPassword">Forgot your password?</a>
