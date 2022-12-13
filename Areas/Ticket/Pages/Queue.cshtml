@@ -9,14 +9,14 @@
 }
 
 
-<div class="box mt-5" style="width: 40%; margin: auto" xmlns="http://www.w3.org/1999/html">
+<div class="box mt-5" style="width: 40%; margin: auto" id="queue-@Model.Ticket.Id">
     <div class="text-center ">
         
         <h3 class="text-white mb-2">HI @Model.Ticket.Nickname</h3>
 
         <h5 class="text-white mb-1">YOU ARE NUMBER</h5>
         
-        <h1 class="display-1 text-white mb-1">@Model.Count</h1>
+        <h1 class="display-1 text-white mb-1" id="counter">@Model.Count</h1>
         
         <h5 class="text-white mb-1">IN THE QUEUE</h5>
         
@@ -30,5 +30,4 @@
 </div>
 
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-
 <script src="~/js/queue.js"></script>
