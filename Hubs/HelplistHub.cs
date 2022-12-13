@@ -96,7 +96,7 @@ namespace OperationCHAN.Hubs
             await Clients.Groups(ticket.Course).SendAsync("RemoveFromHelplist", ticketID);
         }
 
-        public async Task Queue(int id, int c, int counter = 1)
+        public async Task Queue(int id, int c, int counter = 1, string course = "")
         {
             var ticket = _db.HelpList.First(ticket => ticket.Id == id);
             var tickets = _db.HelpList.Where(t => t.Course == ticket.Course && t.Status == "Waiting");
@@ -113,7 +113,7 @@ namespace OperationCHAN.Hubs
             }
             
 
-            await Clients.Others.SendAsync("Queue", id, c, counter);
+            await Clients.Others.SendAsync("Queue", id, c, counter, ticket.Course);
         }
     }
 }
