@@ -45,7 +45,7 @@ namespace OperationCHAN.Hubs
             var ticket = SetTicketStatus(ticketID, "Finished");
 
             await AddToArchive(ticket.Id, ticket.Course, ticket.Nickname, ticket.Description, ticket.Status, ticket.Room);
-
+            await Queue(ticket.Id, 0);
             await Clients.Groups(ticket.Course).SendAsync("RemoveFromHelplist", ticketID);
         }
 
@@ -58,7 +58,7 @@ namespace OperationCHAN.Hubs
             var ticket = SetTicketStatus(ticketID, "Waiting");
             
             await AddToHelplist(ticket.Id, ticket.Course, ticket.Nickname, ticket.Description,  ticket.Room);
-            
+            await Queue(ticket.Id, 1, 1);
             await Clients.Groups(ticket.Course).SendAsync("RemoveFromArchive", ticketID);
         }
         
@@ -94,6 +94,26 @@ namespace OperationCHAN.Hubs
             var ticket = SetTicketStatus(ticketID, "Removed");
 
             await Clients.Groups(ticket.Course).SendAsync("RemoveFromHelplist", ticketID);
+        }
+
+        public async Task Queue(int id, int c, int counter = 1, string course = "")
+        {
+            var ticket = _db.HelpList.First(ticket => ticket.Id == id);
+            var tickets = _db.HelpList.Where(t => t.Course == ticket.Course && t.Status == "Waiting");
+
+
+            foreach (var t in tickets)
+            {
+                if (t.Id == ticket.Id)
+                {
+                    break;
+                }
+
+                counter++;
+            }
+            
+
+            await Clients.Others.SendAsync("Queue", id, c, counter, ticket.Course);
         }
     }
 }

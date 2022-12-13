@@ -76,7 +76,7 @@ namespace OperationCHAN.Areas.Identity.Pages.Account.Manage
             [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
                 MinimumLength = 6)]
             [DataType(DataType.Text)]
-            [Display(Name = "Verification Code")]
+            [Display(Name = "Verification Code", Prompt = "Verification Code")]
             public string Code { get; set; }
         }
 

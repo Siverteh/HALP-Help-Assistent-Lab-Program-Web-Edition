@@ -26,6 +26,8 @@ public class Create : PageModel
         {
             nickname = user.Nickname;
         }
+        
+        // burde vært en sjekk som sjekket om det finnes en cookie allerede, denne måttte også blitt slettet hvis ticketes blir resolved
         Courses = _db.Courses.ToList();//.Where(c => c.LabStart <= DateTime.Now && c.LabEnd >= DateTime.Now).ToList();
         return Page();
     }
