@@ -67,7 +67,7 @@ function removeCell(id) {
 function unArchive(event) {
     var tr = event.target.parentNode.parentNode;
     var id = parseInt(tr.id);
-    
+
     connection.invoke("RemoveFromArchive", id)
         .catch(err => console.error(err.toString()));
 }

@@ -8,7 +8,7 @@
     ViewData["Title"] = "Your place in queue";
 }
 
-<div class="box mt-5" style="max-width: 600px; margin-left: auto; margin-right: auto">
+<div class="box mt-5" style="max-width: 600px; margin-left: auto; margin-right: auto" id="queue-@Model.Ticket.Id">
     <div class="text-center">
             <div class="row mb-4 justify-content-md-center">
 
@@ -16,7 +16,7 @@
 
                 <h5 class="text-white mb-1">YOU ARE NUMBER</h5>
 
-                <h1 class="display-1 text-white mb-1">@Model.Count</h1>
+                <h1 class="display-1 text-white mb-1" id="counter">@Model.Count</h1>
 
                 <h5 class="text-white mb-1">IN THE QUEUE</h5>
 
@@ -31,5 +31,4 @@
 </div>
 
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-
 <script src="~/js/queue.js"></script>
