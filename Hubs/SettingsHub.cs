@@ -102,13 +102,13 @@ public class SettingsHub : Hub
             
             // Set role
             await _um.AddToRoleAsync(user, "Admin");
+            await _um.RemoveFromRoleAsync(user, "Studass");
         }
         else
         {
             // Check how many admins there are 
             var adminRoleId = _db.Roles.First(role => role.Name == "Admin").Id;
-            var admins = _db.UserRoles.Select(role => role.RoleId == adminRoleId).ToList();
-
+            var admins = _db.UserRoles.Where(role => role.RoleId == adminRoleId).ToList();
             if (admins.Count <= 1)
             {
                 await SetError("You are the only admin, and thus cannot be removed. Set a new admin first");
