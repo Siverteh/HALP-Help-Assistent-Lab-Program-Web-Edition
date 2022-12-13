@@ -79,6 +79,10 @@ connection.on("RemoveFromHelplist",
     (id) => removeCell(id)
 );
 
+connection.on("RemovedByUser",
+    (id) => removeCell(id)
+);
+
 function removeCell(id) {
     const row = document.getElementById(id);
     row.remove();
