@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using OperationCHAN.Data;
 using OperationCHAN.Models;
 
@@ -26,18 +29,26 @@ public class SettingsHub : Hub
     public async Task SetStudass(string userName, string courseCode, bool setStudass)
     {
         ApplicationUser user = _db.Users.First(user => user.Nickname == userName);
-        
+        var roleObject = _db.UserRoles.FirstOrDefault(userRole => userRole.UserId == user.Id);
+        var role = "User";
+        if (roleObject != null)
+        {
+            var roleID = roleObject.RoleId;
+            role = _db.Roles.First(role => role.Id == roleID).Name;
+        }
+
         // A user cant be both an admin and a studass, so return if already admin
         if (setStudass)
         {
-            if (user.Role == "admin")
+
+            if (role == "Admin")
             {
                 return;
             }
             
             // Set as studass
+            _um.AddToRoleAsync(user, "Studass");
             _db.Studas.Add(new Studas(user, courseCode));
-            user.Role = "studass";
         }
         else
         {
@@ -53,7 +64,8 @@ public class SettingsHub : Hub
             // If the user is not studass in other courses, remove the studass role
             if (otherCourses.Count <= 0)
             {
-                user.Role = "user";
+                _um.RemoveFromRoleAsync(user, "Studass");
+                _db.Studas.Remove(new Studas(user, courseCode));
             }
         }
         await _db.SaveChangesAsync();
@@ -68,10 +80,18 @@ public class SettingsHub : Hub
     {
         // Get the user by username
         ApplicationUser user = _db.Users.First(user => user.Nickname == userName);
+        var roleObject = _db.UserRoles.FirstOrDefault(userRole => userRole.UserId == user.Id);
+        var role = "User";
+        if (roleObject != null)
+        {
+            var roleID = roleObject.RoleId;
+            role = _db.Roles.First(role => role.Id == roleID).Name;
+        }
+        
         if (setAdmin)
         {
             // If the current role is studass, remove all courses
-            if (user.Role == "studass")
+            if (role == "Studass")
             {
                 var courses = _db.Studas.Where(s => s.ApplicationUserId == user.Id).ToList();
                 foreach (var course in courses)
@@ -82,14 +102,13 @@ public class SettingsHub : Hub
             
             // Set role
             await _um.AddToRoleAsync(user, "Admin");
-            user.Role = "admin";
+            await _um.RemoveFromRoleAsync(user, "Studass");
         }
         else
         {
             // Check how many admins there are 
             var adminRoleId = _db.Roles.First(role => role.Name == "Admin").Id;
-            var admins = _db.UserRoles.Select(role => role.RoleId == adminRoleId).ToList();
-
+            var admins = _db.UserRoles.Where(role => role.RoleId == adminRoleId).ToList();
             if (admins.Count <= 1)
             {
                 await SetError("You are the only admin, and thus cannot be removed. Set a new admin first");
@@ -98,7 +117,6 @@ public class SettingsHub : Hub
             {
                 // Remove roles, and set them to user
                 await _um.RemoveFromRoleAsync(user, "Admin");
-                user.Role = "user";
             }
         }
         
@@ -114,10 +132,22 @@ public class SettingsHub : Hub
     /// <param name="userName">The username to get data from</param>
     public async Task GetUserData(string userName)
     {
+        bool isAdmin;
         // Get user data
         var user = _db.Users.First(user => user.Nickname == userName);
-        // Check if the user is admin
-        bool isAdmin = user.Role.Equals("admin");
+        var roleObject = _db.UserRoles.SingleOrDefault(userRole => userRole.UserId == user.Id);
+        if (roleObject != null)
+        {
+            var roleID = roleObject.RoleId;
+            var role = _db.Roles.First(role => role.Id == roleID).Name;
+            // Check if the user is admin
+            isAdmin = role.Equals("Admin");
+        }
+        else
+        {
+            isAdmin = false;
+        }
+
         // Get the users courses
         var courses = _db.Studas.Where(studass => studass.ApplicationUserId == user.Id)
             .Select(studass => studass.Course).ToList();
