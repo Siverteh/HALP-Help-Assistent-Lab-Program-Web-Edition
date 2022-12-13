@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.Debugger.Contracts.HotReload;
 using OperationCHAN.Models;
 
 namespace OperationCHAN.Areas.Identity.Pages.Account
@@ -90,6 +91,8 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
 
             [Required] public string Nickname { get; set; }
             [Required] public string DiscordTag { get; set; }
+            
+            [Required] public bool DiscordLogin { get; set; }
         }
 
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -173,7 +176,7 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
                 ErrorMessage = "Error loading external login information during confirmation.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
-
+            
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -190,6 +193,7 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
                     user.DiscordTag = Input.DiscordTag;
                     user.Nickname = Input.Nickname;
                     user.EmailConfirmed = true;
+                    user.DiscordLogin = true;
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {

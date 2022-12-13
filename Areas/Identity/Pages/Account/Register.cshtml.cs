@@ -131,7 +131,7 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
 
                 user.DiscordTag = Input.DiscordTag;
                 user.Nickname = Input.Nickname;
-                
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

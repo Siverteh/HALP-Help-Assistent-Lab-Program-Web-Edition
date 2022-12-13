@@ -13,11 +13,14 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger,
+            UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
-        
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -100,6 +103,9 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+            var userList = (from user in _userManager.Users
+                select user).ToList();
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -122,6 +128,17 @@ namespace OperationCHAN.Areas.Identity.Pages.Account
                 {
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
+                }
+
+                if (userList.Any(user => user.Email == Input.Email && user.DiscordLogin == true))
+                {
+                    ModelState.AddModelError(string.Empty, "You must login with Discord.");
+                    return Page();
+                }
+                if (userList.Any(user => user.Email == Input.Email && user.EmailConfirmed == false))
+                {
+                    ModelState.AddModelError(string.Empty, "Your email is not confirmed.");
+                    return Page();
                 }
                 else
                 {
