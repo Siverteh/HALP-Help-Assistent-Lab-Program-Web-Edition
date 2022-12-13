@@ -32,14 +32,17 @@ public class Settings : PageModel
         var loggedInUser = _um.GetUserAsync(User).Result;
         if (loggedInUser != null)
         {
-            var roleObject = _db.UserRoles.First(userRole => userRole.UserId == loggedInUser.Id);
-            if (roleObject == null)
+            var roleObject = _db.UserRoles.FirstOrDefault(userRole => userRole.UserId == loggedInUser.Id);
+            if (roleObject != null)
             {
-                return Redirect("~/error/accessdenied");
+                var roleID = roleObject.RoleId;
+                var role = _db.Roles.First(role => role.Id == roleID).Name;
+                Role = role;
             }
-            var roleID = roleObject.RoleId;
-            var role = _db.Roles.First(role => role.Id == roleID).Name;
-            Role = role;
+            else
+            {
+                Role = "User";
+            }
         }
         else
         {
