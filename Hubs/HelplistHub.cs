@@ -94,7 +94,7 @@ namespace OperationCHAN.Hubs
             var ticket = SetTicketStatus(ticketID, "Removed");
             await AddToArchive(ticket.Id, ticket.Course, ticket.Nickname, ticket.Description, ticket.Status, ticket.Room);
             await Queue(ticket.Id, 0);
-            await Clients.Groups(ticket.Course).SendAsync("RemoveFromHelplist", ticketID);
+            await Clients.Groups(ticket.Course).SendAsync("RemovedByUser", ticketID);
             
         }
 
