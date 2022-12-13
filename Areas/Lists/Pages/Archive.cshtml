@@ -35,7 +35,7 @@
                 <td>@Html.DisplayFor(item => entry.Room)</td>
                 <td>@Html.DisplayFor(item => entry.Status)</td>
                 <td class="tdButton">
-                    <button type="submit" onclick="unArchive(event)" class="btn uaButton">Unarchive</button>
+                    <button type="submit" disabled="@(entry.Status == "Removed")" onclick="unArchive(event)" class="btn uaButton">Unarchive</button>
                 </td>
             </tr>
         }

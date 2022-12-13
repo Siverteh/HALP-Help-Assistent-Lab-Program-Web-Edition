@@ -14,7 +14,7 @@
             
             <div id="navbar text-white" class="row">
 
-                @if (Model.Role == "admin")
+                @if (Model.Role == "Admin")
                 {
                     <div id="btn_settings" class="header col-sm">
                         <button onclick="showSettings()" class="headerButton text-white">Settings</button>
@@ -33,7 +33,7 @@
             <p id="errorMessage" class="h6"></p>
         </div>
         @{
-            if (Model.Role == "admin")
+            if (Model.Role == "Admin")
             {
                 await Html.RenderPartialAsync("_TimeEditPartial", Model);
                 await Html.RenderPartialAsync("_RolesPartial", Model);
